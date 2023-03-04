@@ -1,0 +1,24 @@
+.main {
+  box-sizing: border-box;
+  float: left;
+  width: 50%;
+  overflow-y: auto;
+  max-height: 67vh;
+  scrollbar-width: thin;
+  
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #2F2F37;
+  margin-bottom: 30px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+  
+}
+

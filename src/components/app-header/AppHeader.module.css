@@ -1,0 +1,46 @@
+.header {
+  box-sizing: border-box;
+  background-color: #1C1C21;
+  margin: 0 auto;  
+}
+
+.flexContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wrapper {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  column-gap: 29px;
+}
+
+.logo {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+
+.iconWrapper {
+  box-sizing: border-box;
+  padding: 16px 20px 16px 0;
+  display: flex;
+  align-items: center;
+  column-gap: 9px;
+}
+
+.text {
+  margin: 0;
+  box-sizing: content-box;
+}
