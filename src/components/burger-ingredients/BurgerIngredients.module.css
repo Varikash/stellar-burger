@@ -5,7 +5,8 @@
   overflow-y: auto;
   max-height: 67vh;
   scrollbar-width: thin;
-  
+  padding: 0;
+  margin: 0;
 }
 
 ::-webkit-scrollbar {
