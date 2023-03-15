@@ -15,7 +15,7 @@
   display: flex;
   align-items: center;
   justify-content: left;
-  column-gap: 29px;
+  column-gap: 8px;
 }
 
 .logo {
@@ -33,11 +33,13 @@
 }
 
 .iconWrapper {
+  text-decoration: none;
   box-sizing: border-box;
-  padding: 16px 20px 16px 0;
   display: flex;
   align-items: center;
   column-gap: 9px;
+  color: white;
+  border-radius: 40px;
 }
 
 .text {
