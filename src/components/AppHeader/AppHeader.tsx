@@ -1,5 +1,5 @@
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import Wrapper from '../Wrapper/Wrapper.js';
+import Wrapper from '../Wrapper/Wrapper';
 import Style from './AppHeader.module.css'
 
 

@@ -1,6 +1,6 @@
 import Style from './BurgerConstructor.module.css';
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-
+import PropTypes from 'prop-types';
 
 function BurgerConstructor() {
   return(
@@ -17,7 +17,7 @@ function BurgerConstructor() {
         </li>
           <ul className={Style.ingredientsList}>
             <li className={Style.item}>
-              <DragIcon />
+              <DragIcon type={'primary'} />
               <ConstructorElement
                 text="Говяжий метеорит (отбивная)"
                 price={3000}
@@ -25,7 +25,7 @@ function BurgerConstructor() {
               />
             </li>
             <li className={Style.item}>
-              <DragIcon />
+              <DragIcon type={'primary'} />
               <ConstructorElement
                 text="Соус Spicy-X"
                 price={90}
@@ -33,7 +33,7 @@ function BurgerConstructor() {
               /> 
             </li>
             <li className={Style.item}>
-              <DragIcon />
+              <DragIcon type={'primary'} />
               <ConstructorElement
                 text="Говяжий метеорит (отбивная)"
                 price={3000}
@@ -41,7 +41,7 @@ function BurgerConstructor() {
               />
             </li>
             <li className={Style.item}>
-              <DragIcon />
+              <DragIcon type={'primary'} />
               <ConstructorElement
                 text="Соус Spicy-X"
                 price={90}
@@ -49,7 +49,7 @@ function BurgerConstructor() {
               /> 
             </li>
             <li className={Style.item}>
-              <DragIcon />
+              <DragIcon type={'primary'} />
               <ConstructorElement
                 text="Говяжий метеорит (отбивная)"
                 price={3000}
@@ -57,7 +57,7 @@ function BurgerConstructor() {
               />
             </li>
             <li className={Style.item}>
-              <DragIcon />
+              <DragIcon type={'primary'} />
               <ConstructorElement
                 text="Соус Spicy-X"
                 price={90}
@@ -78,7 +78,7 @@ function BurgerConstructor() {
       <div className={`${Style.order} mt-10`}>
         <p className={`${Style.paragraph} text text_type_digits-medium`}>
           610
-          <CurrencyIcon />
+          <CurrencyIcon type={'primary'} />
         </p>
         <Button htmlType="button" type="primary" size="large">
           Оформить заказ

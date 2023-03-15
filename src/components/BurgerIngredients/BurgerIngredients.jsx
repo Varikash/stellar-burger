@@ -37,9 +37,10 @@ function BurgerIngredients() {
       </div>
       </Wrapper>
     </section>
-    
-    
   )
 }
+
+
+
 
 export default BurgerIngredients;
