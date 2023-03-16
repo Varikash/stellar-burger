@@ -3,11 +3,12 @@ import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import Wrapper from "../Wrapper/Wrapper";
 
 
-function ConstructorPage() {
+function ConstructorPage({data}) {
+
   return(
     <section>
       <Wrapper>
-        <BurgerIngredients />
+        <BurgerIngredients data={data}/>
         <BurgerConstructor />
       </Wrapper>
     </section>

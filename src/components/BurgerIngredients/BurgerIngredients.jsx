@@ -1,16 +1,16 @@
 import TabMenu from "../TabMenu/TabMenu";
 import Wrapper from "../Wrapper/Wrapper";
 import Style from './BurgerIngredients.module.css';
-import {data} from '../utils/data';
 import CardList from "../CardList/CardList";
+import PropTypes from 'prop-types';
+import PropTypesBurger from '../utils/PropTypesShape';
 
-
-function BurgerIngredients() {
+function BurgerIngredients(props) {
   const categories = ['Булки', 'Соусы', 'Начинки'];
 
-  const buns = data.filter(item => item.type === 'bun');
-  const sauces = data.filter(item => item.type === 'sauce');
-  const fillings = data.filter(item => item.type === 'main');
+  const buns = props.data.filter(item => item.type === 'bun');
+  const sauces = props.data.filter(item => item.type === 'sauce');
+  const fillings = props.data.filter(item => item.type === 'main');
 
   return(
     <section className={`${Style.section} pt-10 pl-5`}>
@@ -40,7 +40,9 @@ function BurgerIngredients() {
   )
 }
 
-
+BurgerIngredients.propTypes = {
+  data: PropTypes.arrayOf(PropTypesBurger).isRequired
+}
 
 
 export default BurgerIngredients;

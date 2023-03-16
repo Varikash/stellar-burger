@@ -1,6 +1,7 @@
 import Card from "../Card/Card";
-
 import Style from './CardList.module.css';
+import PropTypes from 'prop-types';
+import PropTypesBurger from '../utils/PropTypesShape';
 
 function CardList(props) {
   const { category, items } = props;
@@ -16,3 +17,8 @@ function CardList(props) {
 }
 
 export default CardList;
+
+CardList.propTypes = {
+  category: PropTypes.string.isRequired,
+  items: PropTypes.arrayOf(PropTypesBurger).isRequired,
+}
