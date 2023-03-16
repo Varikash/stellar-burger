@@ -9,6 +9,7 @@
   max-height: calc(100vh - 336px);
   scrollbar-width: thin;
   padding: 0;
+  scroll-behavior: smooth;
 }
 
 ::-webkit-scrollbar {
