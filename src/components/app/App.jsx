@@ -15,6 +15,7 @@ function App() {
       );
       const data = await res.json();
       setState(data.data);
+      console.log()
     }
 
     getIngredients();
