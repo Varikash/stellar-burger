@@ -28,7 +28,7 @@ function Card(props) {
       <p className={`${Style.text} text text_type_main-default`}>{item.name}</p>
       {showModal && (
         <Modal onClose={handleCloseModal}>
-          <PopupIngredient item={item}/>
+          <PopupIngredient onClose={handleCloseModal} item={item} />
         </Modal>
       )}
     </li>

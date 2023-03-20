@@ -1,27 +1,33 @@
-import Style from './PopupIngredient.module.css'
+import Style from './PopupIngredient.module.css';
+import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export default function PopupIngredient({item}) {
+export default function PopupIngredient({onClose, item}) {
   return(
     <>
-      <h1>{item.name}</h1>
+      <div className={Style.header}>
+        <h1 className='text text_type_main-large'>Детали ингредиента</h1>
+        <button className={Style.button} onClick={console.log('click')}>
+          <CloseIcon type='primary' />
+        </button>
+      </div>
       <img src={item.image_large} alt={item.name} />
-      <p>{item.name}</p>
-      <ul>
+      <p className='text text_type_main-medium mb-8 mt-4'>{item.name}</p>
+      <ul className={Style.infoList}>
         <li>
-          <p>Калории,ккал</p>
-          <p>{item.calories}</p>
+          <p className='text text_type_main-default text_color_inactive'>Калории,ккал</p>
+          <p className='text text_type_digits-default text_color_inactive'>{item.calories}</p>
         </li>
         <li>
-          <p>Белки, г</p>
-          <p>{item.proteins}</p>
+          <p className='text text_type_main-default text_color_inactive'>Белки, г</p>
+          <p className='text text_type_digits-default text_color_inactive'>{item.proteins}</p>
         </li>
         <li>
-          <p>Жиры, г</p>
-          <p>{item.fat}</p>
+          <p className='text text_type_main-default text_color_inactive'>Жиры, г</p>
+          <p className='text text_type_digits-default text_color_inactive'>{item.fat}</p>
         </li>
         <li>
-          <p>Углеводы, г</p>
-          <p>{item.carbohydrates}</p>
+          <p className='text text_type_main-default text_color_inactive'>Углеводы, г</p>
+          <p className='text text_type_digits-default text_color_inactive'>{item.carbohydrates}</p>
         </li>
       </ul>
     </>

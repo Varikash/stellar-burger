@@ -1,0 +1,20 @@
+.infoList {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  column-gap: 40px;
+  text-align: center;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
