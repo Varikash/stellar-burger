@@ -2,11 +2,17 @@ import Style from './PopupIngredient.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export default function PopupIngredient({onClose, item}) {
+
+  const handleClick = (e) => {
+    e.stopPropagation();
+    onClose();
+  }
+
   return(
     <>
       <div className={Style.header}>
         <h1 className='text text_type_main-large'>Детали ингредиента</h1>
-        <button className={Style.button} onClick={console.log('click')}>
+        <button className={Style.button} onClick={handleClick}>
           <CloseIcon type='primary' />
         </button>
       </div>

@@ -1,7 +1,18 @@
 import Style from './BurgerConstructor.module.css';
+import { useState } from 'react';
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import Modal from '../Modal/Modal';
+import PopupOrder from '../PopupOrder/PopupOrder';
 
 function BurgerConstructor() {
+  const [showModal, setShowModal] = useState(false);
+  const handleCloseModal = () => {
+    setShowModal(false);
+  }
+  const handleOpenModal = () => {
+    setShowModal(true);
+  }
+
   return(
     <section className={`${Style.section} pt-25 pr-5 pl-4`}>
       <ul className={`${Style.itemList}`}>
@@ -79,10 +90,15 @@ function BurgerConstructor() {
           610
           <CurrencyIcon type={'primary'} />
         </p>
-        <Button htmlType="button" type="primary" size="large">
+        <Button htmlType="button" type="primary" size="large" onClick={handleOpenModal}>
           Оформить заказ
         </Button>
       </div>
+      {showModal && (
+        <Modal onClose={handleCloseModal}>
+          <PopupOrder onClose={handleCloseModal}/>
+        </Modal>
+      )}
     </section>
   )
 }
