@@ -35,7 +35,7 @@
   flex-direction: column;
   row-gap: 16px;
   overflow-y: auto;
-  max-height: 25vh;
+  max-height: 42vh;
   padding-right: 5px;
 }
 
