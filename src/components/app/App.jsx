@@ -10,12 +10,18 @@ function App() {
 
   React.useEffect(()=> {
     const getIngredients = async () => {
-      const res = await fetch(
+      try {
+        const res = await fetch(
         'https://norma.nomoreparties.space/api/ingredients'
       );
+      if (!res.ok) {
+        throw new Error('Ошибка запроса API')
+      }
       const data = await res.json();
       setState(data.data);
-      console.log()
+      } catch (error) {
+        console.error(error);
+      }
     }
 
     getIngredients();
