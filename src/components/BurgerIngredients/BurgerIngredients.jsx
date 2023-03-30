@@ -4,13 +4,18 @@ import Style from './BurgerIngredients.module.css';
 import CardList from "../CardList/CardList";
 import PropTypes from 'prop-types';
 import PropTypesBurger from '../utils/PropTypesShape';
+import { useContext } from "react";
+import { ApiContext } from "../utils/apiContext";
 
-function BurgerIngredients(props) {
+function BurgerIngredients() {
+
+  const {state} = useContext(ApiContext)
+
   const categories = ['Булки', 'Соусы', 'Начинки'];
 
-  const buns = props.data.filter(item => item.type === 'bun');
-  const sauces = props.data.filter(item => item.type === 'sauce');
-  const fillings = props.data.filter(item => item.type === 'main');
+  const buns = state.filter(item => item.type === 'bun');
+  const sauces = state.filter(item => item.type === 'sauce');
+  const fillings = state.filter(item => item.type === 'main');
 
   return(
     <section className={`${Style.section} pt-10 pl-5`}>

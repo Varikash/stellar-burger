@@ -1,7 +1,7 @@
 import React from 'react';
 import AppHeader from '../AppHeader/AppHeader';
 import ConstructorPage from '../ConstructorPage/ConstructorPage';
-
+import { ApiContext } from '../utils/apiContext';
 import Style from './App.module.css'
 
 function App() {
@@ -23,15 +23,18 @@ function App() {
         console.error(error);
       }
     }
-
     getIngredients();
+    console.log(state);
   },[])
 
     return (
     <div className={`${Style.App} pt-10`}>
-      <AppHeader />
-      <ConstructorPage data={state}/>
+      <ApiContext.Provider value={{state}} >
+        <AppHeader />
+        <ConstructorPage/>
+      </ApiContext.Provider>
     </div>
+    
   );
   
 }

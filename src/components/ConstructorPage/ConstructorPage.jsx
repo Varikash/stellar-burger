@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 import PropTypesBurger from "../utils/PropTypesShape";
 
 
-function ConstructorPage({data}) {
+function ConstructorPage() {
   return(
     <section>
       <Wrapper>
-        <BurgerIngredients data={data}/>
+        <BurgerIngredients />
         <BurgerConstructor />
       </Wrapper>
     </section>
