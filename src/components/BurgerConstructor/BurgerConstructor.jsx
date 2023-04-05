@@ -9,65 +9,46 @@ import { apiFetch } from '../utils/apiBackend';
 
 function BurgerConstructor() {
 
-  const [orderInfo, setOrderInfo] = useState();
-  const [bun, setBun] = useState([]);
-  const [ingredients, setIngredients] = useState([]);
-  const [componentsArray, setComponentsArray] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
   const {state} = useContext(ApiContext);
-
-  useEffect(() => {
-    if (state) {
-      const bun = state.find(item => item.type === 'bun');
-      setBun(bun);
-      const ingredients = state.filter(item => item.type !== 'bun');
-      setIngredients(ingredients);
-      const burgerComponents = [bun, ...ingredients, bun];
-      setComponentsArray(burgerComponents);
-
-      const initialPrice = bun.price * 2;
-      const totalPrice = ingredients.reduce((acc, ingredient) => acc + ingredient.price, initialPrice);
-      setTotalPrice(totalPrice);
-    }
-  }, [state]);
-
-  console.log(bun)
-
-  // const bun = state.find(item => item.type === 'bun');
-  // const ingredients = state.filter(item => item.type !== 'bun');
-
-  // const burgerComponents = useMemo(() => {
-  //   const components = [bun, ...ingredients, bun];
-  //   return components;
-  // }) ;
-
-  // const initialPrice = bun?.price * 2;
-  // const totalPrice = ingredients.reduce((acc, ingredient) => acc + ingredient.price, initialPrice);
-
   const [showModal, setShowModal] = useState(false);
-  const handleCloseModal = () => {
-    setShowModal(false);
-  }
-  const handleOpenModal = () => {
-    setShowModal(true);
-  }
+  const [orderNumber, setOrderNumber] = useState();
+  const [totalPrice, setTotalPrice] = useState(0);
 
-  const ingredientsDataId = useMemo(() => {
-    const dataId = componentsArray.map(element => element._id);
-    return dataId;
-  }, [componentsArray])
+  const handleCloseModal = () => setShowModal(false);
+  const handleOpenModal = () => setShowModal(true);
+
+  const bun = state.find(item => item.type === 'bun');
+  const bunID = bun?._id;
+  const ingredients = state.filter(item => item.type !== 'bun');
+
+  const burgerComponentsID = useMemo(() => {
+    const components = [bunID];
+    ingredients.forEach((ingredient) => {
+      components.push(ingredient._id);
+    });
+    components.push(bunID);
+    return components;
+  }, [bunID, ingredients]);
 
   useEffect(() => {
-    if (ingredientsDataId) {
-      apiFetch(ingredientsDataId)
-      .then(data => {
-        setOrderInfo(data)
-      })
-      .catch((err) => {
-        console.error('Ошибка создания заказа', err );
-      })
+    const initialPrice = bun?.price * 2;
+    const totalPrice = ingredients.reduce((acc, ingredient) => acc + ingredient.price, initialPrice);
+    setTotalPrice(totalPrice);
+  }, [state]);
+  
+  useEffect(() => {
+    const fetchIngredientsData = async () => {
+      try {
+        const data = await apiFetch(burgerComponentsID);
+        setOrderNumber(data.order.number);
+        console.log(data);
+      } catch(error) {
+        console.error(error)
+      }
     }
-  }, [ingredientsDataId])
+
+    fetchIngredientsData();
+  }, []);
 
   if (!state) return <>...Загрузка</>
 
