@@ -22,12 +22,8 @@ function BurgerConstructor() {
   const ingredients = state.filter(item => item.type !== 'bun');
 
   const burgerComponentsID = useMemo(() => {
-    const components = [bunID];
-    ingredients.forEach((ingredient) => {
-      components.push(ingredient._id);
-    });
-    components.push(bunID);
-    return components;
+    const components = ingredients.map(ingredient => ingredient._id);
+    return [bunID, ...components, bunID];
   }, [bunID, ingredients]);
 
   useEffect(() => {
@@ -103,7 +99,7 @@ function BurgerConstructor() {
       </div>
       {showModal && (
         <Modal onClose={handleCloseModal}>
-          <PopupOrder onClose={handleCloseModal}/>
+          <PopupOrder onClose={handleCloseModal} orderNumber={orderNumber}/>
         </Modal>
       )}
     </section>
