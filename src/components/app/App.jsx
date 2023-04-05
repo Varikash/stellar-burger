@@ -27,12 +27,17 @@ function App() {
   },[])
 
     return (
-    <div className={`${Style.App} pt-10`}>
-      <ApiContext.Provider value={{state}} >
-        <AppHeader />
-        <ConstructorPage/>
-      </ApiContext.Provider>
-    </div>
+      <>
+      {state.length && (
+        <div className={`${Style.App} pt-10`}>
+          <ApiContext.Provider value={{state}} >
+            <AppHeader />
+            <ConstructorPage/>
+          </ApiContext.Provider>
+        </div>
+      )}
+      </>
+    
     
   );
   

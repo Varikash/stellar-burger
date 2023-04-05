@@ -18,7 +18,7 @@ function BurgerConstructor() {
   const handleOpenModal = () => setShowModal(true);
 
   const bun = state.find(item => item.type === 'bun');
-  const bunID = bun?._id;
+  const bunID = bun._id;
   const ingredients = state.filter(item => item.type !== 'bun');
 
   const burgerComponentsID = useMemo(() => {
@@ -31,12 +31,16 @@ function BurgerConstructor() {
   }, [bunID, ingredients]);
 
   useEffect(() => {
-    const initialPrice = bun?.price * 2;
+    const initialPrice = bun.price * 2;
     const totalPrice = ingredients.reduce((acc, ingredient) => acc + ingredient.price, initialPrice);
     setTotalPrice(totalPrice);
   }, [state]);
   
   useEffect(() => {
+    if (burgerComponentsID.length === 0) {
+      return;
+    }
+
     const fetchIngredientsData = async () => {
       try {
         const data = await apiFetch(burgerComponentsID);
