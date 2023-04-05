@@ -2,8 +2,6 @@ import TabMenu from "../TabMenu/TabMenu";
 import Wrapper from "../Wrapper/Wrapper";
 import Style from './BurgerIngredients.module.css';
 import CardList from "../CardList/CardList";
-import PropTypes from 'prop-types';
-import PropTypesBurger from '../utils/PropTypesShape';
 import { useContext } from "react";
 import { ApiContext } from "../utils/apiContext";
 
@@ -43,10 +41,6 @@ function BurgerIngredients() {
       </Wrapper>
     </section>
   )
-}
-
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(PropTypesBurger).isRequired
 }
 
 

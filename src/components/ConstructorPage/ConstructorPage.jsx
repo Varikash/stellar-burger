@@ -16,8 +16,4 @@ function ConstructorPage() {
   )
 }
 
-ConstructorPage.propTypes = {
-  data: PropTypes.arrayOf(PropTypesBurger).isRequired,
-}
-
 export default ConstructorPage

@@ -24,7 +24,6 @@ function App() {
       }
     }
     getIngredients();
-    console.log(state);
   },[])
 
     return (
