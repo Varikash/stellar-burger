@@ -1,9 +1,9 @@
 import React from 'react';
 import AppHeader from '../AppHeader/AppHeader';
 import ConstructorPage from '../ConstructorPage/ConstructorPage';
-import { ApiContext } from '../../utils/apiContext';
+import { getIngredients } from '../../utils/apiBackend';
 import Style from './App.module.css'
-import { getIngredients } from '../utils/apiBackend';
+import { ApiContext } from '../../utils/apiContext';
 
 function App() {
 
