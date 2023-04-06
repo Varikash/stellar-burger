@@ -3,51 +3,44 @@ import { useState, useContext, useMemo, useEffect } from 'react';
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../Modal/Modal';
 import PopupOrder from '../PopupOrder/PopupOrder';
-import { ApiContext } from "../utils/apiContext";
-import { apiFetch } from '../utils/apiBackend';
+import { ApiContext } from "../../utils/apiContext";
+import { apiFetch } from '../../utils/apiBackend';
 
 
 function BurgerConstructor() {
 
   const {state} = useContext(ApiContext);
-  const [showModal, setShowModal] = useState(false);
-  const [orderNumber, setOrderNumber] = useState();
-  const [totalPrice, setTotalPrice] = useState(0);
+  const [orderNumber, setOrderNumber] = useState(undefined);
+  // const [totalPrice, setTotalPrice] = useState(0);
 
-  const handleCloseModal = () => setShowModal(false);
-  const handleOpenModal = () => setShowModal(true);
+  const handleCloseModal = () => setOrderNumber(undefined);
 
-  const bun = state.find(item => item.type === 'bun');
+  const bun = useMemo(() => {
+    return state.find(item => item.type === 'bun');
+  }) 
   const bunID = bun._id;
-  const ingredients = state.filter(item => item.type !== 'bun');
 
-  const burgerComponentsID = useMemo(() => {
-    const components = ingredients.map(ingredient => ingredient._id);
-    return [bunID, ...components, bunID];
-  }, [bunID, ingredients]);
+  const ingredients = useMemo(() => {
+    return state.filter(item => item.type !== 'bun');
+  })
 
-  useEffect(() => {
-    const initialPrice = bun.price * 2;
-    const totalPrice = ingredients.reduce((acc, ingredient) => acc + ingredient.price, initialPrice);
-    setTotalPrice(totalPrice);
-  }, [state]);
-  
-  useEffect(() => {
-    if (burgerComponentsID.length === 0) {
-      return;
+  const totalPrice = useMemo(() => {
+    return ingredients.reduce((acc, ingredient) => acc + ingredient.price, (bun.price * 2))
+  })
+
+
+  const sendOrder = async () => {
+      const components = ingredients.map(ingredient => ingredient._id);
+      const burgerComponentsID = [bunID,...components,bunID];
+
+    try {
+      const data = await apiFetch(burgerComponentsID);
+      setOrderNumber(data.order.number);
+      console.log(data);
+    } catch(error) {
+      console.error(error)
     }
-
-    const fetchIngredientsData = async () => {
-      try {
-        const data = await apiFetch(burgerComponentsID);
-        setOrderNumber(data.order.number);
-      } catch(error) {
-        console.error(error)
-      }
-    }
-
-    fetchIngredientsData();
-  }, []);
+  }
 
   if (!state) return <>...Загрузка</>
 
@@ -92,11 +85,11 @@ function BurgerConstructor() {
           {totalPrice}
           <CurrencyIcon type={'primary'} />
         </p>
-        <Button htmlType="button" type="primary" size="large" onClick={handleOpenModal}>
+        <Button htmlType="button" type="primary" size="large" onClick={sendOrder}>
           Оформить заказ
         </Button>
       </div>
-      {showModal && (
+      {orderNumber && (
         <Modal onClose={handleCloseModal}>
           <PopupOrder onClose={handleCloseModal} orderNumber={orderNumber}/>
         </Modal>

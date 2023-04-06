@@ -3,7 +3,7 @@ import Wrapper from "../Wrapper/Wrapper";
 import Style from './BurgerIngredients.module.css';
 import CardList from "../CardList/CardList";
 import { useContext } from "react";
-import { ApiContext } from "../utils/apiContext";
+import { ApiContext } from "../../utils/apiContext";
 
 function BurgerIngredients() {
 

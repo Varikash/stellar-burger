@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import Style from './Card.module.css';
-import PropTypesBurger from '../utils/PropTypesShape';
+import PropTypesBurger from '../../utils/PropTypesShape';
 import Modal from "../Modal/Modal";
 import PopupIngredient from "../PopupIngredient/PopupIngredient";
 
