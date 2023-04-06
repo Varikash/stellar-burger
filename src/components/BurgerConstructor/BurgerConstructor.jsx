@@ -10,12 +10,10 @@ import { apiFetch } from '../utils/apiBackend';
 function BurgerConstructor() {
 
   const {state} = useContext(ApiContext);
-  const [showModal, setShowModal] = useState(false);
-  const [orderNumber, setOrderNumber] = useState();
+  const [orderNumber, setOrderNumber] = useState(undefined);
   const [totalPrice, setTotalPrice] = useState(0);
 
-  const handleCloseModal = () => setShowModal(false);
-  const handleOpenModal = () => setShowModal(true);
+  const handleCloseModal = () => setOrderNumber(undefined);
 
   const bun = state.find(item => item.type === 'bun');
   const bunID = bun._id;
@@ -31,24 +29,16 @@ function BurgerConstructor() {
     const totalPrice = ingredients.reduce((acc, ingredient) => acc + ingredient.price, initialPrice);
     setTotalPrice(totalPrice);
   }, [state]);
-  
-  useEffect(() => {
-    if (burgerComponentsID.length === 0) {
-      return;
-    }
 
-    const fetchIngredientsData = async () => {
-      try {
-        const data = await apiFetch(burgerComponentsID);
-        setOrderNumber(data.order.number);
-        console.log(data);
-      } catch(error) {
-        console.error(error)
-      }
+  const fetchIngredientsData = async () => {
+    try {
+      const data = await apiFetch(burgerComponentsID);
+      setOrderNumber(data.order.number);
+      console.log(data);
+    } catch(error) {
+      console.error(error)
     }
-
-    fetchIngredientsData();
-  }, []);
+  }
 
   if (!state) return <>...Загрузка</>
 
@@ -93,11 +83,11 @@ function BurgerConstructor() {
           {totalPrice}
           <CurrencyIcon type={'primary'} />
         </p>
-        <Button htmlType="button" type="primary" size="large" onClick={handleOpenModal}>
+        <Button htmlType="button" type="primary" size="large" onClick={fetchIngredientsData}>
           Оформить заказ
         </Button>
       </div>
-      {showModal && (
+      {orderNumber && (
         <Modal onClose={handleCloseModal}>
           <PopupOrder onClose={handleCloseModal} orderNumber={orderNumber}/>
         </Modal>
