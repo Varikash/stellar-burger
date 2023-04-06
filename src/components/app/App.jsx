@@ -3,28 +3,26 @@ import AppHeader from '../AppHeader/AppHeader';
 import ConstructorPage from '../ConstructorPage/ConstructorPage';
 import { ApiContext } from '../utils/apiContext';
 import Style from './App.module.css'
+import { getIngredients } from '../utils/apiBackend';
 
 function App() {
 
   const [state, setState] = React.useState([]);
 
   React.useEffect(()=> {
-    const getIngredients = async () => {
-      try {
-        const res = await fetch(
-        'https://norma.nomoreparties.space/api/ingredients'
-      );
-      if (!res.ok) {
-        throw new Error('Ошибка запроса API')
+    getIngredients()
+    .then(data => {
+      if (data.success) {
+        setState(data.data)
+      } else {
+        return Promise.reject(data.error)
       }
-      const data = await res.json();
-      setState(data.data);
-      } catch (error) {
-        console.error(error);
-      }
+    })
+    .catch((error) => {
+      return Promise.reject(error);
+    });
     }
-    getIngredients();
-  },[])
+  ,[])
 
     return (
       <>
@@ -37,8 +35,6 @@ function App() {
         </div>
       )}
       </>
-    
-    
   );
   
 }

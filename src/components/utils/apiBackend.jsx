@@ -14,3 +14,9 @@ export const apiFetch = (ingredients) => {
   })
     .then((res) => getResponseData(res))
 };
+
+
+export const getIngredients = () => {
+  return fetch('https://norma.nomoreparties.space/api/ingredients')
+  .then((res) => getResponseData(res))
+}

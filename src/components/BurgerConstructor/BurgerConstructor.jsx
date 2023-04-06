@@ -41,7 +41,6 @@ function BurgerConstructor() {
       try {
         const data = await apiFetch(burgerComponentsID);
         setOrderNumber(data.order.number);
-        console.log(data);
       } catch(error) {
         console.error(error)
       }
