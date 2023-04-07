@@ -1,37 +1,40 @@
 import React from 'react';
 import AppHeader from '../AppHeader/AppHeader';
 import ConstructorPage from '../ConstructorPage/ConstructorPage';
-
+import { getIngredients } from '../../utils/apiBackend';
 import Style from './App.module.css'
+import { ApiContext } from '../../utils/apiContext';
 
 function App() {
 
   const [state, setState] = React.useState([]);
 
   React.useEffect(()=> {
-    const getIngredients = async () => {
-      try {
-        const res = await fetch(
-        'https://norma.nomoreparties.space/api/ingredients'
-      );
-      if (!res.ok) {
-        throw new Error('Ошибка запроса API')
+    getIngredients()
+    .then(data => {
+      if (data.success) {
+        setState(data.data)
+      } else {
+        return Promise.reject(data.error)
       }
-      const data = await res.json();
-      setState(data.data);
-      } catch (error) {
-        console.error(error);
-      }
+    })
+    .catch((error) => {
+      return Promise.reject(error);
+    });
     }
-
-    getIngredients();
-  },[])
+  ,[])
 
     return (
-    <div className={`${Style.App} pt-10`}>
-      <AppHeader />
-      <ConstructorPage data={state}/>
-    </div>
+      <>
+      {state.length && (
+        <div className={`${Style.App} pt-10`}>
+          <ApiContext.Provider value={{state}} >
+            <AppHeader />
+            <ConstructorPage/>
+          </ApiContext.Provider>
+        </div>
+      )}
+      </>
   );
   
 }

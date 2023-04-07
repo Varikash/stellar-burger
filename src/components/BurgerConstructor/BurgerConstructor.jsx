@@ -1,17 +1,48 @@
 import Style from './BurgerConstructor.module.css';
-import { useState } from 'react';
+import { useState, useContext, useMemo, useEffect } from 'react';
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../Modal/Modal';
 import PopupOrder from '../PopupOrder/PopupOrder';
+import { ApiContext } from "../../utils/apiContext";
+import { apiFetch } from '../../utils/apiBackend';
+
 
 function BurgerConstructor() {
-  const [showModal, setShowModal] = useState(false);
-  const handleCloseModal = () => {
-    setShowModal(false);
+
+  const {state} = useContext(ApiContext);
+  const [orderNumber, setOrderNumber] = useState(undefined);
+  // const [totalPrice, setTotalPrice] = useState(0);
+
+  const handleCloseModal = () => setOrderNumber(undefined);
+
+  const bun = useMemo(() => {
+    return state.find(item => item.type === 'bun');
+  }) 
+  const bunID = bun._id;
+
+  const ingredients = useMemo(() => {
+    return state.filter(item => item.type !== 'bun');
+  })
+
+  const totalPrice = useMemo(() => {
+    return ingredients.reduce((acc, ingredient) => acc + ingredient.price, (bun.price * 2))
+  })
+
+
+  const sendOrder = async () => {
+      const components = ingredients.map(ingredient => ingredient._id);
+      const burgerComponentsID = [bunID,...components,bunID];
+
+    try {
+      const data = await apiFetch(burgerComponentsID);
+      setOrderNumber(data.order.number);
+      console.log(data);
+    } catch(error) {
+      console.error(error)
+    }
   }
-  const handleOpenModal = () => {
-    setShowModal(true);
-  }
+
+  if (!state) return <>...Загрузка</>
 
   return(
     <section className={`${Style.section} pt-25 pr-5 pl-4`}>
@@ -20,83 +51,47 @@ function BurgerConstructor() {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text="Краторная булка N-200i (верх)"
-            price={200}
-            thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
+            text={`${bun?.name} (верх)`}
+            price={bun?.price}
+            thumbnail={bun?.image}
           />
         </li>
           <ul className={Style.ingredientsList}>
-            <li className={Style.item}>
-              <DragIcon type={'primary'} />
-              <ConstructorElement
-                text="Говяжий метеорит (отбивная)"
-                price={3000}
-                thumbnail={"https://code.s3.yandex.net/react/code/meat-04.png"}
-              />
-            </li>
-            <li className={Style.item}>
-              <DragIcon type={'primary'} />
-              <ConstructorElement
-                text="Соус Spicy-X"
-                price={90}
-                thumbnail={"https://code.s3.yandex.net/react/code/sauce-02.png"}
-              /> 
-            </li>
-            <li className={Style.item}>
-              <DragIcon type={'primary'} />
-              <ConstructorElement
-                text="Говяжий метеорит (отбивная)"
-                price={3000}
-                thumbnail={"https://code.s3.yandex.net/react/code/meat-04.png"}
-              />
-            </li>
-            <li className={Style.item}>
-              <DragIcon type={'primary'} />
-              <ConstructorElement
-                text="Соус Spicy-X"
-                price={90}
-                thumbnail={"https://code.s3.yandex.net/react/code/sauce-02.png"}
-              /> 
-            </li>
-            <li className={Style.item}>
-              <DragIcon type={'primary'} />
-              <ConstructorElement
-                text="Говяжий метеорит (отбивная)"
-                price={3000}
-                thumbnail={"https://code.s3.yandex.net/react/code/meat-04.png"}
-              />
-            </li>
-            <li className={Style.item}>
-              <DragIcon type={'primary'} />
-              <ConstructorElement
-                text="Соус Spicy-X"
-                price={90}
-                thumbnail={"https://code.s3.yandex.net/react/code/sauce-02.png"}
-              /> 
-            </li>
+            {ingredients.map(ingredient => {
+              return(
+                <li key={ingredient?._id} className={Style.item}>
+                  <DragIcon type={'primary'} />
+                  <ConstructorElement
+                    text={`${ingredient?.name}`}
+                    price={ingredient?.price}
+                    thumbnail={ingredient?.image}
+                  />
+                </li>
+              )
+            })}
           </ul>
         <li className={Style.buns}>
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text="Краторная булка N-200i (низ)"
-            price={200}
+            text={`${bun?.name || ''} (низ)`}
+            price={bun?.price}
             thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
           />
         </li>
       </ul>
       <div className={`${Style.order} mt-10`}>
         <p className={`${Style.paragraph} text text_type_digits-medium`}>
-          610
+          {totalPrice}
           <CurrencyIcon type={'primary'} />
         </p>
-        <Button htmlType="button" type="primary" size="large" onClick={handleOpenModal}>
+        <Button htmlType="button" type="primary" size="large" onClick={sendOrder}>
           Оформить заказ
         </Button>
       </div>
-      {showModal && (
+      {orderNumber && (
         <Modal onClose={handleCloseModal}>
-          <PopupOrder onClose={handleCloseModal}/>
+          <PopupOrder onClose={handleCloseModal} orderNumber={orderNumber}/>
         </Modal>
       )}
     </section>

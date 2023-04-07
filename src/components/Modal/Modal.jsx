@@ -10,13 +10,13 @@ const order = 'pt-30 pb-30';
 
 export default function Modal({onClose, children}) {
 
-  const closeModalOnEsc = (evt) => {
-    if(evt.key === 'Escape') {
-      onClose()
-    }
-  }
-
   useEffect(() => {
+    const closeModalOnEsc = (evt) => {
+      if(evt.key === 'Escape') {
+        onClose()
+      }
+    }
+
     document.addEventListener('keydown', closeModalOnEsc);
 
     return () => {
