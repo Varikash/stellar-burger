@@ -1,8 +1,6 @@
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import Wrapper from "../Wrapper/Wrapper";
-import PropTypes from 'prop-types';
-import PropTypesBurger from "../../utils/PropTypesShape";
 
 
 function ConstructorPage() {

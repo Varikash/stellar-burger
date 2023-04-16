@@ -2,18 +2,27 @@ import TabMenu from "../TabMenu/TabMenu";
 import Wrapper from "../Wrapper/Wrapper";
 import Style from './BurgerIngredients.module.css';
 import CardList from "../CardList/CardList";
-import { useContext } from "react";
-import { ApiContext } from "../../utils/apiContext";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchIngredients } from "../../services/actions/fetchIngredients";
+
 
 function BurgerIngredients() {
 
-  const {state} = useContext(ApiContext)
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchIngredients());
+  }, [])
 
   const categories = ['Булки', 'Соусы', 'Начинки'];
 
-  const buns = state.filter(item => item.type === 'bun');
-  const sauces = state.filter(item => item.type === 'sauce');
-  const fillings = state.filter(item => item.type === 'main');
+  const data = useSelector(state => state.ingredients)
+  console.log(data);
+
+  const buns = useSelector(store => store.feed.filter(item => item.type === 'bun'));
+  const sauces = useSelector(store => store.feed.filter(item => item.type === 'sauce'));
+  const fillings = useSelector(store => store.feed.filter(item => item.type === 'main'));
 
   return(
     <section className={`${Style.section} pt-10 pl-5`}>

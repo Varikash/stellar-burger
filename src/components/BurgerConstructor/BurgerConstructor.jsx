@@ -4,7 +4,7 @@ import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktiku
 import Modal from '../Modal/Modal';
 import PopupOrder from '../PopupOrder/PopupOrder';
 import { ApiContext } from "../../utils/apiContext";
-import { apiFetch } from '../../utils/apiBackend';
+import { getOrders } from '../../utils/apiBackend';
 
 
 function BurgerConstructor() {
@@ -34,7 +34,7 @@ function BurgerConstructor() {
       const burgerComponentsID = [bunID,...components,bunID];
 
     try {
-      const data = await apiFetch(burgerComponentsID);
+      const data = await getOrders(burgerComponentsID);
       setOrderNumber(data.order.number);
       console.log(data);
     } catch(error) {
