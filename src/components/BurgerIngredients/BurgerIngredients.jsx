@@ -5,24 +5,18 @@ import CardList from "../CardList/CardList";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchIngredients } from "../../services/actions/fetchIngredients";
+import { fetchOrder } from "../../services/actions/fetchOrder";
 
 
 function BurgerIngredients() {
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchIngredients());
-  }, [])
-
   const categories = ['Булки', 'Соусы', 'Начинки'];
 
-  const data = useSelector(state => state.ingredients)
-  console.log(data);
+  const data = useSelector(store => store.ingredients.ingredients)
 
-  const buns = useSelector(store => store.feed.filter(item => item.type === 'bun'));
-  const sauces = useSelector(store => store.feed.filter(item => item.type === 'sauce'));
-  const fillings = useSelector(store => store.feed.filter(item => item.type === 'main'));
+  const buns = data.filter(item => item.type === 'bun');
+  const sauces = data.filter(item => item.type === 'sauce');
+  const fillings = data.filter(item => item.type === 'main');
 
   return(
     <section className={`${Style.section} pt-10 pl-5`}>

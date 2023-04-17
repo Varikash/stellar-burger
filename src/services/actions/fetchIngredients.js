@@ -12,14 +12,14 @@ export function fetchIngredients() {
     })
 
       getIngredients()
-      .then(res => res.json())
       .then(data => {
         dispatch({
           type: GET_FEED_SUCCESS,
-          feed: data.data
+          ingredients: data.data
         });
       })
       .catch(err => {
+        console.log(`Произошла ошибка запроса: ${err}`)
         dispatch({
           type: GET_FEED_FAILED
         });

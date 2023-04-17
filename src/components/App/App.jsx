@@ -1,39 +1,28 @@
-import React from 'react';
 import AppHeader from '../AppHeader/AppHeader';
 import ConstructorPage from '../ConstructorPage/ConstructorPage';
-import { getIngredients } from '../../utils/apiBackend';
 import Style from './App.module.css'
-import { ApiContext } from '../../utils/apiContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { fetchIngredients } from '../../services/actions/fetchIngredients';
 
 function App() {
 
-  const [state, setState] = React.useState([]);
+  const dispatch = useDispatch();
 
-  React.useEffect(()=> {
-    getIngredients()
-    .then(data => {
-      if (data.success) {
-        setState(data.data)
-      } else {
-        return Promise.reject(data.error)
-      }
-    })
-    .catch((error) => {
-      return Promise.reject(error);
-    });
-    }
-  ,[])
+  const { loadingIngredients, errorLoadingIngredients, ingredientsLoaded} = useSelector(store => store.ingredients);
+
+  useEffect(() => {
+    dispatch(fetchIngredients());
+  }, [dispatch])
 
     return (
       <>
-      {state.length && (
         <div className={`${Style.App} pt-10`}>
-          <ApiContext.Provider value={{state}} >
             <AppHeader />
-            <ConstructorPage/>
-          </ApiContext.Provider>
+            {loadingIngredients && <p>...Загрузка</p>}
+            {errorLoadingIngredients && <p className={`${Style.error}`}>Ошибка загрузки</p>}
+            {ingredientsLoaded && <ConstructorPage/>}
         </div>
-      )}
       </>
   );
   

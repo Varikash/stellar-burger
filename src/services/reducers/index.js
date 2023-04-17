@@ -1,6 +1,8 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import { feedReducer } from "./api-feed";
+import { ingredientsReducer } from "./feedReducer";
+import { orderReducer } from "./orderReducer";
 
 export const rootReducer = combineReducers({
-  feed: feedReducer,
+  ingredients: ingredientsReducer,
+  orders: orderReducer,
 })

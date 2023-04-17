@@ -3,46 +3,42 @@ import { useState, useContext, useMemo, useEffect } from 'react';
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../Modal/Modal';
 import PopupOrder from '../PopupOrder/PopupOrder';
-import { ApiContext } from "../../utils/apiContext";
 import { getOrders } from '../../utils/apiBackend';
+import { useSelector } from 'react-redux';
 
 
 function BurgerConstructor() {
 
-  const {state} = useContext(ApiContext);
-  const [orderNumber, setOrderNumber] = useState(undefined);
-  // const [totalPrice, setTotalPrice] = useState(0);
+  const { pushOrder, errorPushOrder, data } = useSelector(store => store.orders);
 
-  const handleCloseModal = () => setOrderNumber(undefined);
+  const burgerIngredientsData = useSelector(store => store.ingredients.ingredients);
+  const orderNumber = useSelector(store => store.orders.data.order.number);
 
+  const [showModal, setShowModal] = useState(false);
+
+  const handleCloseModal = () => setShowModal(false);
+  const handleOpenModal = () => setShowModal(true);
+
+  useEffect(() => {
+    const dispatch = useDispatch();
+    dispatch(fetchOrder)
+  }, [dispatch])
+
+  
   const bun = useMemo(() => {
-    return state.find(item => item.type === 'bun');
+    return burgerIngredientsData.find(item => item.type === 'bun');
   }) 
   const bunID = bun._id;
 
   const ingredients = useMemo(() => {
-    return state.filter(item => item.type !== 'bun');
+    return burgerIngredientsData.filter(item => item.type !== 'bun');
   })
 
   const totalPrice = useMemo(() => {
     return ingredients.reduce((acc, ingredient) => acc + ingredient.price, (bun.price * 2))
   })
 
-
-  const sendOrder = async () => {
-      const components = ingredients.map(ingredient => ingredient._id);
-      const burgerComponentsID = [bunID,...components,bunID];
-
-    try {
-      const data = await getOrders(burgerComponentsID);
-      setOrderNumber(data.order.number);
-      console.log(data);
-    } catch(error) {
-      console.error(error)
-    }
-  }
-
-  if (!state) return <>...Загрузка</>
+  
 
   return(
     <section className={`${Style.section} pt-25 pr-5 pl-4`}>
@@ -85,11 +81,11 @@ function BurgerConstructor() {
           {totalPrice}
           <CurrencyIcon type={'primary'} />
         </p>
-        <Button htmlType="button" type="primary" size="large" onClick={sendOrder}>
+        <Button htmlType="button" type="primary" size="large" onClick={handleOpenModal}>
           Оформить заказ
         </Button>
       </div>
-      {orderNumber && (
+      {showModal && (
         <Modal onClose={handleCloseModal}>
           <PopupOrder onClose={handleCloseModal} orderNumber={orderNumber}/>
         </Modal>
