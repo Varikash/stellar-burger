@@ -1,30 +1,28 @@
 import Style from './BurgerConstructor.module.css';
-import { useState, useContext, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../Modal/Modal';
 import PopupOrder from '../PopupOrder/PopupOrder';
-import { getOrders } from '../../utils/apiBackend';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchOrder, clearOrder } from "../../services/actions/fetchOrder";
+
 
 
 function BurgerConstructor() {
 
-  const { pushOrder, errorPushOrder, data } = useSelector(store => store.orders);
+  const dispatch = useDispatch();
 
   const burgerIngredientsData = useSelector(store => store.ingredients.ingredients);
-  const orderNumber = useSelector(store => store.orders.data.order.number);
-
-  const [showModal, setShowModal] = useState(false);
-
-  const handleCloseModal = () => setShowModal(false);
-  const handleOpenModal = () => setShowModal(true);
-
-  useEffect(() => {
-    const dispatch = useDispatch();
-    dispatch(fetchOrder)
-  }, [dispatch])
-
+  const orderNumber = useSelector(store => store.orders.number);
   
+
+  const handleCloseModal = () => {
+    dispatch(clearOrder())
+  };
+  const handleOpenModal = () => {
+    dispatch(fetchOrder(burgerComponentsID));
+  };
+
   const bun = useMemo(() => {
     return burgerIngredientsData.find(item => item.type === 'bun');
   }) 
@@ -34,12 +32,14 @@ function BurgerConstructor() {
     return burgerIngredientsData.filter(item => item.type !== 'bun');
   })
 
+  const components = ingredients.map(ingredient => ingredient._id);
+  const burgerComponentsID = [bunID,...components,bunID];
+
+
   const totalPrice = useMemo(() => {
     return ingredients.reduce((acc, ingredient) => acc + ingredient.price, (bun.price * 2))
   })
-
   
-
   return(
     <section className={`${Style.section} pt-25 pr-5 pl-4`}>
       <ul className={`${Style.itemList}`}>
@@ -85,9 +85,9 @@ function BurgerConstructor() {
           Оформить заказ
         </Button>
       </div>
-      {showModal && (
+      {orderNumber && (
         <Modal onClose={handleCloseModal}>
-          <PopupOrder onClose={handleCloseModal} orderNumber={orderNumber}/>
+          <PopupOrder onClose={handleCloseModal}/>
         </Modal>
       )}
     </section>

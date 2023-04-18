@@ -5,7 +5,7 @@ import CardList from "../CardList/CardList";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchIngredients } from "../../services/actions/fetchIngredients";
-import { fetchOrder } from "../../services/actions/fetchOrder";
+
 
 
 function BurgerIngredients() {
