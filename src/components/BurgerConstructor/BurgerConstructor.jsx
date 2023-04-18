@@ -1,5 +1,5 @@
 import Style from './BurgerConstructor.module.css';
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../Modal/Modal';
 import PopupOrder from '../PopupOrder/PopupOrder';
