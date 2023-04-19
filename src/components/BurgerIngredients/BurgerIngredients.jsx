@@ -32,13 +32,19 @@ const BurgerIngredients = () => {
   
 
   const handleScroll = () => {
+    const containerRect = containerRef.current.getBoundingClientRect();
+    const bunRect = bunRef.current.getBoundingClientRect();
+    const sauceRect = sauceRef.current.getBoundingClientRect();
+    const mainRect = mainRef.current.getBoundingClientRect();
     
-    if (containerRef.current.getBoundingClientRect().top > bunRef.current.getBoundingClientRect().top) {
+    if (containerRect.top > bunRect.top) {
       setCurrent('one');
-    } else if (containerRef.current.getBoundingClientRect().top > sauceRef.current.getBoundingClientRect().top) {
+    } 
+    if (containerRect.top > sauceRect.top) {
       setCurrent('two');
-    } else if (containerRef.current.getBoundingClientRect().top > mainRef.current.getBoundingClientRect().top) {
-      setCurrent('Three');
+    }
+    if (containerRect.top > mainRect.top) {
+      setCurrent('three');
     }
     
   }
@@ -50,7 +56,7 @@ const BurgerIngredients = () => {
         Соберите бургер
       </h1>
       <TabMenu bunRef={bunRef} sauceRef={sauceRef} mainRef={mainRef} current={current}/>
-      <div className={`${Style.main} mt-10`} ref={containerRef} onScroll={handleScroll}>
+      <div className={`${Style.main}`} ref={containerRef} onScroll={handleScroll}>
         <CardList category={'Булки'} items={buns} ref={bunRef}/>
         <CardList category={'Соусы'} items={sauces} ref={sauceRef}/>
         <CardList category={'Начинки'} items={fillings} ref={mainRef}/>

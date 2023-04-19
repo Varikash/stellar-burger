@@ -18,7 +18,7 @@ const TabMenu = forwardRef((props, ref) => {
   
     return (
       <div style={{ display: 'flex' }}>
-        <a className={Style.link}>
+        <a className={Style.link} href='/#Булки'>
           <Tab value="one" active={props.current === 'one'} onClick={() => {
           if (props.bunRef.current) {
             handleClick(props.bunRef);

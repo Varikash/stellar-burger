@@ -9,8 +9,8 @@ const CardList = forwardRef((props, ref) => {
 
   return(
     <div ref={ref}>
-      <h1 className="text text_type_main-medium mb-6" id={`${category}`}>{category}</h1>
-      <ul className={`${Style.cardsList} pb-10`}>
+      <h1 className="text text_type_main-medium mb-6 pt-10" id={`${category}`}>{category}</h1>
+      <ul className={`${Style.cardsList}`}>
         {items.map(item => <Card key={item._id} item={item}/>)}
       </ul>
     </div>
