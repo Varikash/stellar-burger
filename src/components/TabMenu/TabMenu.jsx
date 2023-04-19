@@ -1,24 +1,47 @@
-import React, { forwardRef, useEffect, useRef } from 'react';
+import { forwardRef } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Style from './TabMenu.module.css'
 
 const TabMenu = forwardRef((props, ref) => {
-  const [current, setCurrent] = React.useState('one');
 
+  const handleClick = (ref) => {
+    const parentContainer = ref.current.parentNode;
+    const categoryTop = ref.current.offsetTop;
+    const parentContainerTop = parentContainer.getBoundingClientRect().top;
+    const offsetTop = categoryTop - parentContainerTop - parentContainer.scrollTop;
+
+    parentContainer.scroll({
+      behavior: 'smooth',
+      top: parentContainer.scrollTop + offsetTop
+    })
+  };
+  
     return (
       <div style={{ display: 'flex' }}>
-        <a href='/#Булки' className={Style.link}>
-          <Tab value="one" active={current === 'one'} onClick={setCurrent}>
+        <a className={Style.link}>
+          <Tab value="one" active={props.current === 'one'} onClick={() => {
+          if (props.bunRef.current) {
+            handleClick(props.bunRef);
+          }
+        }}>
             Булки
           </Tab>
         </a>
-        <a href='/#Соусы' className={Style.link}>
-          <Tab value="two" active={current === 'two'} onClick={setCurrent}>
+        <a className={Style.link}>
+          <Tab value="two" active={props.current === 'two'} onClick={() => {
+          if (props.sauceRef.current) {
+            handleClick(props.sauceRef);
+          }
+        }}>
             Соусы
           </Tab>
         </a>
-        <a href='/#Начинки'className={Style.link}>
-          <Tab value="three" active={current === 'three'} onClick={setCurrent}>
+        <a className={Style.link}>
+          <Tab value="three" active={props.current === 'three'} onClick={() => {
+          if (props.mainRef.current) {
+            handleClick(props.mainRef);
+          }
+        }}>
             Начинки
           </Tab>
         </a>
