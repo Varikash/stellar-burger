@@ -1,12 +1,15 @@
+import { useSelector } from 'react-redux';
 import Style from './PopupIngredient.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export default function PopupIngredient({onClose, item}) {
+export default function PopupIngredient({onClose}) {
 
   const handleClick = (e) => {
     e.stopPropagation();
     onClose();
   }
+
+  const item = useSelector(store => store.ingredient.ingredient);
 
   return(
     <>

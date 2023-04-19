@@ -1,20 +1,15 @@
-import { useState } from "react";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import Style from './Card.module.css';
 import PropTypesBurger from '../../utils/PropTypesShape';
-import Modal from "../Modal/Modal";
-import PopupIngredient from "../PopupIngredient/PopupIngredient";
+import { passIngredient } from "../../services/actions/ingredientAction";
+import { useDispatch } from "react-redux";
 
 function Card(props) {
   const { item } = props;
-  const [showModal, setShowModal] = useState(false); 
-  
-  const handleCloseModal = () => {
-    setShowModal(false);
-  }
+  const dispatch = useDispatch();
 
   const handleOpenModal = () => {
-    setShowModal(true);
+    dispatch(passIngredient(item));
   }
 
   return(
@@ -26,11 +21,6 @@ function Card(props) {
         <CurrencyIcon type="primary" />
       </div>
       <p className={`${Style.text} text text_type_main-default`}>{item.name}</p>
-      {showModal && (
-        <Modal onClose={handleCloseModal}>
-          <PopupIngredient onClose={handleCloseModal} item={item} />
-        </Modal>
-      )}
     </li>
   )
 }
