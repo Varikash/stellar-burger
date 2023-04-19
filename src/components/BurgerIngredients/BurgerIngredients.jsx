@@ -29,6 +29,7 @@ const BurgerIngredients = () => {
   const sauceRef = useRef(null);
   const mainRef = useRef(null);
   const [current, setCurrent] = useState('one');
+  
 
   const handleScroll = () => {
     
