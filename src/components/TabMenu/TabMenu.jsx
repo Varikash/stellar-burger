@@ -8,7 +8,7 @@ const TabMenu = forwardRef((props, ref) => {
     const parentContainer = ref.current.parentNode;
     const categoryTop = ref.current.offsetTop;
     const parentContainerTop = parentContainer.getBoundingClientRect().top;
-    const offsetTop = categoryTop - parentContainerTop - parentContainer.scrollTop;
+    const offsetTop = categoryTop - parentContainerTop - parentContainer.scrollTop - 100;
 
     parentContainer.scroll({
       behavior: 'smooth',
@@ -18,7 +18,7 @@ const TabMenu = forwardRef((props, ref) => {
   
     return (
       <div style={{ display: 'flex' }}>
-        <a className={Style.link} href='/#Булки'>
+        <a className={Style.link}>
           <Tab value="one" active={props.current === 'one'} onClick={() => {
           if (props.bunRef.current) {
             handleClick(props.bunRef);
