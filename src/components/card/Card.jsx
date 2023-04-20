@@ -3,9 +3,17 @@ import Style from './Card.module.css';
 import PropTypesBurger from '../../utils/PropTypesShape';
 import { passIngredient } from "../../services/actions/ingredientAction";
 import { useDispatch } from "react-redux";
+import { useDrag } from "react-dnd";
 
-function Card(props) {
-  const { item } = props;
+function Card({item}) {
+  const [{isDrag},dragRef] = useDrag({
+    type: 'ingredient',
+    item: { item },
+    collect: monitor => ({
+      isDrag: monitor.isDragging()
+    })
+  });
+
   const dispatch = useDispatch();
 
   const handleOpenModal = () => {
@@ -13,8 +21,8 @@ function Card(props) {
   }
 
   return(
-    <li className={Style.card} type='button' onClick={handleOpenModal}>
-      <Counter count={1} size="default" extraClass="m-1"/>
+    <li className={Style.card} type='button' onClick={handleOpenModal} ref={dragRef}>
+      <Counter count={0} size="default" extraClass="m-1"/>
       <img src={item.image} alt={item.name} className={Style.image}/>
       <div className={Style.priceBlock}>
         <span className="text text_type_digits-default">{item.price}</span>

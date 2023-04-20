@@ -8,7 +8,7 @@ const TabMenu = forwardRef((props, ref) => {
     const parentContainer = ref.current.parentNode;
     const categoryTop = ref.current.offsetTop;
     const parentContainerTop = parentContainer.getBoundingClientRect().top;
-    const offsetTop = categoryTop - parentContainerTop - parentContainer.scrollTop - 100;
+    const offsetTop = categoryTop - parentContainerTop - parentContainer.scrollTop;
 
     parentContainer.scroll({
       behavior: 'smooth',

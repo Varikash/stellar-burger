@@ -5,10 +5,19 @@ import Modal from '../Modal/Modal';
 import PopupOrder from '../PopupOrder/PopupOrder';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchOrder, clearOrder } from "../../services/actions/fetchOrder";
+import { useDrop } from 'react-dnd';
 
 
 
 function BurgerConstructor() {
+
+
+  // const [, dropTarget] = useDrop({
+  //   accept: 'ingredients',
+  //   drop(item) {
+  //     onDropHandler(item);
+  //   },
+  // });
 
   const dispatch = useDispatch();
 
@@ -42,6 +51,7 @@ function BurgerConstructor() {
   
   return(
     <section className={`${Style.section} pt-25 pr-5 pl-4`}>
+      {/* ref={dropTarget} */}
       <ul className={`${Style.itemList}`}>
         <li className={`${Style.buns}`}>
           <ConstructorElement
