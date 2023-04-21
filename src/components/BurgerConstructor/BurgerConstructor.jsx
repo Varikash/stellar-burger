@@ -6,24 +6,29 @@ import PopupOrder from '../PopupOrder/PopupOrder';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchOrder, clearOrder } from "../../services/actions/fetchOrder";
 import { useDrop } from 'react-dnd';
-
+import { addBun, addIngredient } from '../../services/reducers/burgerConstructionSlice';
 
 
 function BurgerConstructor() {
-
-
-  // const [, dropTarget] = useDrop({
-  //   accept: 'ingredients',
-  //   drop(item) {
-  //     onDropHandler(item);
-  //   },
-  // });
-
+  const { bunItem, ingredientsList } = useSelector(store => store.orderList);
   const dispatch = useDispatch();
-
   const burgerIngredientsData = useSelector(store => store.ingredients.ingredients);
   const orderNumber = useSelector(store => store.orders.number);
-  
+
+
+  const [ , dropTarget] = useDrop({
+    accept: 'ingredients',
+    drop(item) {
+      console.log(item)
+      if (item.type === 'bun') {
+        dispatch(addBun(item));
+        console.log(item);
+      } else {
+        dispatch(addIngredient(item));
+        console.log(item);
+      }
+    },
+  });
 
   const handleCloseModal = () => {
     dispatch(clearOrder())
@@ -50,20 +55,24 @@ function BurgerConstructor() {
   })
   
   return(
-    <section className={`${Style.section} pt-25 pr-5 pl-4`}>
-      {/* ref={dropTarget} */}
+    <section className={`${Style.section} pt-25 pr-5 pl-4`} ref={dropTarget}>
+      
       <ul className={`${Style.itemList}`}>
-        <li className={`${Style.buns}`}>
+
+        {bunItem || ingredientsList.length > 0 ? (
+          <>
+          <li className={`${Style.buns}`}>
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={`${bun?.name} (верх)`}
-            price={bun?.price}
-            thumbnail={bun?.image}
+            text={`${bunItem.name} (верх)`}
+            price={bunItem.price}
+            thumbnail={bunItem.image}
           />
         </li>
+
           <ul className={Style.ingredientsList}>
-            {ingredients.map(ingredient => {
+            {ingredientsList.map(ingredient => {
               return(
                 <li key={ingredient?._id} className={Style.item}>
                   <DragIcon type={'primary'} />
@@ -76,16 +85,32 @@ function BurgerConstructor() {
               )
             })}
           </ul>
+
         <li className={Style.buns}>
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${bun?.name || ''} (низ)`}
-            price={bun?.price}
-            thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
+            text={`${bunItem.name || ''} (низ)`}
+            price={bunItem.price}
+            thumbnail={bunItem.image}
           />
         </li>
+        </>
+
+        ) : (
+          <>
+            Не голодай, перетаскивай жратву.
+          </>
+        )}
+
+        
       </ul>
+    
+    
+    
+    
+  
+
       <div className={`${Style.order} mt-10`}>
         <p className={`${Style.paragraph} text text_type_digits-medium`}>
           {totalPrice}

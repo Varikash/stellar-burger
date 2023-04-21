@@ -6,11 +6,11 @@ import { useDispatch } from "react-redux";
 import { useDrag } from "react-dnd";
 
 function Card({item}) {
-  const [{isDrag},dragRef] = useDrag({
-    type: 'ingredient',
-    item: { item },
+  const [{opacity}, dragRef] = useDrag({
+    type: 'ingredients',
+    item,
     collect: monitor => ({
-      isDrag: monitor.isDragging()
+      opacity: monitor.isDragging()? 0.2 : 1
     })
   });
 
@@ -21,7 +21,7 @@ function Card({item}) {
   }
 
   return(
-    <li className={Style.card} type='button' onClick={handleOpenModal} ref={dragRef}>
+    <li className={Style.card} type='button' onClick={handleOpenModal} style={{opacity}} ref={dragRef}>
       <Counter count={0} size="default" extraClass="m-1"/>
       <img src={item.image} alt={item.name} className={Style.image}/>
       <div className={Style.priceBlock}>
