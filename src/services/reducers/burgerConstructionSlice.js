@@ -31,18 +31,14 @@ export const burgerConstructionSlice = createSlice({
         dragConstructor.splice(action.payload.hoverElIndex, 1)[0]
       );
       state.ingredientsList = dragConstructor;
-      state.highlightedIndex = action.payload.hoverElIndex;
     },
     deleteIngredient: (state, action) => {
       state.ingredientsList.splice(action.index, 1);
     },
     resetIngredients: (state) => {
       state.ingredientsList = [];
-      state.highlightedIndex = null;
+      state.bunItem = null;
     },
-    resetHighlightedIndex: (state) => {
-      state.highlightedIndex = null;
-    }
   }
 })
 

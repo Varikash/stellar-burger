@@ -1,12 +1,12 @@
 import Style from './BurgerConstructor.module.css';
 import { useMemo } from 'react';
-import { ConstructorElement, DragIcon, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../Modal/Modal';
 import PopupOrder from '../PopupOrder/PopupOrder';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchOrder, clearOrder } from "../../services/actions/fetchOrder";
 import { useDrop } from 'react-dnd';
-import { addBun, addIngredient } from '../../services/reducers/burgerConstructionSlice';
+import { addBun, addIngredient, resetIngredients } from '../../services/reducers/burgerConstructionSlice';
 import IngredientElement from '../IngredientElement/IngredientElement';
 
 
@@ -35,7 +35,8 @@ function BurgerConstructor() {
   });
 
   const handleCloseModal = () => {
-    dispatch(clearOrder())
+    dispatch(clearOrder());
+    dispatch(resetIngredients());
   };
   const handleOpenModal = () => {
     const bunID = bunItem._id;
