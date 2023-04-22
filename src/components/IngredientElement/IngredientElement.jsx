@@ -1,8 +1,8 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useRef } from "react";
-import { moveIngredient, deleteIngredient } from "../../services/reducers/burgerConstructionSlice";
+import { moveIngredient, deleteIngredient} from "../../services/reducers/burgerConstructionSlice";
 import Style from './IngredientElement.module.css'
 
 
