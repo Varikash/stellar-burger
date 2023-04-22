@@ -30,7 +30,7 @@ export const burgerConstructionSlice = createSlice({
         0,
         dragConstructor.splice(action.payload.hoverElIndex, 1)[0]
       );
-      state.ingredients = dragConstructor;
+      state.ingredientsList = dragConstructor;
     },
     deleteIngredient: (state, action) => {
       state.ingredientsList.splice(action.index, 1);
