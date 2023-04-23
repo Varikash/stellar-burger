@@ -8,12 +8,19 @@ import { fetchOrder, clearOrder } from "../../services/actions/fetchOrder";
 import { useDrop } from 'react-dnd';
 import { addBun, addIngredient, resetIngredients } from '../../services/reducers/burgerConstructionSlice';
 import IngredientElement from '../IngredientElement/IngredientElement';
+import { v4 as uuidv4 } from 'uuid';
 
 
 function BurgerConstructor() {
-  const { bunItem, ingredientsList } = useSelector(store => store.orderList);
+
   const dispatch = useDispatch();
-  const orderNumber = useSelector(store => store.orders.number);
+
+  const getIngredientsData = state => state.orderList;
+  const ingredientsData = useSelector(getIngredientsData);
+  const { bunItem, ingredientsList } = ingredientsData;
+
+  const getOrderNumber = state => state.orders.number;
+  const orderNumber = useSelector(getOrderNumber);
 
   const bunPrice = () => {
     if (bunItem !== null) {
@@ -29,7 +36,12 @@ function BurgerConstructor() {
       if (item.type === 'bun') {
         dispatch(addBun(item));
       } else {
-        dispatch(addIngredient(item));
+        const key = uuidv4();
+        const ingredientWithKey = {
+          ...item,
+          key
+        }
+        dispatch(addIngredient(ingredientWithKey));
       }
     },
   });
@@ -47,7 +59,7 @@ function BurgerConstructor() {
 
   const totalPrice = useMemo(() => {
     return ingredientsList.reduce((acc, ingredient) => acc + ingredient.price, (bunPrice()))
-  })
+  }, [ingredientsList, bunPrice])
   
   return(
     <section className={`${Style.section} pt-25 pr-5 pl-4`} ref={dropTarget}>

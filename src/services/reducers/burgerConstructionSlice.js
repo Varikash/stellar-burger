@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { v4 as uuidv4 } from 'uuid';
 
 const initialState = {
   bunItem: null,
@@ -11,10 +10,8 @@ export const burgerConstructionSlice = createSlice({
   initialState,
   reducers: {
     addIngredient: (state, action) => {
-      const key = uuidv4();
       state.ingredientsList.push({
         ...action.payload,
-        key
       });
     },
     addBun: (state, action) => {

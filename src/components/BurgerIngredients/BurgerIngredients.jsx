@@ -11,13 +11,16 @@ import { useMemo, useRef, useState } from "react";
 
 const BurgerIngredients = () => {
 
-  const data = useSelector(store => store.ingredients.ingredients);
+  const getData = state => state.ingredients.ingredients;
+  const data = useSelector(getData);
+  const getIngredient = state => state.ingredient.ingredient;
+  const ingredient = useSelector(getIngredient);
+
   const dispatch = useDispatch();
 
   const buns = useMemo(() => {
     return data.filter(item => item.type === 'bun');
   }, [data]);
-  
   
   const sauces = useMemo(() => {
     return data.filter(item => item.type === 'sauce');
@@ -27,8 +30,6 @@ const BurgerIngredients = () => {
     return data.filter(item => item.type === 'main');
   }, [data]) 
 
-  const ingredient = useSelector(store => store.ingredient.ingredient);
-  
   const handleCloseModal = () => {
     dispatch(resetData());
   }

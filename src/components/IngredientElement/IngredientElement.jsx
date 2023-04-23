@@ -1,9 +1,11 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useRef } from "react";
 import { moveIngredient, deleteIngredient} from "../../services/reducers/burgerConstructionSlice";
-import Style from './IngredientElement.module.css'
+import PropTypes from 'prop-types';
+import PropTypesBurger from "../../utils/PropTypesShape";
+import Style from './IngredientElement.module.css';
 
 
 const IngredientElement = ({index, item}) => {
@@ -56,4 +58,9 @@ const IngredientElement = ({index, item}) => {
 }
 
 
-export default IngredientElement
+export default IngredientElement;
+
+IngredientElement.propTypes = {
+  index: PropTypes.number.isRequired,
+  item: PropTypesBurger.isRequired,
+}

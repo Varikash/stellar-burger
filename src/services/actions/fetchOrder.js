@@ -32,9 +32,7 @@ export const fetchOrder = (ingredientsID) => async (dispatch) => {
   }
 }
 
-export const clearOrder = () => (dispatch) => {
-  dispatch({
+export const clearOrder = () => ({
     type: CLEAR_ORDER,
     number: null
-  })
-}
+})

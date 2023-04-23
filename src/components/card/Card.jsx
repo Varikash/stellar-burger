@@ -8,7 +8,9 @@ import { useMemo } from "react";
 
 function Card({item}) {
 
-  const { bunItem, ingredientsList } = useSelector(store => store.orderList);
+  const getIngredientsData = state => state.orderList;
+  const ingredientsData = useSelector(getIngredientsData);
+  const { bunItem, ingredientsList } = ingredientsData;
 
   const counter = useMemo(() => {
     let count = 0;

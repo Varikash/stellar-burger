@@ -9,7 +9,10 @@ function App() {
 
   const dispatch = useDispatch();
 
-  const { loadingIngredients, errorLoadingIngredients, ingredientsLoaded} = useSelector(store => store.ingredients);
+  const getIngredientsState = state => state.ingredients;
+  const ingredientsState = useSelector(getIngredientsState);
+
+  const { loadingIngredients, errorLoadingIngredients, ingredientsLoaded} = ingredientsState;
 
   useEffect(() => {
     dispatch(fetchIngredients());
