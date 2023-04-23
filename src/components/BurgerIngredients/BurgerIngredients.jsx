@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Modal from "../Modal/Modal";
 import PopupIngredient from "../PopupIngredient/PopupIngredient";
 import { resetData } from "../../services/actions/ingredientAction";
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 
 const BurgerIngredients = () => {
@@ -14,9 +14,18 @@ const BurgerIngredients = () => {
   const data = useSelector(store => store.ingredients.ingredients);
   const dispatch = useDispatch();
 
-  const buns = data.filter(item => item.type === 'bun');
-  const sauces = data.filter(item => item.type === 'sauce');
-  const fillings = data.filter(item => item.type === 'main');
+  const buns = useMemo(() => {
+    return data.filter(item => item.type === 'bun');
+  }, [data]);
+  
+  
+  const sauces = useMemo(() => {
+    return data.filter(item => item.type === 'sauce');
+  }, [data]);
+  
+  const fillings = useMemo(() => {
+    return data.filter(item => item.type === 'main');
+  }, [data]) 
 
   const ingredient = useSelector(store => store.ingredient.ingredient);
   

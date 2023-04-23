@@ -92,46 +92,25 @@ function BurgerConstructor() {
               </li>
             )}
           </ul> 
-          
-          {bunItem && ingredientsList.length > 0? (
-            <div className={`${Style.order} mt-10`}>
-              <p className={`${Style.paragraph} text text_type_digits-medium`}>
-                {totalPrice}
-                <CurrencyIcon type={'primary'} />
-              </p>
-              <Button htmlType="button" type="primary" size="large" onClick={handleOpenModal}>
-                Оформить заказ
-              </Button>
-            </div>
-          ):(
-            <div className={`${Style.order} mt-10`}>
-              <p className={`${Style.paragraph} text text_type_digits-medium`}>
-                {totalPrice}
-                <CurrencyIcon type={'primary'} />
-              </p>
-              <Button htmlType="button" type="primary" size="large" onClick={handleOpenModal} disabled>
-                Оформить заказ
-              </Button>
-            </div>
-          )}
 
         </>
   
         ) : (
           <>
             Не голодай, перетаскивай жратву.
-            <div className={`${Style.order} mt-10`}>
-              <p className={`${Style.paragraph} text text_type_digits-medium`}>
-                {totalPrice}
-                <CurrencyIcon type={'primary'} />
-              </p>
-              <Button htmlType="button" type="primary" size="large" onClick={handleOpenModal} disabled>
-                Оформить заказ
-              </Button>
-            </div>
           </>
         )
       }
+
+      <div className={`${Style.order} mt-10`}>
+        <p className={`${Style.paragraph} text text_type_digits-medium`}>
+          {totalPrice}
+          <CurrencyIcon type={'primary'} />
+        </p>
+          <Button htmlType="button" type="primary" size="large" onClick={handleOpenModal} disabled={bunItem && ingredientsList.length > 0 ? false : true}>
+            Оформить заказ
+          </Button>
+      </div>
         
       {orderNumber && (
         <Modal onClose={handleCloseModal}>
