@@ -97,7 +97,7 @@ function BurgerConstructor() {
   
         ) : (
           <>
-            Не голодай, перетаскивай жратву.
+            <p className={`${Style.call}`}>Не голодай, перетаскивай еду.</p>
           </>
         )
       }
