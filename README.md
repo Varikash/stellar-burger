@@ -23,6 +23,6 @@
 
 Демо: https://varikash.github.io/stellar-burger/  
 
-*Автор: Варикаш Николай* 
-*Контакты: n.varicash@gmail.com*  
+*Автор: Варикаш Николай*   
+*Контакты: n.varicash@gmail.com*    
   
