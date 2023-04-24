@@ -1,17 +1,19 @@
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import Wrapper from "../Wrapper/Wrapper";
-import PropTypes from 'prop-types';
-import PropTypesBurger from "../../utils/PropTypesShape";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 
 function ConstructorPage() {
   return(
     <section>
-      <Wrapper>
-        <BurgerIngredients />
-        <BurgerConstructor />
-      </Wrapper>
+      <DndProvider backend={HTML5Backend}>
+        <Wrapper>
+          <BurgerIngredients />
+          <BurgerConstructor/>
+        </Wrapper>
+      </DndProvider>
     </section>
   )
 }

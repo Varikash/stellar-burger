@@ -1,13 +1,16 @@
 import Style from './PopupOrder.module.css'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import done from '../../images/order accpeted/done.svg'
+import { useSelector } from 'react-redux';
 
-function PopupOrder ({onClose, orderNumber}) {
+function PopupOrder ({onClose}) {
 
   const handleClick = (e) => {
     e.stopPropagation();
     onClose();
   }
+
+  const orderNumber =  useSelector(store => store.orders.number);
 
   return(
     <>
