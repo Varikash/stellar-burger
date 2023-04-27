@@ -1,6 +1,7 @@
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import Wrapper from '../Wrapper/Wrapper';
-import Style from './AppHeader.module.css'
+import Style from './AppHeader.module.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 
 function AppHeader() {

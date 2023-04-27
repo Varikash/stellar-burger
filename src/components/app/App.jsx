@@ -5,13 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchIngredients } from '../../services/actions/fetchIngredients';
 
+
 function App() {
 
   const dispatch = useDispatch();
-
   const getIngredientsState = state => state.ingredients;
   const ingredientsState = useSelector(getIngredientsState);
-
   const { loadingIngredients, errorLoadingIngredients, ingredientsLoaded} = ingredientsState;
 
   useEffect(() => {
