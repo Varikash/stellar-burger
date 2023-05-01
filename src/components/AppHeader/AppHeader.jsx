@@ -10,23 +10,23 @@ function AppHeader() {
         <Wrapper>
           <div className={Style.flexContainer}>
             <div className={Style.wrapper}>
-              <a className={`${Style.iconWrapper} pl-5 pr-5 pb-4 pt-4`} href='#'>
+              <NavLink className={`${Style.iconWrapper} pl-5 pr-5 pb-4 pt-4`} to='/'>
                 <BurgerIcon type='primary'/>
                 <p className={`${Style.text} text text_type_main-default`}>Конструктор</p>
-              </a>
-              <a className={`${Style.iconWrapper} pl-5 pr-5 pb-4 pt-4`} href='#'>
+              </NavLink>
+              <NavLink className={`${Style.iconWrapper} pl-5 pr-5 pb-4 pt-4`} to='/feed'>
                 <ListIcon type='secondary' />
                 <p className={`${Style.text} text text_type_main-default text_color_inactive`}>Лента заказов</p>
-              </a>
+              </NavLink>
             </div>
             <div className={Style.logo}>
               <Logo />
             </div>
             <div className={Style.icon}> 
-              <a className={`${Style.iconWrapper} pl-5 pr-5 pb-4 pt-4`} href='#'>
+              <NavLink to='/login' className={`${Style.iconWrapper} pl-5 pr-5 pb-4 pt-4`}>
                 <ProfileIcon type='secondary' />
-                <p className={`${Style.text} text text_type_main-default text_color_inactive`}>Личный кабинет</p>
-              </a>
+                <p className={`${Style.text} text text_type_main-default text_color_inactive`}>Личный&nbsp;кабинет</p>
+              </NavLink>
             </div>
           </div>
         </Wrapper>

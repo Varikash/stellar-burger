@@ -30,8 +30,8 @@ function App() {
     return (
       <>
         <div className={`${Style.App} pt-10`}>
-            <AppHeader />
             <Router>
+              <AppHeader />
               <Routes>
                 <Route path="/" element={content}/>
                 <Route path="/login" element={<LoginPage />} />
