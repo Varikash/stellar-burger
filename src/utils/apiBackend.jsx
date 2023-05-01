@@ -21,12 +21,26 @@ export const getIngredients = () => {
   .then((res) => getResponseData(res))
 }
 
-export const sendEmail = (data) => {
-  return fetch('https://norma.nomoreparties.space/api/password-reset', {
+export const sendEmail = async (data) => {
+  try {
+    const response = await fetch('https://norma.nomoreparties.space/api/password-reset', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         'email': data
       }),
     })
+
+    if (!response.ok) {
+      throw new Error(`Ошибка при отправке запроса на сервер`)
+    }
+
+    const result = await response.json();
+    return result;
+
+  } catch (error) {
+    console.log(error);
+    throw new Error(`Ошибка при отправке запроса на сервер`)
+  }
+  
 }
