@@ -32,8 +32,6 @@ const LoginPage = () => {
         </p>
       </form>
     </section>
-    
-    
   )
 }
 

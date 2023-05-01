@@ -6,6 +6,9 @@ import { useEffect } from 'react';
 import { fetchIngredients } from '../../services/actions/fetchIngredients';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from '../../pages/Login/Login';
+import RegisterPage from '../../pages/Register/Register';
+import ForgotPage from '../../pages/ForgotPage/ForgotPage';
+import ResetPage from '../../pages/ResetPage/ResetPage';
 
 function App() {
 
@@ -32,6 +35,9 @@ function App() {
               <Routes>
                 <Route path="/" element={content}/>
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/forgot-password" element={<ForgotPage />} />
+                <Route path="/reset-password" element={<ResetPage />} />
               </Routes>
             </Router>
         </div>
