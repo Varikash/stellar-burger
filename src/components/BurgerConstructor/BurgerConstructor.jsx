@@ -22,14 +22,6 @@ function BurgerConstructor() {
   const getOrderNumber = state => state.orders.number;
   const orderNumber = useSelector(getOrderNumber);
 
-  // const bunPrice = () => {
-  //   if (bunItem !== null) {
-  //     return bunItem.price * 2;
-  //   } else {
-  //     return 0;
-  //   }
-  // }
-
   const [ , dropTarget] = useDrop({
     accept: 'ingredients',
     drop(item) {

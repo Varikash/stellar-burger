@@ -20,3 +20,13 @@ export const getIngredients = () => {
   return fetch('https://norma.nomoreparties.space/api/ingredients')
   .then((res) => getResponseData(res))
 }
+
+export const sendEmail = (data) => {
+  return fetch('https://norma.nomoreparties.space/api/password-reset', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        'email': data
+      }),
+    })
+}

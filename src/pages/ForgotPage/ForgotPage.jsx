@@ -1,8 +1,15 @@
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import Style from './ForgotPage.module.css';
+import { useState } from 'react';
 
 const ForgotPage = () => {
+
+  const [value, setValue] = useState('');
+  const handleChange = (e) => {
+    setValue(e.target.value);
+  }
+
   return(
     <section className={`${Style.section} pt-45`}>
       <form className={Style.container}>
@@ -10,6 +17,8 @@ const ForgotPage = () => {
         <EmailInput 
           name={'email'}
           isIcon={false}
+          onChange={handleChange}
+          value={value}
         />
         <Button htmlType="button" type="primary" size="medium" extraClass={`${Style.button} mb-20`}>
           Восстановить
