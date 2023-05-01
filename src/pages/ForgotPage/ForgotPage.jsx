@@ -15,12 +15,10 @@ const ForgotPage = () => {
   const handleChange = (e) => {
     setValue(e.target.value);
   }
-
   const handleClick = (e) => {
     e.preventDefault()
     dispatch(checkEmail(value));
   }
-
   useEffect(() => {
     if (state.success) {
       navigate('/reset-password');
