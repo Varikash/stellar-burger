@@ -22,7 +22,7 @@ export default function Modal({onClose, children}) {
     return () => {
       document.removeEventListener('keydown', closeModalOnEsc);
     }
-  }, [])
+  }, )
 
   return createPortal(
     <>

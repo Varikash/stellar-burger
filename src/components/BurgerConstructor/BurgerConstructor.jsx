@@ -22,13 +22,13 @@ function BurgerConstructor() {
   const getOrderNumber = state => state.orders.number;
   const orderNumber = useSelector(getOrderNumber);
 
-  const bunPrice = () => {
-    if (bunItem !== null) {
-      return bunItem.price * 2;
-    } else {
-      return 0;
-    }
-  }
+  // const bunPrice = () => {
+  //   if (bunItem !== null) {
+  //     return bunItem.price * 2;
+  //   } else {
+  //     return 0;
+  //   }
+  // }
 
   const [ , dropTarget] = useDrop({
     accept: 'ingredients',
@@ -58,8 +58,9 @@ function BurgerConstructor() {
   };
 
   const totalPrice = useMemo(() => {
-    return ingredientsList.reduce((acc, ingredient) => acc + ingredient.price, (bunPrice()))
-  }, [ingredientsList, bunPrice])
+    const bunPrice = bunItem ? bunItem.price * 2 : 0;
+    return ingredientsList.reduce((acc, ingredient) => acc + ingredient.price, bunPrice)
+  }, [ingredientsList, bunItem])
   
   return(
     <section className={`${Style.section} pt-25 pr-5 pl-4`} ref={dropTarget}>
