@@ -9,6 +9,7 @@ import LoginPage from '../../pages/Login/Login';
 import RegisterPage from '../../pages/Register/Register';
 import ForgotPage from '../../pages/ForgotPage/ForgotPage';
 import ResetPage from '../../pages/ResetPage/ResetPage';
+import NotFound404 from '../../pages/NotFound404/NotFound404';
 
 function App() {
 
@@ -38,6 +39,8 @@ function App() {
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/forgot-password" element={<ForgotPage />} />
                 <Route path="/reset-password" element={<ResetPage />} />
+                <Route path='*' element={<NotFound404 />} />
+                {/* <Route path="/ingredients/:id" element={<IngredientPage/>} /> */}
               </Routes>
             </Router>
         </div>
