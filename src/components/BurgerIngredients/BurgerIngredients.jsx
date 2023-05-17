@@ -9,6 +9,7 @@ import { resetData } from "../../services/actions/ingredientAction";
 import { useMemo, useRef, useState } from "react";
 
 
+
 const BurgerIngredients = () => {
 
   const getData = state => state.ingredients.ingredients;
@@ -17,6 +18,7 @@ const BurgerIngredients = () => {
   const ingredient = useSelector(getIngredient);
 
   const dispatch = useDispatch();
+
 
   const buns = useMemo(() => {
     return data.filter(item => item.type === 'bun');
@@ -32,6 +34,7 @@ const BurgerIngredients = () => {
 
   const handleCloseModal = () => {
     dispatch(resetData());
+    window.history.pushState("", "", "/");
   }
 
   const containerRef = useRef(null);

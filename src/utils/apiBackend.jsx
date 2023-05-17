@@ -27,7 +27,7 @@ export const sendEmail = async (data) => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        'email': data
+        email: data
       }),
     })
 

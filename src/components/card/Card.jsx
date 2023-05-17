@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
 import { useMemo } from "react";
 
+
 function Card({item}) {
 
   const getIngredientsData = state => state.orderList;
@@ -38,6 +39,7 @@ function Card({item}) {
 
   const handleOpenModal = () => {
     dispatch(passIngredient(item));
+    window.history.pushState("", "", `/ingredients/${item._id}`);
   }
 
   return(

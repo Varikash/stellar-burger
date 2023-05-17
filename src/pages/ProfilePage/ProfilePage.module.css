@@ -1,0 +1,52 @@
+.page {
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  column-gap: 60px;
+}
+
+.navigation {
+  max-width: 320px;
+}
+
+.list {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  margin: 0;
+  padding: 0;
+}
+
+.point {
+  display: flex;
+  justify-content: left;
+  height: 64px;
+
+}
+
+.link {
+  text-decoration: none;
+  color: #8585AD;
+}
+
+.activeLink {
+  text-decoration: none;
+  color: #fff;
+}
+
+.form {
+  flex: 1;
+  min-width: 0;
+}
+
+.text {
+  color: #8585AD;
+  opacity: .4;
+  width: 320px;
+}
