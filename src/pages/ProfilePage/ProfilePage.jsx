@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from 'react-router-dom';
-import Style from './ProfilePage.module.css'
+import Style from './ProfilePage.module.css';
 
 
 const ProfilePage = () => {

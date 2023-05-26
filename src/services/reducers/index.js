@@ -4,6 +4,7 @@ import { orderReducer } from "./orderReducer";
 import { ingredientReducer } from "./ingredientReducer";
 import burgerConstructionSlice from "./burgerConstructionSlice";
 import forgotPasswordSlice from "./forgotPasswordSlice";
+import handleUserSlice from "./handleUserSlice";
 
 export const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
@@ -11,4 +12,5 @@ export const rootReducer = combineReducers({
   orders: orderReducer,
   orderList: burgerConstructionSlice,
   getEmail: forgotPasswordSlice,
+  user: handleUserSlice,
 })

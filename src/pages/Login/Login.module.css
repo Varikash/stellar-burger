@@ -32,3 +32,18 @@
   text-decoration: none;
   color: #4C4CFF;
 }
+
+.spinner {
+  height: 50px;
+  width: 50px;
+  border: 6px solid #e056fd; align-self: center;
+  border-color: #e056fd transparent #e056fd transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
