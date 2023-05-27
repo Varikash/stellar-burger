@@ -50,10 +50,12 @@ export const handleUserSlice = createSlice({
     [createUser.pending]: (state) => {
       state.loading = true;
     },
-    [createUser.fulfilled]: (state) => {
+    [createUser.fulfilled]: (state, action) => {
       state.loading = false;
       state.success = true;
       state.registered = true;
+      localStorage.setItem('accessToken', action.payload.accessToken);
+      localStorage.setItem('refreshToken', action.payload.refreshToken);
     },
     [createUser.rejected]: (state, action) => {
       state.loading = false;

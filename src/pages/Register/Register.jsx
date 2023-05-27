@@ -10,7 +10,7 @@ const RegisterPage = () => {
 
   const [form, setValue] = useState({name: '', email: '', password: ''});
   
-  const regUser = state => state.registration.registered;
+  const regUser = state => state.user.registered;
   const registered = useSelector(regUser);
 
   const dispatch = useDispatch();
