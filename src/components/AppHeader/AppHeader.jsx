@@ -2,9 +2,14 @@ import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-dev
 import Wrapper from '../Wrapper/Wrapper';
 import Style from './AppHeader.module.css';
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 function AppHeader() {
+  
+  const login = state => state.user.loggedIn;
+  const handleLogin = useSelector(login);
+
     return (
       <header className={`${Style.header} pb-4 pt-4`}>
         <Wrapper>
@@ -22,11 +27,18 @@ function AppHeader() {
             <div className={Style.logo}>
               <Logo />
             </div>
-            <div className={Style.icon}> 
-              <NavLink to='/login' className={`${Style.iconWrapper} pl-5 pr-5 pb-4 pt-4`}>
-                <ProfileIcon type='secondary' />
-                <p className={`${Style.text} text text_type_main-default text_color_inactive`}>Личный&nbsp;кабинет</p>
-              </NavLink>
+            <div className={Style.icon}>
+              {handleLogin ? (
+                <NavLink to="/profile" className={`${Style.iconWrapper} pl-5 pr-5 pb-4 pt-4`}>
+                  <ProfileIcon type="secondary" />
+                  <p className={`${Style.text} text text_type_main-default text_color_inactive`}>Личный&nbsp;кабинет</p>
+                </NavLink>
+              ) : (
+                <NavLink to="/login" className={`${Style.iconWrapper} pl-5 pr-5 pb-4 pt-4`}>
+                  <ProfileIcon type="secondary" />
+                  <p className={`${Style.text} text text_type_main-default text_color_inactive`}>Личный&nbsp;кабинет</p>
+                </NavLink>
+              )}
             </div>
           </div>
         </Wrapper>

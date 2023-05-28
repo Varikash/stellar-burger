@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Style from './Register.module.css';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createUser } from '../../services/reducers/registerUserSlice';
+import { createUser } from '../../services/reducers/handleUserSlice';
 import { Navigate } from 'react-router-dom';
 
 const RegisterPage = () => {

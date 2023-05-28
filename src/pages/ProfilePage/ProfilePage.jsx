@@ -1,8 +1,16 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import Style from './ProfilePage.module.css';
+import { logOutUser } from '../../services/reducers/handleUserSlice';
+import { useDispatch } from 'react-redux';
 
 
 const ProfilePage = () => {
+  const dispatch = useDispatch();
+
+  const onClick = () => {
+    dispatch(logOutUser())
+  }
+
   return(
     <div className={Style.page}>
       <div className={Style.container}>
@@ -22,10 +30,10 @@ const ProfilePage = () => {
             >История заказов</NavLink>
           </li>
           <li className={Style.point}>
-            <NavLink 
-              to='/logout'
-              className={({ isActive }) => isActive? `${Style.activeLink} text text_type_main-medium` :`${Style.link} text text_type_main-medium` }
-            >Выход</NavLink>
+            <button
+              className={`${Style.button} text text_type_main-medium` }
+              onClick={onClick}
+            >Выход</button>
           </li>
         </ul>
         <p className={`${Style.text} text text_type_main-small mt-20`}>
