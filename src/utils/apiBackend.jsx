@@ -6,82 +6,76 @@ export const getResponseData = (res) => {
     : Promise.reject(`Ошибка ${res.status} ${res.ok}`);
 };
 
+const request = (url, options) => {
+  return fetch(url, options).then(getResponseData);
+};
+
 export const getOrders = (ingredients) => {
-  return fetch(`${BASE_URL}/orders`, {
+  return request(`${BASE_URL}/orders`, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({
       ingredients: ingredients,
     }),
-  })
-    .then(getResponseData);
+  });
 };
 
 
 export const getIngredients = () => {
-  return fetch(`${BASE_URL}/ingredients`)
-  .then(getResponseData);
-}
+  return request(`${BASE_URL}/ingredients`);
+};
 
 export const sendEmail = (data) => {
-  return fetch(`${BASE_URL}/password-reset`, {
+  return request(`${BASE_URL}/password-reset`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       email: data
     }),
-  })
-  .then(getResponseData);
-}
+  });
+};
 
 export const registerUser = (form) => {
-  return fetch(`${BASE_URL}/auth/register`,
+  return request(`${BASE_URL}/auth/register`,
     {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(form)
-    })
-  .then(getResponseData);
-}
+    });
+};
 
 export const logginUser = (form) => {
-  return fetch(`${BASE_URL}/auth/login`,
+  return request(`${BASE_URL}/auth/login`,
     {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(form)
-    }
-  )
-  .then(getResponseData);
-}
+    });
+};
 
 export const fetchUser = (token) => {
-  return fetch(`${BASE_URL}/auth/user`,
+  return request(`${BASE_URL}/auth/user`,
     {
       method: 'GET',
       headers: {
         authorization: token,
       },
-    }
-  )
-  .then(getResponseData);
-}
+    });
+};
 
 export const refreshUser = (token) => {
-  return fetch(`${BASE_URL}/auth/token`, 
+  return request(`${BASE_URL}/auth/token`, 
     {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
         token: token,
       }),
-    }
-  )
-  .then(getResponseData);
-}
+    });
+};
 
 export const updateUser = (token, form) => {
-  return fetch(`${BASE_URL}/auth/user`,
+  return request(`${BASE_URL}/auth/user`,
     {
       method: 'PATCH',
       headers: {
@@ -89,13 +83,11 @@ export const updateUser = (token, form) => {
         "Content-Type": "application/json;charset=utf-8",
       },
       body: JSON.stringify(form),
-    }
-  )
-  .then(getResponseData);
-}
+    });
+};
 
 export const logOut = (refreshToken) => {
-  return fetch(`${BASE_URL}/auth/logout`, 
+  return request(`${BASE_URL}/auth/logout`, 
     {
       method: 'POST',
       headers: {
@@ -104,20 +96,16 @@ export const logOut = (refreshToken) => {
       body: JSON.stringify({
         token: refreshToken,
       }),
-    }
-  )
-  .then(getResponseData);
-}
+    });
+};
 
 export const sendNewPass = (form) => {
-    return fetch(`${BASE_URL}/password-reset/reset`,
+    return request(`${BASE_URL}/password-reset/reset`,
       {
         method: 'POST',
         headers: {
           "Content-Type": "application/json;charset=utf-8",
         },
         body: JSON.stringify(form),
-      }
-    )
-  .then(getResponseData);
-}
+      });
+};
