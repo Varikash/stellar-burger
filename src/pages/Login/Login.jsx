@@ -1,41 +1,27 @@
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
 import Style from './Login.module.css';
-import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { authUser } from '../../services/reducers/handleUserSlice';
-
+import { useForm } from '../../hooks/useForm';
 const LoginPage = () => {
 
-  const [form, setValue] = useState({email: '', password: ''});
+  const { values, handleChange} = useForm({email: '', password: ''});
   const dispatch = useDispatch();
-  const userData = state => state.user.user;
   const loading = state => state.user.loading;
-  const error = state => state.user.error;
-  const handleError = useSelector(error);
   const isLoading = useSelector(loading);
-  const user = useSelector(userData);
   const navigate = useNavigate();
-
-  const onChange = e => {
-    setValue({ ...form, [e.target.name]: e.target.value });
-  };
-
+  
   const onSubmit = e => {
     e.preventDefault();
-    dispatch(authUser(form))
+    dispatch(authUser(values))
     .then(() => {
-      navigate('/profile', { replace: true });
+      navigate('/', { replace: true });
     })
     .catch(error => {
-      throw new Error('ошибка переадресации');
+      console.error('Ошибка переадресации:', error);
     })
   }
-
-  if (handleError) {
-    alert(handleError.message);
-  }
-
 
   return(
     <section className={`${Style.section} pt-45`}>
@@ -47,16 +33,16 @@ const LoginPage = () => {
             <EmailInput 
               name='email'
               isIcon={false}
-              value={form.email}
+              value={values.email}
               required
-              onChange={onChange}
+              onChange={handleChange}
             />
             <PasswordInput 
               name='password'
               icon={"ShowIcon"}
-              value={form.password}
+              value={values.password}
               required
-              onChange={onChange}
+              onChange={handleChange}
             />
             {isLoading ? (
               <div className={Style.spinner}></div>

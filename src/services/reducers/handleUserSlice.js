@@ -12,26 +12,12 @@ const initialState = {
 
 export const createUser = createAsyncThunk(
   'user/createUser',
-  async(form) => {
-    try {
-      const response = await registerUser(form);
-      return response
-    } catch (error) {
-      throw new Error(`Ошибка регистрации юзера: ${error.message}`)
-    }
-  }
+  registerUser
 )
 
 export const authUser = createAsyncThunk(
   'user/authUser',
-  async(form) => {
-    try {
-      const response = await logginUser(form);
-      return response 
-    } catch (error) {
-      throw new Error(`Ошибка аутентификации: ${error.message}`)
-    }
-  }
+  logginUser
 )
 
 export const checkUser = createAsyncThunk(

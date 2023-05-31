@@ -5,9 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { sendNewPass } from '../../utils/apiBackend';
+import { useForm } from '../../hooks/useForm';
 
 const ResetPage = () => {
-  const [form, setValue] = useState({password: '', token: ''});
+  const { values, handleChange } = useForm({password: '', token: ''})
   const condition = state => state.getEmail.success;
   const state = useSelector(condition);
   const navigate = useNavigate();
@@ -18,13 +19,9 @@ const ResetPage = () => {
     }
   }, [state, navigate])
 
-  const onChange = e => {
-    setValue({ ...form, [e.target.name]: e.target.value });
-  }
-
   const onSubmit = e => {
     e.preventDefault();
-    sendNewPass(form)
+    sendNewPass(values)
     .then(() => {
       alert("Пароль изменен успешно!");
       navigate('/login');
@@ -43,15 +40,15 @@ const ResetPage = () => {
           name='password'
           icon={"ShowIcon"}
           placeholder={'Введите новый пароль'}
-          value={form.password}
-          onChange={onChange}
+          value={values.password}
+          onChange={handleChange}
         />
         <Input 
           name='token'
           type={'text'}
           placeholder={'Введите код из письма'}
-          value={form.token}
-          onChange={onChange}
+          value={values.token}
+          onChange={handleChange}
         />
         <Button htmlType="submit" type="primary" size="medium" extraClass={`${Style.button} mb-20`}>
           Сохранить

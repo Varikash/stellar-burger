@@ -5,23 +5,18 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createUser } from '../../services/reducers/handleUserSlice';
 import { Navigate } from 'react-router-dom';
+import { useForm } from '../../hooks/useForm';
 
 const RegisterPage = () => {
-
-  const [form, setValue] = useState({name: '', email: '', password: ''});
-  
+  const { values, handleChange } = useForm({name: '', email: '', password: ''});
   const regUser = state => state.user.registered;
   const registered = useSelector(regUser);
 
   const dispatch = useDispatch();
 
-  const onChange = e => {
-    setValue({ ...form, [e.target.name]: e.target.value });
-  };
-
   const onSubmit = e => {
     e.preventDefault()
-    dispatch(createUser(form));
+    dispatch(createUser(values));
   }
 
   return(
@@ -36,22 +31,22 @@ const RegisterPage = () => {
           type={'text'}
           placeholder={'Имя'}
           name='name'
-          value={form.name}
-          onChange={onChange}
+          value={values.name}
+          onChange={handleChange}
           required
         />
         <EmailInput 
           name='email'
           isIcon={false}
-          onChange={onChange}
-          value={form.email}
+          onChange={handleChange}
+          value={values.email}
           required
         />
         <PasswordInput 
           name='password'
           icon={"ShowIcon"}
-          onChange={onChange}
-          value={form.password}
+          onChange={handleChange}
+          value={values.password}
           required
         />
         <Button htmlType="submit" type="primary" size="medium" extraClass={`${Style.button} mb-20`}>

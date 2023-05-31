@@ -1,23 +1,20 @@
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
 import Style from './ForgotPage.module.css';
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { checkEmail } from '../../services/reducers/forgotPasswordSlice';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { useForm } from '../../hooks/useForm';
 
 const ForgotPage = () => {
   const state = useSelector(store => store.getEmail)
   const dispatch = useDispatch();
-  const [value, setValue] = useState('');
+  const { values, handleChange } = useForm({email: ''})
   const navigate = useNavigate();
-  const handleChange = (e) => {
-    setValue(e.target.value);
-  }
   const handleClick = (e) => {
     e.preventDefault()
-    dispatch(checkEmail(value));
+    dispatch(checkEmail(values.email));
   }
   useEffect(() => {
     if (state.success) {
@@ -34,7 +31,7 @@ const ForgotPage = () => {
           name={'email'}
           isIcon={false}
           onChange={handleChange}
-          value={value}
+          value={values.email}
         />
         <Button htmlType="button" type="primary" size="medium" extraClass={`${Style.button} mb-20`} onClick={handleClick}>
           Восстановить

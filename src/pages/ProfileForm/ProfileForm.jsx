@@ -5,12 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateUserInfo } from '../../services/reducers/handleUserSlice';
 
 const ProfileForm = () => {
-
-  const [form, setValue] = useState({name: '', email: '', password: ''});
-  const [editMode, setEditMode] = useState(false);
   const userData = state => state.user.user;
-  const loading = state => state.user.loading;
   const user = useSelector(userData);
+
+  const [form, setValue] = useState({name: '', email: ``, password: ''});
+  const [editMode, setEditMode] = useState(false);
+  
+  const loading = state => state.user.loading;
+  
   const isLoading = useSelector(loading);
   const dispatch = useDispatch();
 
@@ -45,7 +47,9 @@ const ProfileForm = () => {
     }
   }, [user])
 
-  
+  if (!user) {
+    return null;
+  }
 
   return(
     <>
