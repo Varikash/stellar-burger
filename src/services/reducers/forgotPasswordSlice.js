@@ -9,11 +9,15 @@ const initialState = {
 
 export const checkEmail = createAsyncThunk(
   'email/checkEmail',
-  async(email) => {
-    const response = await sendEmail(email);
-    return response
+  async (email) => {
+    try {
+      const response = await sendEmail(email);
+      return response;
+    } catch (error) {
+      throw new Error(`Ошибка при отправке email: ${error.message}`);
+    }
   }
-)
+);
 
 export const forgotPasswordSlice = createSlice({
   name: 'email',

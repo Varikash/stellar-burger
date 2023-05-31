@@ -1,3 +1,5 @@
+import { BASE_URL } from "./url";
+
 export const getResponseData = (res) => {
   return res.ok
     ? res.json()
@@ -5,99 +7,56 @@ export const getResponseData = (res) => {
 };
 
 export const getOrders = (ingredients) => {
-  return fetch('https://norma.nomoreparties.space/api/orders', {
+  return fetch(`${BASE_URL}/orders`, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({
       ingredients: ingredients,
     }),
   })
-    .then((res) => getResponseData(res))
+    .then(getResponseData);
 };
 
 
 export const getIngredients = () => {
-  return fetch('https://norma.nomoreparties.space/api/ingredients')
-  .then((res) => getResponseData(res))
+  return fetch(`${BASE_URL}/ingredients`)
+  .then(getResponseData);
 }
 
-export const sendEmail = async (data) => {
-  try {
-    const response = await fetch('https://norma.nomoreparties.space/api/password-reset', 
+export const sendEmail = (data) => {
+  return fetch(`${BASE_URL}/password-reset`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      email: data
+    }),
+  })
+  .then(getResponseData);
+}
+
+export const registerUser = (form) => {
+  return fetch(`${BASE_URL}/auth/register`,
     {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: data
-      }),
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(form)
     })
-
-    if (!response.ok) {
-      throw new Error(`Ошибка при отправке запроса на сервер`)
-    }
-
-    const result = await response.json();
-    return result;
-
-  } catch (error) {
-    console.log(error);
-    throw new Error(`Ошибка при отправке запроса на сервер`)
-  }
+  .then(getResponseData);
 }
 
-export const registerUser = async (form) => {
-  try {
-    const response = await fetch('https://norma.nomoreparties.space/api/auth/register',
-      {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(form)
-      }
-    )
-    
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.error('Server response', errorData);
-      throw new Error(`Ошибка ${response.status}: ${errorData.message}`);
+export const logginUser = (form) => {
+  return fetch(`${BASE_URL}/auth/login`,
+    {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(form)
     }
-
-    const result = await response.json();
-    return result;
-
-    } catch (error) {
-      console.log(error);
-      throw new Error(error.message)
-    }
+  )
+  .then(getResponseData);
 }
 
-export const logginUser = async (form) => {
-  try{
-    const response = await fetch('https://norma.nomoreparties.space/api/auth/login',
-      {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(form)
-      }
-    )
-    
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.error('Server response', errorData);
-      throw new Error(`Ошибка ${response.status}: ${errorData.message}`);
-    }
-
-    const result = await response.json();
-    return result;
-
-  }
-  catch (error) {
-    throw new Error(error.message);
-  }
-}
-
-export const fetchUser = async (token) => {
-  try {
-    const response = await fetch('https://norma.nomoreparties.space/api/auth/user',
+export const fetchUser = (token) => {
+  return fetch(`${BASE_URL}/auth/user`,
     {
       method: 'GET',
       headers: {
@@ -105,23 +64,11 @@ export const fetchUser = async (token) => {
       },
     }
   )
-
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(`Ошибка ${response.status}: ${errorData.message}`);
-  }
-
-  const result = await response.json();
-  return result;
-
-  } catch (error) {
-    throw new Error(error.message);
-  }
+  .then(getResponseData);
 }
 
-export const refreshUser = async (token) => {
-  try {
-    const response = await fetch('https://norma.nomoreparties.space/api/auth/token', 
+export const refreshUser = (token) => {
+  return fetch(`${BASE_URL}/auth/token`, 
     {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -130,74 +77,40 @@ export const refreshUser = async (token) => {
       }),
     }
   )
-
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(`Ошибка ${response.status}: ${errorData.message}`);
-  }
-
-  const result = await response.json();
-  return result;
-
-
-  } catch (error) {
-    throw new Error(error.message);
-  }
+  .then(getResponseData);
 }
 
-export const updateUser = async (token, form) => {
-  try {
-    const response = await fetch('https://norma.nomoreparties.space/api/auth/user',
-      {
-        method: 'PATCH',
-        headers: {
-          authorization: token,
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify(form),
-      }
-    )
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(`Ошибка ${response.status}: ${errorData.message}`)
+export const updateUser = (token, form) => {
+  return fetch(`${BASE_URL}/auth/user`,
+    {
+      method: 'PATCH',
+      headers: {
+        authorization: token,
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify(form),
     }
-
-    const result = await response.json();
-    return result;
-
-  } catch (error) {
-    throw new Error(error.message);
-  }
+  )
+  .then(getResponseData);
 }
 
-export const logOut = async (refreshToken) => {
-  try {
-    const response = await fetch('https://norma.nomoreparties.space/api/auth/logout', 
-      {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify({
-          token: refreshToken,
-        }),
-      }
-    )
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(`Ошибка ${response.status}: ${errorData.message}`);
+export const logOut = (refreshToken) => {
+  return fetch(`${BASE_URL}/auth/logout`, 
+    {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify({
+        token: refreshToken,
+      }),
     }
-
-  } catch (error) {
-    throw new Error(error.message);
-  }
+  )
+  .then(getResponseData);
 }
 
-export const sendNewPass = async (form) => {
-  try {
-    const response = await fetch('https://norma.nomoreparties.space/api/password-reset/reset',
+export const sendNewPass = (form) => {
+    return fetch(`${BASE_URL}/password-reset/reset`,
       {
         method: 'POST',
         headers: {
@@ -206,13 +119,5 @@ export const sendNewPass = async (form) => {
         body: JSON.stringify(form),
       }
     )
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(`Ошибка ${response.status}: ${errorData.message}`);
-    }
-    
-  } catch (error) {
-    throw new Error(error.message);
-  }
+  .then(getResponseData);
 }
