@@ -12,7 +12,7 @@ export default function PopupIngredient({onClose}) {
   const item = useSelector(store => store.ingredient.ingredient);
 
   return(
-    <>
+    <div className={`pt-10 pl-10 pr-10 pb-15 ${Style.popupIngredient}`} >
       <div className={Style.header}>
         <h1 className='text text_type_main-large'>Детали ингредиента</h1>
         <button className={Style.button} onClick={handleClick}>
@@ -39,6 +39,6 @@ export default function PopupIngredient({onClose}) {
           <p className='text text_type_digits-default text_color_inactive'>{item.carbohydrates}</p>
         </li>
       </ul>
-    </>
+    </div>
   )
 }
