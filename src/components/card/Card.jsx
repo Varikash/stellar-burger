@@ -40,6 +40,7 @@ function Card({item}) {
   const handleOpenModal = () => {
     dispatch(passIngredient(item));
     window.history.pushState("", "", `/ingredients/${item._id}`);
+    console.log(location)
   }
 
   return(
