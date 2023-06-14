@@ -4,7 +4,7 @@ import Style from './App.module.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchIngredients } from '../../services/actions/fetchIngredients';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ProtectedRouteElement } from '../ProtectedRouteElement/ProtectedRouteElement';
 import LoginPage from '../../pages/Login/Login';
 import RegisterPage from '../../pages/Register/Register';
@@ -16,6 +16,8 @@ import ProfilePage from '../../pages/ProfilePage/ProfilePage';
 import ProfileForm from '../../pages/ProfileForm/ProfileForm';
 import GuestRouteElement from '../GuestRouteElement/GuestRouteElement';
 import { checkUser } from '../../services/reducers/handleUserSlice';
+import Modal from '../Modal/Modal';
+import PopupIngredient from '../PopupIngredient/PopupIngredient';
 
 function App() {
 
@@ -23,6 +25,15 @@ function App() {
   const getIngredientsState = state => state.ingredients;
   const ingredientsState = useSelector(getIngredientsState);
   const { loadingIngredients, errorLoadingIngredients} = ingredientsState;
+  const { id } = useParams();
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  const background = location.state && location.state.background;
+
+  const handleModalClose = () => {
+    navigate(-1);
+  }
 
   useEffect(() => {
     dispatch(fetchIngredients());
@@ -38,9 +49,8 @@ function App() {
     return (
       <>
         <div className={`${Style.App} pt-10`}>
-            <Router>
               <AppHeader />
-              <Routes>
+              <Routes location={background || location}>
                 <Route path="/" element={content}/>
                 <Route path="/login" element={<GuestRouteElement element={<LoginPage />} />} />
                 <Route path="/register" element={<GuestRouteElement element={<RegisterPage />} /> } />
@@ -54,7 +64,19 @@ function App() {
                 </Route>
                 <Route path='*' element={<NotFound404 />} />
               </Routes>
-            </Router>
+
+              {background && (
+                <Routes>
+                  <Route 
+                    path="/ingredients/:id"
+                    element={
+                      <Modal onClose={handleModalClose}>
+                        <PopupIngredient onClose={handleModalClose}/>
+                      </Modal>
+                    }
+                  />
+                </Routes>
+              )}
         </div>
       </>
   );
