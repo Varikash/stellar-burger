@@ -44,6 +44,7 @@ function Card({item}) {
       key={itemID}
       to={`/ingredients/${itemID}`}
       state={{ background: location }}
+      className={Style.link}
     >
       <li className={Style.card} type='button'  style={{opacity}} ref={dragRef}>
         {counter > 0 && (<Counter count={counter} size={counter > 99 ? "small" : "default"} extraClass="m-1"/>)}
