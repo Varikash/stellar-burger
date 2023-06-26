@@ -1,4 +1,5 @@
 import { getResponseData } from "../../utils/apiBackend";
+import { BASE_URL } from "../../utils/url";
 
 export const SEND_ORDER_FAILED = 'SEND_ORDER_FAILED';
 export const SEND_ORDER_SUCCESS = 'SEND_ORDER_SUCCESS';
@@ -8,7 +9,7 @@ export const CLEAR_ORDER = 'CLEAR_ORDER';
 export const fetchOrder = (ingredientsID) => async (dispatch) => {
   try {
   
-    const response = await fetch('https://norma.nomoreparties.space/api/orders', {
+    const response = await fetch(`${BASE_URL}/orders`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({

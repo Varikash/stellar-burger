@@ -9,18 +9,22 @@ import { useDrop } from 'react-dnd';
 import { addBun, addIngredient, resetIngredients } from '../../services/reducers/burgerConstructionSlice';
 import IngredientElement from '../IngredientElement/IngredientElement';
 import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from 'react-router-dom';
 
 
 function BurgerConstructor() {
 
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const getIngredientsData = state => state.orderList;
   const ingredientsData = useSelector(getIngredientsData);
   const { bunItem, ingredientsList } = ingredientsData;
 
   const getOrderNumber = state => state.orders.number;
   const orderNumber = useSelector(getOrderNumber);
+
+  const userInfo = state => state.user.loggedIn;
+  const isUserLogged = useSelector(userInfo);
 
   const [ , dropTarget] = useDrop({
     accept: 'ingredients',
@@ -43,10 +47,15 @@ function BurgerConstructor() {
     dispatch(resetIngredients());
   };
   const handleOpenModal = () => {
-    const bunID = bunItem._id;
-    const components = ingredientsList.map(ingredient => ingredient._id);
-    const burgerComponentsID = [bunID,...components,bunID];
-    dispatch(fetchOrder(burgerComponentsID));
+    if (isUserLogged) {
+      const bunID = bunItem._id;
+      const components = ingredientsList.map(ingredient => ingredient._id);
+      const burgerComponentsID = [bunID,...components,bunID];
+      dispatch(fetchOrder(burgerComponentsID));
+    } else {
+      const currentPath = window.location.pathname;
+      navigate('/login', { state: { redirect: currentPath } });
+    }
   };
 
   const totalPrice = useMemo(() => {
