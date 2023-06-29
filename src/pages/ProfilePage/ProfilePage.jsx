@@ -1,14 +1,23 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import Style from './ProfilePage.module.css';
 import { logOutUser } from '../../services/reducers/handleUserSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector((store) => store.user.isLoggedIn);
 
   const onClick = () => {
     dispatch(logOutUser())
+    .then(() => {
+      navigate('/'); 
+    })
+    .catch((error) => {
+      console.error('Ошибка при выходе:', error);
+    });
   }
 
   return(

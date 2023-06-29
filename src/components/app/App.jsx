@@ -57,7 +57,7 @@ function App() {
                 <Route path="/forgot-password" element={<GuestRouteElement element={<ForgotPage />} />} />
                 <Route path="/reset-password" element={<GuestRouteElement element={<ResetPage />} />} />
                 <Route path="/ingredients/:id" element={<IngredientPage/>} />
-                <Route path="/profile/*" element={<ProtectedRouteElement element={<ProfilePage />}/>}> 
+                <Route path="/profile/*" element={<ProtectedRouteElement element={<ProfilePage />} anonymous={true}/>}> 
                   <Route index element={<ProfileForm />} />
                   {/* <Route path="/order-history" element={<OrderHistory />} /> */}
                   {/* <Route path="/logout" element={<Logout />} /> */}
