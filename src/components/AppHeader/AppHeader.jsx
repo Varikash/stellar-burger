@@ -2,7 +2,6 @@ import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-dev
 import Wrapper from '../Wrapper/Wrapper';
 import Style from './AppHeader.module.css';
 import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 
 function AppHeader() {
@@ -25,10 +24,12 @@ function AppHeader() {
               <Logo />
             </div>
             <div className={Style.icon}>
-                <NavLink to="/profile" className={`${Style.iconWrapper} pl-5 pr-5 pb-4 pt-4`}>
-                  <ProfileIcon type="secondary" />
-                  <p className={`${Style.text} text text_type_main-default text_color_inactive`}>Личный&nbsp;кабинет</p>
-                </NavLink>
+              
+                  <NavLink to="/profile" className={`${Style.iconWrapper} pl-5 pr-5 pb-4 pt-4`}>
+                    <ProfileIcon type="secondary" />
+                    <p className={`${Style.text} text text_type_main-default text_color_inactive`}>Личный&nbsp;кабинет</p>
+                  </NavLink>
+                
             </div>
           </div>
         </Wrapper>

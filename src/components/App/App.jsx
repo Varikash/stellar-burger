@@ -13,7 +13,6 @@ import NotFound404 from '../../pages/NotFound404/NotFound404';
 import IngredientPage from '../../pages/IngredientPage/IngredientPage';
 import ProfilePage from '../../pages/ProfilePage/ProfilePage';
 import ProfileForm from '../../pages/ProfileForm/ProfileForm';
-import GuestRouteElement from '../GuestRouteElement/GuestRouteElement';
 import { checkUser } from '../../services/reducers/handleUserSlice';
 import Modal from '../Modal/Modal';
 import PopupIngredient from '../PopupIngredient/PopupIngredient';

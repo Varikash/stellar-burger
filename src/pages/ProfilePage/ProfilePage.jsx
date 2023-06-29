@@ -8,16 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 const ProfilePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isLoggedIn = useSelector((store) => store.user.isLoggedIn);
 
   const onClick = () => {
     dispatch(logOutUser())
-    .then(() => {
-      navigate('/'); 
-    })
-    .catch((error) => {
-      console.error('Ошибка при выходе:', error);
-    });
   }
 
   return(
