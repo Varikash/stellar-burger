@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchIngredients } from '../../services/actions/fetchIngredients';
 import { Routes, Route, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { ProtectedRouteElement } from '../ProtectedRouteElement/ProtectedRouteElement';
 import LoginPage from '../../pages/Login/Login';
 import RegisterPage from '../../pages/Register/Register';
 import ForgotPage from '../../pages/ForgotPage/ForgotPage';
@@ -18,6 +17,7 @@ import GuestRouteElement from '../GuestRouteElement/GuestRouteElement';
 import { checkUser } from '../../services/reducers/handleUserSlice';
 import Modal from '../Modal/Modal';
 import PopupIngredient from '../PopupIngredient/PopupIngredient';
+import { OnlyAuth, OnlyUnAuth } from '../ProtectedRouteElement/ProtectedRouteElement';
 
 function App() {
 
@@ -52,12 +52,12 @@ function App() {
               <AppHeader />
               <Routes location={background || location}>
                 <Route path="/" element={content}/>
-                <Route path="/login" element={<GuestRouteElement element={<LoginPage />} />} />
-                <Route path="/register" element={<GuestRouteElement element={<RegisterPage />} /> } />
-                <Route path="/forgot-password" element={<GuestRouteElement element={<ForgotPage />} />} />
-                <Route path="/reset-password" element={<GuestRouteElement element={<ResetPage />} />} />
+                <Route path="/login" element={<OnlyUnAuth component={<LoginPage />} />} />
+                <Route path="/register" element={<OnlyUnAuth component={<RegisterPage />} /> } />
+                <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPage />} />} />
+                <Route path="/reset-password" element={<OnlyUnAuth component={<ResetPage />} />} />
                 <Route path="/ingredients/:id" element={<IngredientPage/>} />
-                <Route path="/profile/*" element={<ProtectedRouteElement element={<ProfilePage />} anonymous={true}/>}> 
+                <Route path="/profile/" element={<OnlyAuth component={<ProfilePage />}/>}> 
                   <Route index element={<ProfileForm />} />
                   {/* <Route path="/order-history" element={<OrderHistory />} /> */}
                   {/* <Route path="/logout" element={<Logout />} /> */}

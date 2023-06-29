@@ -7,9 +7,6 @@ import { useSelector } from 'react-redux';
 
 function AppHeader() {
   
-  const login = state => state.user.loggedIn;
-  const handleLogin = useSelector(login);
-
     return (
       <header className={`${Style.header} pb-4 pt-4`}>
         <Wrapper>
@@ -28,17 +25,10 @@ function AppHeader() {
               <Logo />
             </div>
             <div className={Style.icon}>
-              {handleLogin ? (
                 <NavLink to="/profile" className={`${Style.iconWrapper} pl-5 pr-5 pb-4 pt-4`}>
                   <ProfileIcon type="secondary" />
                   <p className={`${Style.text} text text_type_main-default text_color_inactive`}>Личный&nbsp;кабинет</p>
                 </NavLink>
-              ) : (
-                <NavLink to="/login" className={`${Style.iconWrapper} pl-5 pr-5 pb-4 pt-4`}>
-                  <ProfileIcon type="secondary" />
-                  <p className={`${Style.text} text text_type_main-default text_color_inactive`}>Личный&nbsp;кабинет</p>
-                </NavLink>
-              )}
             </div>
           </div>
         </Wrapper>

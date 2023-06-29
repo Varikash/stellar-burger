@@ -1,53 +1,30 @@
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-// export const ProtectedRouteElement = ({ element }) => {
-//   const login = state => state.user.loggedIn;
-//   const handleLogin = useSelector(login);
-//   return handleLogin ? element : <Navigate to="/login" replace/>
-// }
-
-export function ProtectedRouteElement({ element, anonymous = false }) {
-  const isLoggedIn = useSelector((store) => store.user.isLoggedIn);
-
+const Protected = ({onlyUnAuth = false, component }) => {
+  const checkAuthorisation = state => state.user.loggedIn;
+  const userData = state => state.user.user;
+  const isAuthChecked = useSelector(checkAuthorisation);
+  const user = useSelector(userData);
   const location = useLocation();
-  const from = location.state?.from || '/';
-  // Если разрешен неавторизованный доступ, а пользователь авторизован...
-  if (anonymous && isLoggedIn) {
-    // ...то отправляем его на предыдущую страницу
-    return <Navigate to={ from } />;
+
+  if (!isAuthChecked) {
+    return null
   }
 
-  // Если требуется авторизация, а пользователь не авторизован...
-  if (!anonymous && !isLoggedIn) {
-    // ...то отправляем его на страницу логин
-    return <Navigate to="/login" state={{ from: location}}/>;
+  if (onlyUnAuth && user) {
+    const { from } = location.state || {from: {pathname: '/'}};
+    return <Navigate to={from} />
   }
 
-  // Если все ок, то рендерим внутреннее содержимое
-  return element;
+  if (!onlyUnAuth && !user) {
+    return <Navigate to='/login' state = {{from: location}} />
+  }
+
+  return component;
 }
 
-// export function ProtectedRouteElement({ element, anonymous = false }) {
-//   const isLoggedIn = useSelector((store) => store.user.isLoggedIn);
-//   const navigate = useNavigate();
-
-//   const location = useLocation();
-//   const from = location.pathname;
-
-//   // Если разрешен неавторизованный доступ, а пользователь авторизован...
-//   if (anonymous && isLoggedIn) {
-//     // ...то отправляем его на предыдущую страницу
-//     return <Navigate to={from} />;
-//   }
-
-//   // Если требуется авторизация, а пользователь не авторизован...
-//   if (!anonymous && !isLoggedIn) {
-//     // ...то отправляем его на страницу логин
-//     navigate('/login', { state: { from } });
-//     return null; // Возвращаем null, чтобы компонент не рендерился
-//   }
-
-//   // Если все ок, то рендерим внутреннее содержимое
-//   return element;
-// }
+export const OnlyAuth = Protected;
+export const OnlyUnAuth = ({component}) => {
+  <Protected OnlyUnOuth={true} component={component} />
+}
