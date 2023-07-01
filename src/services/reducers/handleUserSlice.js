@@ -5,7 +5,7 @@ const initialState = {
   loading: false,
   success: false,
   loggedIn: false,
-  registered: false,
+  checked: false,
   error: null,
   user: []
 }
@@ -108,7 +108,6 @@ export const handleUserSlice = createSlice({
       state.loading = false;
       state.success = true;
       state.loggedIn = true;
-      state.registered = true;
       state.user = action.payload;
       localStorage.setItem('accessToken', action.payload.accessToken);
       localStorage.setItem('refreshToken', action.payload.refreshToken);
@@ -140,9 +139,9 @@ export const handleUserSlice = createSlice({
     [checkUser.fulfilled]: (state, action) => {
       state.loading = false;
       state.success = true;
+      state.checked = true;
       state.user = action.payload;
       if (action.payload) {
-        state.registered = true;
         state.loggedIn = true;
       }
     },
@@ -168,7 +167,6 @@ export const handleUserSlice = createSlice({
     },
     [logOutUser.fulfilled]: (state) => {
       state.success = false;
-      state.registered = false;
       state.loggedIn = false;
       state.user = null;
       localStorage.removeItem('accessToken');
