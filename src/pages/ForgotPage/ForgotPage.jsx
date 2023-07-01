@@ -12,7 +12,7 @@ const ForgotPage = () => {
   const dispatch = useDispatch();
   const { values, handleChange } = useForm({email: ''})
   const navigate = useNavigate();
-  const handleClick = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault()
     dispatch(checkEmail(values.email));
   }
@@ -25,7 +25,9 @@ const ForgotPage = () => {
 
   return(
     <section className={`${Style.section} pt-45`}>
-      <form className={Style.container}>
+      <form className={Style.container}
+        onSubmit={onSubmit}
+        >
         <h1 className={`${Style.title}`}>Восстановление пароля</h1>
         <EmailInput 
           name={'email'}
@@ -33,7 +35,7 @@ const ForgotPage = () => {
           onChange={handleChange}
           value={values.email}
         />
-        <Button htmlType="button" type="primary" size="medium" extraClass={`${Style.button} mb-20`} onClick={handleClick}>
+        <Button htmlType="button" type="primary" size="medium" extraClass={`${Style.button} mb-20`}>
           Восстановить
         </Button>
         <p className={`${Style.text} text text_type_main-default text_color_inactive`}>

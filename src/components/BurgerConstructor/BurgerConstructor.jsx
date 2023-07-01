@@ -9,12 +9,13 @@ import { useDrop } from 'react-dnd';
 import { addBun, addIngredient, resetIngredients } from '../../services/reducers/burgerConstructionSlice';
 import IngredientElement from '../IngredientElement/IngredientElement';
 import { v4 as uuidv4 } from 'uuid';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 
 function BurgerConstructor() {
 
   const dispatch = useDispatch();
+  const location = useLocation();
   const navigate = useNavigate();
   const getIngredientsData = state => state.orderList;
   const ingredientsData = useSelector(getIngredientsData);
@@ -53,7 +54,7 @@ function BurgerConstructor() {
       const burgerComponentsID = [bunID,...components,bunID];
       dispatch(fetchOrder(burgerComponentsID));
     } else {
-      const currentPath = window.location.pathname;
+      const currentPath = location.pathname;
       navigate('/login', { state: { redirect: currentPath } });
     }
   };
