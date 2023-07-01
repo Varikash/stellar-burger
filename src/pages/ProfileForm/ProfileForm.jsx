@@ -8,7 +8,7 @@ const ProfileForm = () => {
   const userData = state => state.user.user;
   const user = useSelector(userData);
 
-  const [form, setValue] = useState({name: user.name, email: user.email, password: ''});
+  const [form, setValue] = useState({name: '', email: ``, password: ''});
   const [editMode, setEditMode] = useState(false);
   
   const loading = state => state.user.loading;
@@ -37,19 +37,19 @@ const ProfileForm = () => {
     setEditMode(false);
   }
 
-  // useEffect(() => {
-  //   if (user) {
-  //     setValue({
-  //       name: user.name || '',
-  //       email: user.email || '',
-  //       password: ''
-  //     })
-  //   }
-  // }, [user])
+  useEffect(() => {
+    if (user) {
+      setValue({
+        name: user.name || '',
+        email: user.email || '',
+        password: ''
+      })
+    }
+  }, [user])
 
-  // if (!user) {
-  //   return null;
-  // }
+  if (!user) {
+    return null;
+  }
 
   return(
     <>
