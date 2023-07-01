@@ -1,5 +1,5 @@
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Style from './Login.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { authUser } from '../../services/reducers/handleUserSlice';
@@ -10,17 +10,11 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const loading = state => state.user.loading;
   const isLoading = useSelector(loading);
-  const navigate = useNavigate();
+  
   
   const onSubmit = e => {
     e.preventDefault();
     dispatch(authUser(values))
-    .then(() => {
-      navigate('/', { replace: true });
-    })
-    .catch(error => {
-      console.error('Ошибка переадресации:', error);
-    })
   }
 
   return(
