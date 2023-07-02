@@ -9,12 +9,14 @@ import { useDrop } from 'react-dnd';
 import { addBun, addIngredient, resetIngredients } from '../../services/reducers/burgerConstructionSlice';
 import IngredientElement from '../IngredientElement/IngredientElement';
 import { v4 as uuidv4 } from 'uuid';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 
 function BurgerConstructor() {
 
   const dispatch = useDispatch();
-
+  const location = useLocation();
+  const navigate = useNavigate();
   const getIngredientsData = state => state.orderList;
   const ingredientsData = useSelector(getIngredientsData);
   const { bunItem, ingredientsList } = ingredientsData;
@@ -22,13 +24,8 @@ function BurgerConstructor() {
   const getOrderNumber = state => state.orders.number;
   const orderNumber = useSelector(getOrderNumber);
 
-  const bunPrice = () => {
-    if (bunItem !== null) {
-      return bunItem.price * 2;
-    } else {
-      return 0;
-    }
-  }
+  const userInfo = state => state.user.loggedIn;
+  const isUserLogged = useSelector(userInfo);
 
   const [ , dropTarget] = useDrop({
     accept: 'ingredients',
@@ -51,15 +48,21 @@ function BurgerConstructor() {
     dispatch(resetIngredients());
   };
   const handleOpenModal = () => {
-    const bunID = bunItem._id;
-    const components = ingredientsList.map(ingredient => ingredient._id);
-    const burgerComponentsID = [bunID,...components,bunID];
-    dispatch(fetchOrder(burgerComponentsID));
+    if (isUserLogged) {
+      const bunID = bunItem._id;
+      const components = ingredientsList.map(ingredient => ingredient._id);
+      const burgerComponentsID = [bunID,...components,bunID];
+      dispatch(fetchOrder(burgerComponentsID));
+    } else {
+      const currentPath = location.pathname;
+      navigate('/login', { state: { redirect: currentPath } });
+    }
   };
 
   const totalPrice = useMemo(() => {
-    return ingredientsList.reduce((acc, ingredient) => acc + ingredient.price, (bunPrice()))
-  }, [ingredientsList, bunPrice])
+    const bunPrice = bunItem ? bunItem.price * 2 : 0;
+    return ingredientsList.reduce((acc, ingredient) => acc + ingredient.price, bunPrice)
+  }, [ingredientsList, bunItem])
   
   return(
     <section className={`${Style.section} pt-25 pr-5 pl-4`} ref={dropTarget}>

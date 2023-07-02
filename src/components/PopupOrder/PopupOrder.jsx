@@ -13,7 +13,7 @@ function PopupOrder ({onClose}) {
   const orderNumber =  useSelector(store => store.orders.number);
 
   return(
-    <>
+    <div className={`pt-30 pb-30 ${Style.popupOrder}`}>
       <button className={Style.closeButton} onClick={handleClick}>
         <CloseIcon type='primary'/>
       </button>
@@ -22,7 +22,7 @@ function PopupOrder ({onClose}) {
       <img src={done} alt="готово" className='mt-15 mb-15'/>
       <p className='text text_type_main-default'>Ваш заказ начали готовить</p>
       <p className='text text_type_main-default text_color_inactive mt-2'>Дождитесь готовности на орбитальной станции</p>
-    </>
+    </div>
   )
 }
 

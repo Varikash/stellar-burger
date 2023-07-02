@@ -7,6 +7,8 @@ import Modal from "../Modal/Modal";
 import PopupIngredient from "../PopupIngredient/PopupIngredient";
 import { resetData } from "../../services/actions/ingredientAction";
 import { useMemo, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+
 
 
 const BurgerIngredients = () => {
@@ -15,8 +17,11 @@ const BurgerIngredients = () => {
   const data = useSelector(getData);
   const getIngredient = state => state.ingredient.ingredient;
   const ingredient = useSelector(getIngredient);
-
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const background = location.state && location.state.background;
+
 
   const buns = useMemo(() => {
     return data.filter(item => item.type === 'bun');
@@ -30,9 +35,6 @@ const BurgerIngredients = () => {
     return data.filter(item => item.type === 'main');
   }, [data]) 
 
-  const handleCloseModal = () => {
-    dispatch(resetData());
-  }
 
   const containerRef = useRef(null);
   const bunRef = useRef(null);
@@ -72,11 +74,6 @@ const BurgerIngredients = () => {
         <CardList category={'Начинки'} items={fillings} ref={mainRef}/>
       </div>
       </Wrapper>
-      {ingredient && (
-        <Modal onClose={handleCloseModal}>
-          <PopupIngredient onClose={handleCloseModal} />
-        </Modal>
-      )}
     </section>
   )
 }
