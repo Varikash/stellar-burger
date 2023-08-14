@@ -1,3 +1,10 @@
+.form {
+  position: relative;
+  padding-top: 120px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
 .buttonbox {
   display: flex;
   justify-content: flex-end;
@@ -10,6 +17,12 @@
   border-color: #e056fd transparent #e056fd transparent;
   border-radius: 50%;
   animation: spin 1s linear infinite;
+}
+
+.text {
+  position: absolute;
+  left: 335px;
+  bottom: 414px;
 }
 
 @keyframes spin {

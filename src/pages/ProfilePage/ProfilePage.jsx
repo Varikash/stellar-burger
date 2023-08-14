@@ -2,18 +2,18 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import Style from './ProfilePage.module.css';
 import { logOutUser } from '../../services/reducers/handleUserSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import Wrapper from '../../components/Wrapper/Wrapper';
 
 
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-
   const onClick = () => {
     dispatch(logOutUser())
   }
 
   return(
+    <Wrapper>
     <div className={Style.page}>
       <div className={Style.container}>
         <nav className={Style.navigation}>
@@ -27,7 +27,7 @@ const ProfilePage = () => {
           </li>
           <li className={Style.point}>
             <NavLink
-              to='/profile/order-history'
+              to='/profile/orders'
               className={({ isActive }) => isActive? `${Style.activeLink} text text_type_main-medium` :`${Style.link} text text_type_main-medium` }
             >История заказов</NavLink>
           </li>
@@ -44,11 +44,13 @@ const ProfilePage = () => {
         </p>
       </nav>
 
-      <div className={Style.form}>
-        <Outlet/>
-      </div>
+        <div className={`${Style.secondPage}`}>
+          <Outlet/>
+        </div>
+      
       </div>
     </div>
+    </Wrapper>
   )
 }
 

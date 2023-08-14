@@ -15,7 +15,7 @@ function AppHeader() {
                 <BurgerIcon type='primary'/>
                 <p className={`${Style.text} text text_type_main-default`}>Конструктор</p>
               </NavLink>
-              <NavLink className={`${Style.iconWrapper} pl-5 pr-5 pb-4 pt-4`} to='/feed'>
+              <NavLink className={`${Style.iconWrapper} pl-5 pr-5 pb-4 pt-4`} to='/feed/'>
                 <ListIcon type='secondary' />
                 <p className={`${Style.text} text text_type_main-default text_color_inactive`}>Лента заказов</p>
               </NavLink>

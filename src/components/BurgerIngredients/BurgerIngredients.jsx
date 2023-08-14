@@ -35,6 +35,7 @@ const BurgerIngredients = () => {
     return data.filter(item => item.type === 'main');
   }, [data]) 
 
+ 
 
   const containerRef = useRef(null);
   const bunRef = useRef(null);

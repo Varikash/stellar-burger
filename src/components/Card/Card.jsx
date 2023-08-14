@@ -1,8 +1,7 @@
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import Style from './Card.module.css';
 import PropTypesBurger from '../../utils/PropTypesShape';
-import { passIngredient } from "../../services/actions/ingredientAction";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
 import { useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";

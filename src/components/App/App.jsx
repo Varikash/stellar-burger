@@ -17,6 +17,8 @@ import { checkUser } from '../../services/reducers/handleUserSlice';
 import Modal from '../Modal/Modal';
 import PopupIngredient from '../PopupIngredient/PopupIngredient';
 import { OnlyAuth, OnlyUnAuth } from '../ProtectedRouteElement/ProtectedRouteElement';
+import OrderHistory from '../../pages/OrderHistory/OrderHistory';
+import Feed from '../../pages/Feed/Feed';
 
 function App() {
 
@@ -56,10 +58,10 @@ function App() {
                 <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPage />} />} />
                 <Route path="/reset-password" element={<OnlyUnAuth component={<ResetPage />} />} />
                 <Route path="/ingredients/:id" element={<IngredientPage/>} />
+                <Route path="/feed/" element={<Feed />} />
                 <Route path="/profile/" element={<OnlyAuth component={<ProfilePage />}/>}> 
                   <Route index element={<ProfileForm />} />
-                  {/* <Route path="/order-history" element={<OrderHistory />} /> */}
-                  {/* <Route path="/logout" element={<Logout />} /> */}
+                  <Route path="orders" element={<OrderHistory />} />
                 </Route>
                 <Route path='*' element={<NotFound404 />} />
               </Routes>

@@ -1,5 +1,7 @@
 .App {
   margin: 0 auto;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .error {

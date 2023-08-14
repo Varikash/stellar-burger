@@ -1,0 +1,72 @@
+.orderPics {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.background {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  outline: none;
+  margin-right: -15px;
+  box-sizing: border-box;
+}
+
+
+.background::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  right: -6px;
+  bottom: -1px;
+  border-radius: 50%;
+  background: linear-gradient(to bottom right, #801AB2, #4C4CFF);
+}
+
+.background:nth-child(1) {
+  z-index: 7;
+}
+
+.background:nth-child(2) {
+  z-index: 6;
+}
+
+.background:nth-child(3) {
+  z-index: 5;
+}
+
+.background:nth-child(4) {
+  z-index: 4;
+}
+
+.background:nth-child(5) {
+  z-index: 3;
+}
+
+.background:nth-child(6) {
+  z-index: 2;
+}
+
+.count {
+  z-index: 3;
+}
+
+
+.image {
+  position: absolute;
+  bottom: 2px;  
+  width: 93%;
+  height: 93%;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #1C1C21;
+}
