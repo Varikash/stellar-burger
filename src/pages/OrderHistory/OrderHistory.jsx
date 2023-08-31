@@ -32,7 +32,7 @@ const OrderHistory = () => {
   }, [])
 
 
-  let ordersArray = [...orders.orders].reverse();
+  let ordersArray = orders.orders? [...orders.orders].reverse() : [];
 
   return (
     <div className={`${Style.page}`}>
