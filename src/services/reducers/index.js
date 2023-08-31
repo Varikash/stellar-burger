@@ -5,6 +5,8 @@ import { ingredientReducer } from "./ingredientReducer";
 import burgerConstructionSlice from "./burgerConstructionSlice";
 import forgotPasswordSlice from "./forgotPasswordSlice";
 import handleUserSlice from "./handleUserSlice";
+import { webSocketReducer } from "../webSocket/websocketReducer";
+
 
 export const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
@@ -13,4 +15,5 @@ export const rootReducer = combineReducers({
   orderList: burgerConstructionSlice,
   getEmail: forgotPasswordSlice,
   user: handleUserSlice,
+  websocket: webSocketReducer,
 })

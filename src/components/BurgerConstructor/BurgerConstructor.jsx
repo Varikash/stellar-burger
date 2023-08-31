@@ -49,10 +49,11 @@ function BurgerConstructor() {
   };
   const handleOpenModal = () => {
     if (isUserLogged) {
+      const token = localStorage.getItem('accessToken');
       const bunID = bunItem._id;
       const components = ingredientsList.map(ingredient => ingredient._id);
       const burgerComponentsID = [bunID,...components,bunID];
-      dispatch(fetchOrder(burgerComponentsID));
+      dispatch(fetchOrder(burgerComponentsID, token));
     } else {
       const currentPath = location.pathname;
       navigate('/login', { state: { redirect: currentPath } });

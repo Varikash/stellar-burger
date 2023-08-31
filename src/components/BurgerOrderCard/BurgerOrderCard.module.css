@@ -7,8 +7,7 @@
 
 .card {
   box-sizing: border-box;
-  width: 844px;
-  height: 246px;
+  max-width: 844px;
   margin: 0;
   padding: 0;
   padding-top: 24px;

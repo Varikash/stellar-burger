@@ -6,18 +6,24 @@ import { useSelector } from 'react-redux';
 
 
 
-const BurgerOrderCard = () => {
+const BurgerOrderCard = ({element}) => {
 
-  const currentDate = moment().format('DD.MM.YYYY, HH:mm [i-GTM+3]')
   const getData = state => state.ingredients.ingredients;
   const data = useSelector(getData);
 
+  const pics = [];
+  const price = [];
 
+  element.ingredients.forEach(ingredient => {
+    const foundObject = data.find(obj => obj._id === ingredient);
 
+    if (foundObject) {
+      pics.push(foundObject.image);
+      price.push(foundObject.price)
+    }
+  })
 
-  const pics = []; //delete after
-
-  data.forEach(element => pics.push(element.image)); //delete after
+  const sum = price.reduce((acc, current) => acc + current, 0);
 
   const getPicsToShow = (array) => {
     if (array.length > 5) {
@@ -34,12 +40,12 @@ const BurgerOrderCard = () => {
     <li className={`${Style.cardList}`}>
       <ul className={`${Style.card}`}>
         <div className={`${Style.orderDetails}`}>
-          <p className={`${Style.orderNumber} text text_type_digits-default`}>#034535</p>
-          <p className='text text_type_main-default text_color_inactive'>{currentDate}</p>
+          <p className={`${Style.orderNumber} text text_type_digits-default`}>#0{element.number}</p>
+          <p className='text text_type_main-default text_color_inactive'>{element.createdAt}</p>
         </div>
         <div className={`${Style.orderInfo}`}>
           <p className={`${Style.orderTitle} text text_type_main-medium`}>
-            Death Star Starship Main бургер
+            {element && element.name}
           </p>
           <p className={`${Style.orderStatus} text text_type_main_small`}>
             создан
@@ -48,7 +54,7 @@ const BurgerOrderCard = () => {
         <div className={`${Style.orderContent}`}>
           <BurgerOrderCardImage picsUrl={picsToShow} lastPicture={lastPic} count={count} />
           <div className={`${Style.priceBox}`}>
-            <p className={`${Style.orderPrice}`}>480</p>
+            <p className={`${Style.orderPrice} text text_type_digits-default`}>{sum}</p>
             <CurrencyIcon/>
           </div>
         </div>

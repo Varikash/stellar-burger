@@ -17,7 +17,7 @@ export const createUser = createAsyncThunk(
 
 export const authUser = createAsyncThunk(
   'user/authUser',
-  logginUser
+  logginUser,
 )
 
 export const checkUser = createAsyncThunk(

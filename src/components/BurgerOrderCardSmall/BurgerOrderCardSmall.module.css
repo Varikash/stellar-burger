@@ -1,14 +1,11 @@
 .cardList {
-  box-sizing: border-box;
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
 
 .card {
-  box-sizing: border-box;
-  width: 584px;
-  height: 214px;
+  max-width: 584px;
   margin: 0;
   padding: 0;
   display: flex;
