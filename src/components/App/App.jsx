@@ -19,6 +19,8 @@ import PopupIngredient from '../PopupIngredient/PopupIngredient';
 import { OnlyAuth, OnlyUnAuth } from '../ProtectedRouteElement/ProtectedRouteElement';
 import OrderHistory from '../../pages/OrderHistory/OrderHistory';
 import Feed from '../../pages/Feed/Feed';
+import OrderExtention from '../../pages/OrderExtention/OrderExtention';
+import OrderExtentionStatic from '../../pages/OrderExtention/OrderExtentionStatic';
 
 function App() {
 
@@ -59,9 +61,11 @@ function App() {
                 <Route path="/reset-password" element={<OnlyUnAuth component={<ResetPage />} />} />
                 <Route path="/ingredients/:id" element={<IngredientPage/>} />
                 <Route path="/feed/" element={<OnlyAuth component={<Feed />}/>} />
+                <Route path="/feed/:id" element={<OrderExtention />} />
                 <Route path="/profile/" element={<OnlyAuth component={<ProfilePage />}/>}> 
                   <Route index element={<ProfileForm />} />
                   <Route path="orders" element={<OrderHistory />} />
+                  <Route path="orders/:id" element={<OrderExtentionStatic />} />
                 </Route>
                 <Route path='*' element={<NotFound404 />} />
               </Routes>
@@ -75,7 +79,16 @@ function App() {
                       </Modal>
                     }
                   />
+                  <Route 
+                    path="/profile/orders/:id"
+                    element={
+                      <Modal onClose={handleModalClose}>
+                        <OrderExtention onClose={handleModalClose}/>
+                      </Modal>
+                    }
+                  />
                 </Routes>
+                
               )}
         </div>
       </>

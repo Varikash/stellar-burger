@@ -1,8 +1,8 @@
-import Style from './BurgerOrderCard.module.css'
-import moment from 'moment'
+import Style from './BurgerOrderCard.module.css';
 import BurgerOrderCardImage from '../BurgerOrderCardImage/BurgerOrderCardImage';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
+import { Link, useLocation } from "react-router-dom";
 
 
 
@@ -10,6 +10,9 @@ const BurgerOrderCard = ({element}) => {
 
   const getData = state => state.ingredients.ingredients;
   const data = useSelector(getData);
+
+  const location = useLocation();
+  const itemID = element._id;
 
   const pics = [];
   const price = [];
@@ -37,6 +40,12 @@ const BurgerOrderCard = ({element}) => {
   const lastPic = pics.length >= 5 ? pics[6] : null;
 
   return (
+    <Link
+      key={element._id}
+      to={`/profile/orders/${itemID}`}
+      state={{background: location}}
+      className={Style.link}
+    >
     <li className={`${Style.cardList}`}>
       <ul className={`${Style.card}`}>
         <div className={`${Style.orderDetails}`}>
@@ -60,6 +69,7 @@ const BurgerOrderCard = ({element}) => {
         </div>
       </ul>
     </li>
+    </Link>
   )
 }
 
