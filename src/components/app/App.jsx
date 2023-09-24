@@ -20,7 +20,7 @@ import { OnlyAuth, OnlyUnAuth } from '../ProtectedRouteElement/ProtectedRouteEle
 import OrderHistory from '../../pages/OrderHistory/OrderHistory';
 import Feed from '../../pages/Feed/Feed';
 import OrderExtention from '../../pages/OrderExtention/OrderExtention';
-import OrderExtentionStatic from '../../pages/OrderExtention/OrderExtentionStatic';
+import OrderExtentionStatic from '../../pages/OrderExtentionStatic/OrderExtentionStatic';
 
 function App() {
 

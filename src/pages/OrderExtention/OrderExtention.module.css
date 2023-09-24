@@ -21,6 +21,12 @@
   flex-direction: column;
 }
 
+.headerContainer {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
 .number {
   display: flex;
   justify-content: center;
@@ -54,16 +60,38 @@
 }
 
 .imageContainer {
-  box-sizing: border-box;
+  flex-shrink: 0;
   width: 56px;
   height: 56px;
   border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  outline: none;
+  margin-right: -15px;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: linear-gradient(to bottom right, #801AB2, #4C4CFF);
+  margin-right: 16px;
+}
+
+.imageContainer::before {
+  content: '';
+  position: absolute;
+  width: 90%;
+  height: 90%;
+  border-radius: 50%;
+  background-color: #1C1C21;
+  z-index: 1;
 }
 
 .image {
   object-fit: cover;
   width: 93%;
   height: 93%;
+  z-index: 2;
 }
 
 .ingredientContainer {
@@ -99,4 +127,15 @@
   display: flex;
   align-items: center;
   column-gap: 10px;
+}
+
+.button {
+  display: absolute;
+  top: 0;
+  right: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  justify-self: flex-end;
 }

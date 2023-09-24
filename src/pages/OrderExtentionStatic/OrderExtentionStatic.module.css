@@ -1,5 +1,129 @@
 .container {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   background-color: #131316;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  max-width: 50%;
+  height: 80%;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.number {
+  align-self: center;
+}
+
+.status {
+  color: #00CCCC;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  max-height: 350px;
+  overflow-y: scroll;
+}
+
+.listElement {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+}
+
+.ingredientContainer {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+}
+
+.imageContainer {
+  box-sizing: border-box;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+}
+
+.image {
+  object-fit: cover;
+  width: 93%;
+  height: 93%;
+  z-index: 2;
+}
+
+.ingredientContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.imageContainer {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  outline: none;
+  margin-right: -15px;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: linear-gradient(to bottom right, #801AB2, #4C4CFF);
+  margin-right: 16px;
+}
+
+.imageContainer::before {
+  content: '';
+  position: absolute;
+  width: 90%;
+  height: 90%;
+  border-radius: 50%;
+  background-color: #131316;
+  z-index: 1;
+}
+
+
+.ingredientName {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.ingredientPrice {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+  flex-shrink: 0;
+}
+
+.infoOrder {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.totalSum {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
 }
