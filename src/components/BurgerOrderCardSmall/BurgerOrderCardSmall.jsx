@@ -1,12 +1,16 @@
 import Style from './BurgerOrderCardSmall.module.css';
 import BurgerOrderCardImage from '../BurgerOrderCardImage/BurgerOrderCardImage';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
+import { Link, useLocation } from "react-router-dom";
 
 const BurgerOrderCardSmall = ({ element }) => {
 
+  const location = useLocation();
+
   const getData = state => state.ingredients.ingredients;
   const data = useSelector(getData);
+  const itemID = element._id;
 
   const pics = [];
   const price = [];
@@ -32,13 +36,21 @@ const BurgerOrderCardSmall = ({ element }) => {
   const picsToShow = getPicsToShow(pics);
   const count = picsToShow.length < 5 ? null : `+${pics.length - picsToShow.length}`;
   const lastPic = pics.length >= 5 ? pics[6] : null;
+
+  const time = <FormattedDate date={new Date(element.createdAt)} />
   
   return (
+    <Link
+      key={element._id}
+      to={`/feed/${itemID}`}
+      state={{background: location}}
+      className={Style.link}
+      >
     <li className={`${Style.cardList}`}>
       <ul className={`${Style.card}`}>
         <div className={`${Style.orderDetails}`}>
           <p className={`${Style.orderNumber} text text_type_digits-default`}>#{element.number}</p>
-          <p className='text text_type_main-default text_color_inactive'>{element.createdAt}</p>
+          <p className='text text_type_main-default text_color_inactive'>{time}</p>
         </div>
         <div className={`${Style.orderInfo}`}>
           <p className={`${Style.orderTitle} text text_type_main-medium`}>
@@ -54,6 +66,7 @@ const BurgerOrderCardSmall = ({ element }) => {
         </div>
       </ul>
     </li>
+    </Link>
   )
 
 }

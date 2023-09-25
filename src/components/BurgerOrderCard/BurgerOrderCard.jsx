@@ -1,6 +1,6 @@
 import Style from './BurgerOrderCard.module.css';
 import BurgerOrderCardImage from '../BurgerOrderCardImage/BurgerOrderCardImage';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from "react-router-dom";
 
@@ -39,6 +39,8 @@ const BurgerOrderCard = ({element}) => {
   const count = picsToShow.length < 5? null : `+${pics.length - picsToShow.length}`;
   const lastPic = pics.length >= 5 ? pics[6] : null;
 
+  const time = <FormattedDate date={new Date(element.createdAt)} />
+
   return (
     <Link
       key={element._id}
@@ -50,7 +52,7 @@ const BurgerOrderCard = ({element}) => {
       <ul className={`${Style.card}`}>
         <div className={`${Style.orderDetails}`}>
           <p className={`${Style.orderNumber} text text_type_digits-default`}>#0{element.number}</p>
-          <p className='text text_type_main-default text_color_inactive'>{element.createdAt}</p>
+          <p className='text text_type_main-default text_color_inactive'>{time}</p>
         </div>
         <div className={`${Style.orderInfo}`}>
           <p className={`${Style.orderTitle} text text_type_main-medium`}>

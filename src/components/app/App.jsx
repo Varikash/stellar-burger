@@ -61,7 +61,7 @@ function App() {
                 <Route path="/reset-password" element={<OnlyUnAuth component={<ResetPage />} />} />
                 <Route path="/ingredients/:id" element={<IngredientPage/>} />
                 <Route path="/feed/" element={<OnlyAuth component={<Feed />}/>} />
-                <Route path="/feed/:id" element={<OrderExtention />} />
+                <Route path="/feed/:id" element={<OrderExtentionStatic />} />
                 <Route path="/profile/" element={<OnlyAuth component={<ProfilePage />}/>}> 
                   <Route index element={<ProfileForm />} />
                   <Route path="orders" element={<OrderHistory />} />
@@ -81,6 +81,14 @@ function App() {
                   />
                   <Route 
                     path="/profile/orders/:id"
+                    element={
+                      <Modal onClose={handleModalClose}>
+                        <OrderExtention onClose={handleModalClose}/>
+                      </Modal>
+                    }
+                  />
+                  <Route 
+                    path="/feed/:id"
                     element={
                       <Modal onClose={handleModalClose}>
                         <OrderExtention onClose={handleModalClose}/>

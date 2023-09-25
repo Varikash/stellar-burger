@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useMatch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Style from './OrderExtentionStatic.module.css';
 import { useEffect, useState } from "react";
@@ -6,7 +6,9 @@ import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burge
 import {
   connect as connectFeedOrder,
   disconnect as disconnectFeedOrder
-} from '../../services/webSocket/actions'
+} from '../../services/webSocket/actions';
+import { WS_FEED_ORDER_URL } from "../../utils/url";
+import { WS_USER_FEED_ORDER_URL } from "../../utils/url";
 
 const transformIngredients = (ingredients) => {
   const uniqueIngredients = {};
@@ -27,13 +29,12 @@ const transformIngredients = (ingredients) => {
 
 const OrderExtentionStatic = () => {
 
-  const dispatch = useDispatch();
-  const userOrderURL = 'wss://norma.nomoreparties.space/orders';
-  const token = localStorage.getItem('accessToken');
-  const pureToken = token ? token.replace('Bearer ', '') : '';
-  const WS_USER_FEED_ORDER_URL = `${userOrderURL}?token=${pureToken}`;
+  const isProfileOrder = useMatch('/profile/orders/:id');
+  const isFeedOrder = useMatch('/feed/:id');
 
-  const connect = () => dispatch(connectFeedOrder(WS_USER_FEED_ORDER_URL));
+  const dispatch = useDispatch();
+
+  const connect = (url) => dispatch(connectFeedOrder(url));
   const disconnect = () => dispatch(disconnectFeedOrder());
 
   const { id } = useParams();
@@ -46,11 +47,15 @@ const OrderExtentionStatic = () => {
   const price = [];
 
   useEffect(() => {
-    connect();
+    const url = isProfileOrder? WS_USER_FEED_ORDER_URL : isFeedOrder ? WS_FEED_ORDER_URL : null;
+    if (url) {
+      connect(url);
+    }
+
     return () => {
       disconnect();
     }
-  }, []);
+  }, [dispatch, isProfileOrder, isFeedOrder]);
 
   useEffect(() => {
     if (ordersObj && Array.isArray(ordersObj.orders)) {
