@@ -28,7 +28,6 @@ const OrderExtention = ({onClose}) => {
   const [order, setOrder] = useState(null);
   const [uniqueOrderArray, setUniqueOrderArray] = useState([]);
   const [sum, setSum] = useState(0);
-  const price = [];
   
   const handleClick = (e) => {
     e.stopPropagation();
@@ -44,24 +43,23 @@ const OrderExtention = ({onClose}) => {
 
   useEffect(() => {
     if (order && data) {
-      const orderArray = [];
-      order.ingredients.forEach(ingredient => {
+      const orderArray = order.ingredients.map(ingredient => {
         const foundObject = data.find(obj => obj._id === ingredient);
-  
-        if (foundObject) {
-          price.push(foundObject.price);
-          orderArray.push({
-            _id: foundObject._id,
-            name: foundObject.name,
-            price: foundObject.price,
-            image: foundObject.image,
-          });
-        }
-      });
-      setSum(price?.reduce((acc, current) => acc + current, 0));
+        return foundObject ? {
+          _id: foundObject._id,
+          name: foundObject.name,
+          price: foundObject.price,
+          image: foundObject.image,
+        } : null;
+      }).filter(Boolean); // фильтрация, чтобы убрать возможные null значения
+      
+      const sum = orderArray.reduce((acc, cur) => acc + (cur?.price || 0), 0);
+      setSum(sum);
+      
       setUniqueOrderArray(transformIngredients(orderArray));
     }
-  }, [order, data, price]);
+}, [order, data]);
+
 
   const status = order?.status === 'done' ? 'Выполнен': 'Выполняется';
   const time = <FormattedDate date={new Date(order?.createdAt)} />;
