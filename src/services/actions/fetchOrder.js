@@ -6,12 +6,14 @@ export const SEND_ORDER_SUCCESS = 'SEND_ORDER_SUCCESS';
 export const CLEAR_ORDER = 'CLEAR_ORDER';
 
 
-export const fetchOrder = (ingredientsID) => async (dispatch) => {
+export const fetchOrder = (ingredientsID, token) => async (dispatch) => {
   try {
-  
     const response = await fetch(`${BASE_URL}/orders`, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `${token}`
+      },
       body: JSON.stringify({
         ingredients: ingredientsID,
       }),
@@ -23,6 +25,8 @@ export const fetchOrder = (ingredientsID) => async (dispatch) => {
       type: SEND_ORDER_SUCCESS,
       number: result.order.number
     })
+
+    console.log(typeof(result.order.number));
     
   } catch (error) {
     console.log(`Произошла ошибка отправки заказа: ${error}`)

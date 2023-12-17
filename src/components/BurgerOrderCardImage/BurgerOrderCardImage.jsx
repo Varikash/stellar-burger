@@ -6,8 +6,8 @@ const BurgerOrderCardImage = ({picsUrl, lastPicture, count}) => {
     <ul className={`${Style.orderPics}`}>
       {picsUrl.map((imageUrl, index) => {
       return(
-        <li className={`${Style.background}`}>
-          <img key={index} src={imageUrl} className={`${Style.image}`}/>
+        <li key={index} className={`${Style.background}`}>
+          <img src={imageUrl} className={`${Style.image}`}/>
         </li>
       )
     })

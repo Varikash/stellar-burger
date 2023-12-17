@@ -1,23 +1,50 @@
+import { useEffect, useMemo } from 'react';
 import BurgerOrderCardSmall from '../../components/BurgerOrderCardSmall/BurgerOrderCardSmall';
 import Wrapper from '../../components/Wrapper/Wrapper';
 import Style from './Feed.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  connect as connectFeedOrder,
+  disconnect as disconnectFeedOrder
+} from '../../services/webSocket/actions'
+import { WS_FEED_ORDER_URL } from '../../utils/url';
+
 
 const Feed = () => {
 
-  const arrayReady = ['34533', '34532', '34530', '34530', '34530', '333333', '333333', '333333', '333333', '333333', '333333', '333333', '333333', '333333', '333333', '333333', '333333'];
-  const arrayProgress = ['3453', '34541', '34542'];
+  const dispatch = useDispatch();
+  const orders = useSelector(state => state.websocket.orders);
+
+  const connect = () => dispatch(connectFeedOrder(WS_FEED_ORDER_URL));
+  const disconnect = () => dispatch(disconnectFeedOrder());
 
 
 
+  useEffect(() => {
+    connect();
+    return () => {
+      disconnect();
+    }
+  }, [])
+
+  let arrayReady = useMemo(() => {
+    return orders?.orders?.filter(element => element.status === 'done').map(element => element.number) || [];
+  }, [orders]);
+
+  let arrayProgress = useMemo (() => {
+    return orders?.orders?.filter(element => element.status !== 'done').map(element => element.number) || [];
+  }, [orders]);
+  
   return (
       <Wrapper>
         <p className={`${Style.header} text text_type_main-large`}>Лента Заказов</p>
         <div className={`${Style.container}`}>
           <div className={`${Style.feedLog}`}>
-            <BurgerOrderCardSmall />
-            <BurgerOrderCardSmall />
-            <BurgerOrderCardSmall />
-            <BurgerOrderCardSmall />
+            {orders.orders && 
+              orders.orders.map((element) => {
+                return <BurgerOrderCardSmall key={element._id} element={element}/>
+              })
+            }
           </div>
           <div className={`${Style.feedData}`}>
             <div className={`${Style.feedStatus}`}>
@@ -46,11 +73,11 @@ const Feed = () => {
             </div>
             <div>
               <p className={`text text_type_main-large`}>Выполненно за всё время</p>
-              <p className={`${Style.number} text text_type_digits-large`}>28752</p>
+              <p className={`${Style.number} text text_type_digits-large`}>{orders.total}</p>
             </div>
             <div>
               <p className={`${Style.headerToday} text text_type_main-large`}>Выполненно за сегодня:</p>
-              <p className={`${Style.number} text text_type_digits-large`}>138</p>
+              <p className={`${Style.number} text text_type_digits-large`}>{orders.totalToday}</p>
             </div>
           </div>
         </div>
