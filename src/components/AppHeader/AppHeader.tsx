@@ -4,7 +4,7 @@ import Style from './AppHeader.module.css';
 import { NavLink } from 'react-router-dom';
 
 
-function AppHeader() {
+function AppHeader(): JSX.Element {
   
     return (
       <header className={`${Style.header} pb-4 pt-4`}>

@@ -3,23 +3,25 @@ import BurgerOrderCardImage from '../BurgerOrderCardImage/BurgerOrderCardImage';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from "react-router-dom";
+import TOrderHistory from '../../utils/TOrderHistory.types';
+import TIngredientProps from '../../utils/TIngredientProps.types';
 
 
 
-const BurgerOrderCard = ({element}) => {
+const BurgerOrderCard = ({element}: {element: TOrderHistory}): JSX.Element => {
 
-  const getData = state => state.ingredients.ingredients;
-  const data = useSelector(getData);
+  const getData = (state: any) => state.ingredients.ingredients; // переопределить тип
+  const data = useSelector(getData); // определить тип
 
   const location = useLocation();
   const itemID = element._id;
 
-  const pics = [];
-  const price = [];
+  const pics: string[] = [];
+  const price: number[] = [];
 
-  element.ingredients.forEach(ingredient => {
-    const foundObject = data.find(obj => obj._id === ingredient);
-
+  element.ingredients.forEach((ingredient) => {
+    const foundObject: TIngredientProps = data.find((obj: TIngredientProps) => obj._id === ingredient);
+    
     if (foundObject) {
       pics.push(foundObject.image);
       price.push(foundObject.price)
@@ -28,7 +30,8 @@ const BurgerOrderCard = ({element}) => {
 
   const sum = price.reduce((acc, current) => acc + current, 0);
 
-  const getPicsToShow = (array) => {
+  const getPicsToShow = (array: string[]) => {
+
     if (array.length > 5) {
       return array.slice(0, 5);
     }
@@ -66,7 +69,7 @@ const BurgerOrderCard = ({element}) => {
           <BurgerOrderCardImage picsUrl={picsToShow} lastPicture={lastPic} count={count} />
           <div className={`${Style.priceBox}`}>
             <p className={`${Style.orderPrice} text text_type_digits-default`}>{sum}</p>
-            <CurrencyIcon/>
+            <CurrencyIcon type='primary'/>
           </div>
         </div>
       </ul>

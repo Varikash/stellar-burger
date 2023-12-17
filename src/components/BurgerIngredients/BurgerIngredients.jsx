@@ -2,12 +2,8 @@ import TabMenu from "../TabMenu/TabMenu";
 import Wrapper from "../Wrapper/Wrapper";
 import Style from './BurgerIngredients.module.css';
 import CardList from "../CardList/CardList";
-import { useDispatch, useSelector } from "react-redux";
-import Modal from "../Modal/Modal";
-import PopupIngredient from "../PopupIngredient/PopupIngredient";
-import { resetData } from "../../services/actions/ingredientAction";
+import { useSelector } from "react-redux";
 import { useMemo, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 
 
 
@@ -15,13 +11,6 @@ const BurgerIngredients = () => {
 
   const getData = state => state.ingredients.ingredients;
   const data = useSelector(getData);
-  const getIngredient = state => state.ingredient.ingredient;
-  const ingredient = useSelector(getIngredient);
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const navigate = useNavigate();
-  const background = location.state && location.state.background;
-
 
   const buns = useMemo(() => {
     return data.filter(item => item.type === 'bun');

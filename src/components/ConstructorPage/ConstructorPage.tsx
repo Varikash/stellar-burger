@@ -5,7 +5,7 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 
-function ConstructorPage() {
+function ConstructorPage(): JSX.Element {
   return(
     <section>
       <DndProvider backend={HTML5Backend}>

@@ -1,16 +1,16 @@
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import Style from './Card.module.css';
-import PropTypesBurger from '../../utils/PropTypesShape';
 import { useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
 import { useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
+import TIngredientProps from "../../utils/TIngredientProps.types";
 
 
-function Card({item}) {
+function Card({item}: {item: TIngredientProps}): JSX.Element {
 
-  const getIngredientsData = state => state.orderList;
-  const ingredientsData = useSelector(getIngredientsData);
+  const getIngredientsData = (state: any) => state.orderList; //переопределить тип
+  const ingredientsData = useSelector(getIngredientsData); //добавить тип
   const { bunItem, ingredientsList } = ingredientsData;
   const location = useLocation();
   const itemID = item._id;
@@ -31,7 +31,7 @@ function Card({item}) {
 
   const [{opacity}, dragRef] = useDrag({
     type: 'ingredients',
-    item,
+    item: item as TIngredientProps,
     collect: monitor => ({
       opacity: monitor.isDragging()? 0.2 : 1
     })
@@ -45,7 +45,7 @@ function Card({item}) {
       state={{ background: location }}
       className={Style.link}
     >
-      <li className={Style.card} type='button'  style={{opacity}} ref={dragRef}>
+      <li className={Style.card} style={{opacity}} ref={dragRef}>
         {counter > 0 && (<Counter count={counter} size={counter > 99 ? "small" : "default"} extraClass="m-1"/>)}
         <img src={item.image} alt={item.name} className={Style.image}/>
         <div className={Style.priceBlock}>
@@ -60,7 +60,3 @@ function Card({item}) {
 }
 
 export default Card
-
-Card.propTypes = {
-  item: PropTypesBurger.isRequired
-}

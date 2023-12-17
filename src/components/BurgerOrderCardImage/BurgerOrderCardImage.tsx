@@ -1,6 +1,13 @@
 import Style from './BurgerOrderCardImage.module.css';
 
-const BurgerOrderCardImage = ({picsUrl, lastPicture, count}) => {
+type TBurgerOrderCardImageProps = {
+  picsUrl: string[];
+  lastPicture: string | null;
+  count: string | null;
+}
+
+
+const BurgerOrderCardImage = ({picsUrl, lastPicture, count}: TBurgerOrderCardImageProps) => {
 
   return (
     <ul className={`${Style.orderPics}`}>
@@ -12,7 +19,7 @@ const BurgerOrderCardImage = ({picsUrl, lastPicture, count}) => {
       )
     })
     }
-      {count && <li className={`${Style.background}`}>
+      {lastPicture && count && <li className={`${Style.background}`}>
         <img src={lastPicture} className={`${Style.image}`}/>
         <span className={`${Style.count} text text_type_digits-default`}>{count}</span>
       </li>}
