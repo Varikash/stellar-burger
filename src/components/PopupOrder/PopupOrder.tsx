@@ -3,14 +3,18 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import done from '../../images/order accpeted/done.svg'
 import { useSelector } from 'react-redux';
 
-function PopupOrder ({onClose}) {
+type TPopupOrderProps = {
+  onClose: () => void;
+}
 
-  const handleClick = (e) => {
+function PopupOrder ({onClose}: TPopupOrderProps) {
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     onClose();
   }
 
-  const orderNumber =  useSelector(store => store.orders.number);
+  const orderNumber =  useSelector((store: any) => store.orders.number);
 
   return(
     <div className={`pt-30 pb-30 ${Style.popupOrder}`}>

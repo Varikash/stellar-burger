@@ -2,13 +2,18 @@ import ModalOverlay from '../ModalOverlay/ModalOvelay';
 import { createPortal } from "react-dom";
 import { useEffect } from 'react';
 
+type TModalProps = {
+  onClose: () => void;
+  children: React.ReactNode;
+}
+
 
 const modals = document.querySelector('#modals');
 
-export default function Modal({onClose, children}) {
+export default function Modal({onClose, children}: TModalProps): JSX.Element | null {
 
   useEffect(() => {
-    const closeModalOnEsc = (evt) => {
+    const closeModalOnEsc = (evt: KeyboardEvent) => {
       if(evt.key === 'Escape') {
         onClose()
       }
@@ -19,9 +24,9 @@ export default function Modal({onClose, children}) {
     return () => {
       document.removeEventListener('keydown', closeModalOnEsc);
     }
-  }, )
+  }, [onClose])
 
-  return createPortal(
+  return modals? createPortal(
     <>
     <div>
         {children}
@@ -29,5 +34,5 @@ export default function Modal({onClose, children}) {
     <ModalOverlay onClick={onClose} />
     </>,
     modals
-  )
+  ) : null;
 }

@@ -1,7 +1,11 @@
 import React from 'react';
 import Style from './Wrapper.module.css'
 
-function Wrapper(props) {
+type TWrapperProps = {
+  children: React.ReactNode;
+}
+
+function Wrapper(props: TWrapperProps): JSX.Element {
   return(
     <div className={Style.wrapper}>
       {props.children}

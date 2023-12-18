@@ -3,21 +3,32 @@ import BurgerOrderCardImage from '../BurgerOrderCardImage/BurgerOrderCardImage';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from "react-router-dom";
+import TIngredientProps from '../../utils/TIngredientProps.types';
 
-const BurgerOrderCardSmall = ({ element }) => {
+type TBurgerOrderCardSmallProps = {
+  _id: string;
+  ingredients: Array<string>;
+  status: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  number: number;
+}
+
+const BurgerOrderCardSmall = ({ element }: {element: TBurgerOrderCardSmallProps}): JSX.Element => {
 
   const location = useLocation();
 
-  const getData = state => state.ingredients.ingredients;
-  const data = useSelector(getData);
+  const getData = (state: any) => state.ingredients.ingredients; // TO BE DONE!
+  const data = useSelector(getData); //TO BE DONE!
   const itemID = element._id;
 
-  const pics = [];
-  const price = [];
+  const pics: Array<string> = [];
+  const price: Array<number> = [];
 
   element.ingredients.forEach(ingredient => {
-    const foundObject = data.find(obj => obj._id === ingredient);
-
+    const foundObject: TIngredientProps | undefined = data.find((obj: TIngredientProps) => obj._id === ingredient); //DOUBLE CHECK LATER!
+    
     if (foundObject) {
       pics.push(foundObject.image);
       price.push(foundObject.price);
@@ -26,7 +37,7 @@ const BurgerOrderCardSmall = ({ element }) => {
 
   const sum = price.reduce((acc, current) => acc + current, 0);
   
-  const getPicsToShow = (array) => {
+  const getPicsToShow = (array: string[]) => {
     if (array.length > 5) {
       return array.slice(0, 5);
     }
@@ -61,7 +72,7 @@ const BurgerOrderCardSmall = ({ element }) => {
           <BurgerOrderCardImage picsUrl={picsToShow} lastPicture={lastPic} count={count} />
           <div className={`${Style.priceBox}`}>
             <p className={`${Style.orderPrice} text text_type_digits-default`}>{sum}</p>
-            <CurrencyIcon/>
+            <CurrencyIcon type='primary'/>
           </div>
         </div>
       </ul>

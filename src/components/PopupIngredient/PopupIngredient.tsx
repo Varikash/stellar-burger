@@ -3,18 +3,22 @@ import Style from './PopupIngredient.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useParams } from 'react-router-dom';
 
-export default function PopupIngredient({onClose}) {
+type TPopupIngredientProps = {
+  onClose: () => void;
+}
+
+export default function PopupIngredient({onClose}: TPopupIngredientProps): JSX.Element {
 
   const { id } = useParams();
 
-  const handleClick = (e) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     onClose();
   }
 
-  const ingredients = useSelector(state => state.ingredients.ingredients);
+  const ingredients = useSelector((state: any) => state.ingredients.ingredients); //TO BE DONE!
 
-  const item = ingredients.find(ingredient => ingredient._id === id);
+  const item = ingredients.find((ingredient: any) => ingredient._id === id); // TO BE DONE!
 
   if (!item) {
     return <p>Ошибка загрузки данных</p>;
