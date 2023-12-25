@@ -1,19 +1,31 @@
-import { forwardRef } from 'react';
+import { forwardRef, RefObject } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import Style from './TabMenu.module.css'
+import Style from './TabMenu.module.css';
 
-const TabMenu = forwardRef((props, ref) => {
+type TabMenuProps = {
+  current: string;
+  bunRef: RefObject<HTMLDivElement>;
+  sauceRef: RefObject<HTMLDivElement>;
+  mainRef: RefObject<HTMLDivElement>;
+}
 
-  const handleClick = (ref) => {
-    const parentContainer = ref.current.parentNode;
-    const categoryTop = ref.current.offsetTop;
-    const parentContainerTop = parentContainer.getBoundingClientRect().top;
-    const offsetTop = categoryTop - parentContainerTop - parentContainer.scrollTop;
 
-    parentContainer.scroll({
-      behavior: 'smooth',
-      top: parentContainer.scrollTop + offsetTop
-    })
+const TabMenu = forwardRef<HTMLDivElement, TabMenuProps>((props, ref): JSX.Element => {
+
+  const handleClick = (ref: RefObject<HTMLDivElement>) => {
+    
+    if (ref.current) {
+      const parentContainer = ref.current.parentNode as HTMLDivElement;
+      const categoryTop = ref.current.offsetTop;
+      const parentContainerTop = parentContainer.getBoundingClientRect().top;
+      const offsetTop = categoryTop - parentContainerTop - parentContainer.scrollTop;
+
+      parentContainer.scroll({
+        behavior: 'smooth',
+        top: parentContainer.scrollTop + offsetTop
+      })
+    }
+    
   };
   
     return (

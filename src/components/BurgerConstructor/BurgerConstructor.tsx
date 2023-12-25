@@ -3,33 +3,40 @@ import { useMemo } from 'react';
 import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../Modal/Modal';
 import PopupOrder from '../PopupOrder/PopupOrder';
-import { useSelector, useDispatch } from 'react-redux';
+import { 
+  useSelector, 
+  useDispatch 
+} from 'react-redux';
 import { fetchOrder, clearOrder } from "../../services/actions/fetchOrder";
 import { useDrop } from 'react-dnd';
 import { addBun, addIngredient, resetIngredients } from '../../services/reducers/burgerConstructionSlice';
 import IngredientElement from '../IngredientElement/IngredientElement';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { AppDispatch } from '../../utils/AppThunk.types';
+import TIngredientProps from '../../utils/TIngredientProps.types';
+
+export type TIngredientWithKey = TIngredientProps & {key: string};
 
 
-function BurgerConstructor() {
+function BurgerConstructor(): JSX.Element {
 
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const getIngredientsData = state => state.orderList;
-  const ingredientsData = useSelector(getIngredientsData);
+  const getIngredientsData = (state: any) => state.orderList; // TO DO
+  const ingredientsData = useSelector(getIngredientsData); //TO DO
   const { bunItem, ingredientsList } = ingredientsData;
 
-  const getOrderNumber = state => state.orders.number;
+  const getOrderNumber = (state: any) => state.orders.number; //TO DO
   const orderNumber = useSelector(getOrderNumber);
 
-  const userInfo = state => state.user.loggedIn;
+  const userInfo = (state: any) => state.user.loggedIn; //TO DO
   const isUserLogged = useSelector(userInfo);
 
   const [ , dropTarget] = useDrop({
     accept: 'ingredients',
-    drop(item) {
+    drop(item: TIngredientProps) {
       if (item.type === 'bun') {
         dispatch(addBun(item));
       } else {
@@ -51,7 +58,7 @@ function BurgerConstructor() {
     if (isUserLogged) {
       const token = localStorage.getItem('accessToken');
       const bunID = bunItem._id;
-      const components = ingredientsList.map(ingredient => ingredient._id);
+      const components = ingredientsList.map((ingredient: TIngredientWithKey) => ingredient._id);
       const burgerComponentsID = [bunID,...components,bunID];
       dispatch(fetchOrder(burgerComponentsID, token));
     } else {
@@ -62,7 +69,7 @@ function BurgerConstructor() {
 
   const totalPrice = useMemo(() => {
     const bunPrice = bunItem ? bunItem.price * 2 : 0;
-    return ingredientsList.reduce((acc, ingredient) => acc + ingredient.price, bunPrice)
+    return ingredientsList.reduce((acc: number, ingredient: TIngredientWithKey) => acc + ingredient.price, bunPrice)
   }, [ingredientsList, bunItem])
   
   return(
@@ -89,7 +96,7 @@ function BurgerConstructor() {
             
 
             <ul className={Style.ingredientsList}>
-              {ingredientsList.map((ingredient, index) => {
+              {ingredientsList.map((ingredient: TIngredientWithKey, index: number) => { // TO DO
                 return(
                     <IngredientElement item={ingredient} index={index} key={ingredient.key}/>
                 )

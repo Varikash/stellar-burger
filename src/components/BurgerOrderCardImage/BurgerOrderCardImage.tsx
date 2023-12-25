@@ -7,7 +7,7 @@ type TBurgerOrderCardImageProps = {
 }
 
 
-const BurgerOrderCardImage = ({picsUrl, lastPicture, count}: TBurgerOrderCardImageProps) => {
+const BurgerOrderCardImage = ({picsUrl, lastPicture, count}: TBurgerOrderCardImageProps): JSX.Element => {
 
   return (
     <ul className={`${Style.orderPics}`}>

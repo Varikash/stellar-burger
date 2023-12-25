@@ -1,31 +1,51 @@
 import { BASE_URL } from "./url";
+import { 
+  FetchIngredients, 
+  SendEmail,
+  RegisterUser,
+  LogginUser,
+  FetchUser,
+  RefreshUser,
+  LogOut,
+  SendNewPass
+} from "./ApiResponse.types";
 
-export const getResponseData = (res) => {
-  return res.ok
-    ? res.json()
-    : Promise.reject(`Ошибка ${res.status} ${res.ok}`);
+type EmailForm = {
+  email: string;
+}
+
+type RegisterAndUpdate = EmailForm & {
+  name: string;
+  password: string;
+}
+
+type LogginForm = EmailForm & {
+  password: string;
+}
+
+type NewPassForm = {
+  password: string;
+  token: string;
+}
+
+export const getResponseData = async <T>(res: Response): Promise<T> => {
+  if (res.ok) {
+    const jsonData: T = await res.json();
+    return jsonData;
+  } else {
+    throw new Error(`Ошибка ${res.status}: ${res.statusText}`);
+  }
 };
 
-const request = (url, options) => {
-  return fetch(url, options).then(getResponseData);
+const request = <T>(url: string, options?: RequestInit): Promise<T> => {
+  return fetch(url, options).then(response => getResponseData<T>(response));
 };
 
-export const getOrders = (ingredients) => {
-  return request(`${BASE_URL}/orders`, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      ingredients: ingredients,
-    }),
-  });
-};
-
-
-export const getIngredients = () => {
+export const getIngredients = (): Promise<FetchIngredients> => {
   return request(`${BASE_URL}/ingredients`);
 };
 
-export const sendEmail = (data) => {
+export const sendEmail = (data: string): Promise<SendEmail> => {
   return request(`${BASE_URL}/password-reset`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -35,7 +55,7 @@ export const sendEmail = (data) => {
   });
 };
 
-export const registerUser = (form) => {
+export const registerUser = (form: RegisterAndUpdate): Promise<RegisterUser> => {
   return request(`${BASE_URL}/auth/register`,
     {
       method: 'POST',
@@ -44,7 +64,7 @@ export const registerUser = (form) => {
     });
 };
 
-export const logginUser = (form) => {
+export const logginUser = (form: LogginForm): Promise<LogginUser> => {
   return request(`${BASE_URL}/auth/login`,
     {
       method: 'POST',
@@ -53,7 +73,7 @@ export const logginUser = (form) => {
     });
 };
 
-export const fetchUser = (token) => {
+export const fetchUser = (token: string): Promise<FetchUser> => {
   return request(`${BASE_URL}/auth/user`,
     {
       method: 'GET',
@@ -63,7 +83,7 @@ export const fetchUser = (token) => {
     });
 };
 
-export const refreshUser = (token) => {
+export const refreshUser = (token: string): Promise<RefreshUser> => {
   return request(`${BASE_URL}/auth/token`, 
     {
       method: 'POST',
@@ -74,7 +94,7 @@ export const refreshUser = (token) => {
     });
 };
 
-export const updateUser = (token, form) => {
+export const updateUser = (token: string, form: RegisterAndUpdate): Promise<FetchUser> => {
   return request(`${BASE_URL}/auth/user`,
     {
       method: 'PATCH',
@@ -86,7 +106,7 @@ export const updateUser = (token, form) => {
     });
 };
 
-export const logOut = (refreshToken) => {
+export const logOut = (refreshToken: string): Promise<LogOut> => {
   return request(`${BASE_URL}/auth/logout`, 
     {
       method: 'POST',
@@ -99,7 +119,7 @@ export const logOut = (refreshToken) => {
     });
 };
 
-export const sendNewPass = (form) => {
+export const sendNewPass = (form: NewPassForm): Promise<SendNewPass> => {
     return request(`${BASE_URL}/password-reset/reset`,
       {
         method: 'POST',

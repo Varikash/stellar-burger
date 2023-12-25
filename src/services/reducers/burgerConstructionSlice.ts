@@ -1,6 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import TIngredientProps from "../../utils/TIngredientProps.types";
+import { TIngredientWithKey } from "../../components/BurgerConstructor/BurgerConstructor";
 
-const initialState = {
+type TBurgerConstructionState = {
+  bunItem: TIngredientProps & {type: 'bun'} | null,
+  ingredientsList: Array<TIngredientWithKey>
+}
+
+const initialState: TBurgerConstructionState = {
   bunItem: null,
   ingredientsList: [],
 }
@@ -9,18 +16,18 @@ export const burgerConstructionSlice = createSlice({
   name: 'ingredient',
   initialState,
   reducers: {
-    addIngredient: (state, action) => {
+    addIngredient: (state, action: PayloadAction<TIngredientWithKey>) => {
       state.ingredientsList.push({
         ...action.payload,
       });
     },
-    addBun: (state, action) => {
+    addBun: (state, action: PayloadAction<TIngredientProps>) => {
       state.bunItem = { 
         ...action.payload, 
         type: 'bun' 
       };
     },
-    moveIngredient: (state, action) => {
+    moveIngredient: (state, action: PayloadAction<{dragElIndex: number, hoverElIndex: number}>) => {
       const dragConstructor = [...state.ingredientsList];
       dragConstructor.splice(
         action.payload.dragElIndex,
@@ -29,8 +36,10 @@ export const burgerConstructionSlice = createSlice({
       );
       state.ingredientsList = dragConstructor;
     },
-    deleteIngredient: (state, action) => {
-      state.ingredientsList.splice(action.index, 1);
+    deleteIngredient: (state, action: PayloadAction<number>) => {
+      if (action.payload >= 0 && action.payload < state.ingredientsList.length) {
+        state.ingredientsList.splice(action.payload, 1);
+      }
     },
     resetIngredients: (state) => {
       state.ingredientsList = [];

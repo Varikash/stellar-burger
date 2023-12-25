@@ -22,22 +22,27 @@ const ForgotPage = () => {
     }
   }, [state.success, navigate])
   
-
-  return(
+  return (
     <section className={`${Style.section} pt-45`}>
-      <form className={Style.container}
-        onSubmit={onSubmit}
-        >
+      <form className={Style.container} onSubmit={onSubmit}>
         <h1 className={`${Style.title}`}>Восстановление пароля</h1>
-        <EmailInput 
-          name={'email'}
-          isIcon={false}
-          onChange={handleChange}
-          value={values.email}
-        />
-        <Button htmlType="button" type="primary" size="medium" extraClass={`${Style.button} mb-20`}>
-          Восстановить
-        </Button>
+        
+        {state.loading ? (
+          <div className={Style.loader}></div>
+        ) : (
+          <>
+            <EmailInput 
+              name={'email'}
+              isIcon={false}
+              onChange={handleChange}
+              value={values.email}
+            />
+            <Button htmlType="submit" type="primary" size="medium" extraClass={`${Style.button} mb-20`}>
+              Восстановить
+            </Button>
+          </>
+        )}
+
         <p className={`${Style.text} text text_type_main-default text_color_inactive`}>
           Вспомнили пароль?&nbsp;
           <Link to='/login' className={Style.link}>

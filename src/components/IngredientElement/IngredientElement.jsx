@@ -14,8 +14,8 @@ const IngredientElement = ({index, item}) => {
   const ref = useRef(null);
   const { key } = item;
 
-  const handleDelete = (item, index) => {
-    dispatch(deleteIngredient(item, index))
+  const handleDelete = () => {
+    dispatch(deleteIngredient(index));
   }
 
   const [{ opacity }, drag] = useDrag({

@@ -4,7 +4,7 @@ type TModalOverlayProps = {
   onClick: () => void;
 }
 
-export default function ModalOverlay({onClick}: TModalOverlayProps) {
+export default function ModalOverlay({onClick}: TModalOverlayProps): JSX.Element {
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     onClick();
