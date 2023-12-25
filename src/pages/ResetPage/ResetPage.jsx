@@ -2,7 +2,7 @@ import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burg
 import { Link } from 'react-router-dom';
 import Style from './ResetPage.module.css';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { sendNewPass } from '../../utils/apiBackend';
 import { useForm } from '../../hooks/useForm';
