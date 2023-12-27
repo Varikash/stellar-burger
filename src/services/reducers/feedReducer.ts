@@ -1,17 +1,27 @@
+import TIngredientProps from "../../utils/TIngredientProps.types";
 import { 
   GET_FEED, 
   GET_FEED_FAILED, 
   GET_FEED_SUCCESS 
 } from "../actions/fetchIngredients";
 
-const initialState = {
+import { FeedActions } from "../actions/fetchIngredients";
+
+type InitialState = {
+  loadingIngredients: boolean;
+  errorLoadingIngredients: boolean;
+  ingredientsLoaded: boolean;
+  ingredients: TIngredientProps[];
+}
+
+const initialState: InitialState = {
   loadingIngredients: false,
   errorLoadingIngredients: false,
   ingredientsLoaded: false,
   ingredients: []
 }
 
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (state = initialState, action: FeedActions) => {
   switch (action.type) {
     case GET_FEED: {
       return {

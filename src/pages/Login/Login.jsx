@@ -10,7 +10,9 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const loading = state => state.user.loading;
   const isLoading = useSelector(loading);
+  const user = useSelector(state => state.user.user);
   
+  console.log(user);
   
   const onSubmit = e => {
     e.preventDefault();

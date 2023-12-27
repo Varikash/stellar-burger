@@ -1,5 +1,6 @@
 import { AnyAction } from "redux";
 import { ThunkDispatch } from 'redux-thunk';
+import { Dispatch } from "redux";
 import { getResponseData } from "../../utils/apiBackend";
 import { BASE_URL } from "../../utils/url";
 import { AppThunk } from "../../utils/AppThunk.types";
@@ -9,9 +10,25 @@ export const SEND_ORDER_FAILED: 'SEND_ORDER_FAILED' = 'SEND_ORDER_FAILED';
 export const SEND_ORDER_SUCCESS: 'SEND_ORDER_SUCCESS' = 'SEND_ORDER_SUCCESS';
 export const CLEAR_ORDER: 'CLEAR_ORDER' = 'CLEAR_ORDER';
 
+type SendOrderSuccessAction = {
+  type: typeof SEND_ORDER_SUCCESS;
+  number: number;
+}
+
+type SendOrderFailedAction = {
+  type: typeof SEND_ORDER_FAILED;
+  error: string;
+}
+
+type ClearOrderAction = {
+  type: typeof CLEAR_ORDER;
+  number: null;
+}
+
+export type OrderActions = SendOrderSuccessAction | SendOrderFailedAction | ClearOrderAction;
 
 
-export const fetchOrder = (ingredientsID: Array<string>, token: string | null): AppThunk => async (dispatch) => {
+export const fetchOrder = (ingredientsID: Array<string>, token: string | null): AppThunk => async (dispatch: Dispatch<OrderActions>) => {
   try {
     const response = await fetch(`${BASE_URL}/orders`, {
       method: 'POST',
@@ -32,11 +49,11 @@ export const fetchOrder = (ingredientsID: Array<string>, token: string | null): 
     })
     
   } catch (error) {
-    console.log(`Произошла ошибка отправки заказа: ${error}`)
+    console.error(`Произошла ошибка отправки заказа: ${error}`)
     dispatch({
       type: SEND_ORDER_FAILED,
-      number: error
-    })
+      error: error instanceof Error ? error.message : 'Неизвестная ошибка'
+    });
   }
 }
 

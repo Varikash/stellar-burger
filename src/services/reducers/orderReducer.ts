@@ -3,12 +3,17 @@ import {
   SEND_ORDER_FAILED,
   CLEAR_ORDER, 
 } from "../actions/fetchOrder";
+import { OrderActions } from "../actions/fetchOrder";
 
-const initialState = {
+type InitialState = {
+  number: number | null;
+}
+
+const initialState: InitialState = {
   number: null
 }
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action: OrderActions) => {
   switch(action.type) {
     case SEND_ORDER_SUCCESS: {
       return {
@@ -19,7 +24,6 @@ export const orderReducer = (state = initialState, action) => {
     case SEND_ORDER_FAILED: {
       return {
         ...state,
-        number: action.number
       }
     }
     case CLEAR_ORDER: {
