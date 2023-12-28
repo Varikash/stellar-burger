@@ -1,8 +1,9 @@
 import { NavLink, Outlet} from 'react-router-dom';
 import Style from './ProfilePage.module.css';
 import { logOutUser } from '../../services/reducers/handleUserSlice';
-import { useDispatch, useSelector} from 'react-redux';
+import { useDispatch} from 'react-redux';
 import Wrapper from '../../components/Wrapper/Wrapper';
+import { useEffect } from 'react';
 
 
 
@@ -11,6 +12,10 @@ const ProfilePage = () => {
   const onClick = () => {
     dispatch(logOutUser())
   }
+
+  useEffect(() => {
+    console.log('Component did mount')
+  }, [])
 
   return(
     <Wrapper>
