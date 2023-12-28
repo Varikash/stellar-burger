@@ -60,16 +60,11 @@ export const checkUser = createAsyncThunk<FetchUser, void, { rejectValue: ErrorI
   'user/checkUser', 
   async (_, { rejectWithValue }) => {
     const token = localStorage.getItem('accessToken');
-    console.log(token);
     if (!token) {
-      console.log('не фортануло')
       return rejectWithValue({ message: 'Access token is missing' });
-      console.log('идем дальше')
     }
     try {
-      console.log('start fetching')
       const response = await fetchUser(token);
-      console.log(response)
       if (!response.success) {
         return rejectWithValue({ message: response.message || 'Failed to fetch user' });
       }
