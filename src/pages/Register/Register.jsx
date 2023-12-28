@@ -11,7 +11,6 @@ const RegisterPage = () => {
   const { values, handleChange } = useForm({name: '', email: '', password: ''});
   const regUser = state => state.user.registered;
   const registered = useSelector(regUser);
-
   const dispatch = useDispatch();
 
   const onSubmit = e => {

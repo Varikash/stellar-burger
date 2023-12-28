@@ -14,12 +14,12 @@ type EmailForm = {
   email: string;
 }
 
-type RegisterAndUpdate = EmailForm & {
+export type RegisterAndUpdate = EmailForm & {
   name: string;
   password: string;
 }
 
-type LogginForm = EmailForm & {
+export type LogginForm = EmailForm & {
   password: string;
 }
 

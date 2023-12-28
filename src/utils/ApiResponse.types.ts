@@ -10,7 +10,7 @@ type AuthResponse = BaseResponse & {
   refreshToken: string;
 }
 
-type User = {
+export type User = {
   email: string;
   name: string;
 }

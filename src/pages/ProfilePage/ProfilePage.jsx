@@ -1,7 +1,7 @@
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { NavLink, Outlet} from 'react-router-dom';
 import Style from './ProfilePage.module.css';
 import { logOutUser } from '../../services/reducers/handleUserSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import Wrapper from '../../components/Wrapper/Wrapper';
 
 

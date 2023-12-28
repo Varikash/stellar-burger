@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { sendEmail } from "../../utils/apiBackend";
 
-type ErrorInfo = {
+export type ErrorInfo = {
   message: string;
 }
 
