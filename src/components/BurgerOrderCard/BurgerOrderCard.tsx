@@ -1,17 +1,18 @@
 import Style from './BurgerOrderCard.module.css';
 import BurgerOrderCardImage from '../BurgerOrderCardImage/BurgerOrderCardImage';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
 import { Link, useLocation } from "react-router-dom";
 import TOrderHistory from '../../utils/TOrderHistory.types';
 import TIngredientProps from '../../utils/TIngredientProps.types';
+import { RootState } from '../../utils/AppThunk.types';
+import { useAppSelector } from '../../hooks/hooks';
 
 
 
 const BurgerOrderCard = ({element}: {element: TOrderHistory}): JSX.Element => {
 
-  const getData = (state: any) => state.ingredients.ingredients; // переопределить тип
-  const data = useSelector(getData); // определить тип
+  const getData = (state: RootState) => state.ingredients.ingredients;
+  const data = useAppSelector(getData);
 
   const location = useLocation();
   const itemID = element._id;
@@ -20,7 +21,7 @@ const BurgerOrderCard = ({element}: {element: TOrderHistory}): JSX.Element => {
   const price: number[] = [];
 
   element.ingredients.forEach((ingredient) => {
-    const foundObject: TIngredientProps = data.find((obj: TIngredientProps) => obj._id === ingredient);
+    const foundObject: TIngredientProps | undefined = data.find((obj: TIngredientProps) => obj._id === ingredient);
     
     if (foundObject) {
       pics.push(foundObject.image);

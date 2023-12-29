@@ -1,15 +1,21 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { WebsocketStatus } from "../../utils/orderFeed";
-
+import { WebsocketStatus, SocketStatus } from "../../utils/orderFeed";
+import TOrderHistory from "../../utils/TOrderHistory.types";
 import {
   wsConnecting,
   wsOpen,
   wsClose,
   wsError,
   wsMessage
-} from './actions'
+} from './actions';
 
-const initialState = {
+type WebSocketState = {
+  status: SocketStatus;
+  orders: TOrderHistory[];
+  connectingError: string;
+}
+
+const initialState: WebSocketState = {
   status: WebsocketStatus.OFFLINE,
   orders: [],
   connectingError: ''

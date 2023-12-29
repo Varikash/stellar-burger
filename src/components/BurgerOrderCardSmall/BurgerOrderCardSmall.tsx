@@ -1,9 +1,10 @@
 import Style from './BurgerOrderCardSmall.module.css';
 import BurgerOrderCardImage from '../BurgerOrderCardImage/BurgerOrderCardImage';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
 import { Link, useLocation } from "react-router-dom";
 import TIngredientProps from '../../utils/TIngredientProps.types';
+import { RootState } from '../../utils/AppThunk.types';
+import { useAppSelector } from '../../hooks/hooks';
 
 type TBurgerOrderCardSmallProps = {
   _id: string;
@@ -19,15 +20,15 @@ const BurgerOrderCardSmall = ({ element }: {element: TBurgerOrderCardSmallProps}
 
   const location = useLocation();
 
-  const getData = (state: any) => state.ingredients.ingredients; // TO BE DONE!
-  const data = useSelector(getData); //TO BE DONE!
+  const getData = (state: RootState) => state.ingredients.ingredients;
+  const data = useAppSelector(getData);
   const itemID = element._id;
 
   const pics: Array<string> = [];
   const price: Array<number> = [];
 
   element.ingredients.forEach(ingredient => {
-    const foundObject: TIngredientProps | undefined = data.find((obj: TIngredientProps) => obj._id === ingredient); //DOUBLE CHECK LATER!
+    const foundObject: TIngredientProps | undefined = data.find((obj: TIngredientProps) => obj._id === ingredient);
     
     if (foundObject) {
       pics.push(foundObject.image);

@@ -6,12 +6,18 @@ import { moveIngredient, deleteIngredient} from "../../services/reducers/burgerC
 import PropTypes from 'prop-types';
 import PropTypesBurger from "../../utils/PropTypesShape";
 import Style from './IngredientElement.module.css';
+import { useAppDispatch } from "../../hooks/hooks";
+import { TIngredientWithKey } from "../BurgerConstructor/BurgerConstructor";
 
+type DragItem = {
+  key: string;
+  index: number;
+}
 
-const IngredientElement = ({index, item}) => {
+const IngredientElement = ({index, item}: {index: number, item: TIngredientWithKey}): JSX.Element => {
 
-  const dispatch = useDispatch();
-  const ref = useRef(null);
+  const dispatch = useAppDispatch();
+  const ref = useRef<HTMLLIElement>(null);
   const { key } = item;
 
   const handleDelete = () => {
@@ -30,7 +36,7 @@ const IngredientElement = ({index, item}) => {
 
   const [, drop] = useDrop({
     accept: 'item',
-    hover(item) {
+    hover(item: DragItem) {
       if (!ref.current) {
         return;
       }
@@ -59,8 +65,3 @@ const IngredientElement = ({index, item}) => {
 
 
 export default IngredientElement;
-
-IngredientElement.propTypes = {
-  index: PropTypes.number.isRequired,
-  item: PropTypesBurger.isRequired,
-}

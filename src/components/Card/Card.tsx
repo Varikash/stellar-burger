@@ -5,12 +5,14 @@ import { useDrag } from "react-dnd";
 import { useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
 import TIngredientProps from "../../utils/TIngredientProps.types";
+import { RootState } from "../../utils/AppThunk.types";
+import { useAppSelector } from "../../hooks/hooks";
 
 
 function Card({item}: {item: TIngredientProps}): JSX.Element {
 
-  const getIngredientsData = (state: any) => state.orderList; //переопределить тип
-  const ingredientsData = useSelector(getIngredientsData); //добавить тип
+  const getIngredientsData = (state: RootState) => state.orderList;
+  const ingredientsData = useAppSelector(getIngredientsData);
   const { bunItem, ingredientsList } = ingredientsData;
   const location = useLocation();
   const itemID = item._id;

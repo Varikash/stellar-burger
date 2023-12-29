@@ -2,6 +2,7 @@ import Style from './PopupOrder.module.css'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import done from '../../images/order accpeted/done.svg'
 import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../hooks/hooks';
 
 type TPopupOrderProps = {
   onClose: () => void;
@@ -14,7 +15,7 @@ function PopupOrder ({onClose}: TPopupOrderProps) {
     onClose();
   }
 
-  const orderNumber =  useSelector((store: any) => store.orders.number);
+  const orderNumber =  useAppSelector((store) => store.orders.number);
 
   return(
     <div className={`pt-30 pb-30 ${Style.popupOrder}`}>

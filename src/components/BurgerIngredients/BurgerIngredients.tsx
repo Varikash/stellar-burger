@@ -2,15 +2,16 @@ import TabMenu from "../TabMenu/TabMenu";
 import Wrapper from "../Wrapper/Wrapper";
 import Style from './BurgerIngredients.module.css';
 import CardList from "../CardList/CardList";
-import { useSelector } from "react-redux";
 import { useMemo, useRef, useState } from "react";
+import { RootState } from "../../utils/AppThunk.types";
+import { useAppSelector } from "../../hooks/hooks";
 
 
 
 const BurgerIngredients = () => {
 
-  const getData = state => state.ingredients.ingredients;
-  const data = useSelector(getData);
+  const getData = (state: RootState) => state.ingredients.ingredients;
+  const data = useAppSelector(getData);
 
   const buns = useMemo(() => {
     return data.filter(item => item.type === 'bun');
@@ -24,28 +25,26 @@ const BurgerIngredients = () => {
     return data.filter(item => item.type === 'main');
   }, [data]) 
 
- 
-
-  const containerRef = useRef(null);
-  const bunRef = useRef(null);
-  const sauceRef = useRef(null);
-  const mainRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const bunRef = useRef<HTMLDivElement>(null);
+  const sauceRef = useRef<HTMLDivElement>(null);
+  const mainRef = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState('one');
   
 
   const handleScroll = () => {
-    const containerRect = containerRef.current.getBoundingClientRect();
-    const bunRect = bunRef.current.getBoundingClientRect();
-    const sauceRect = sauceRef.current.getBoundingClientRect();
-    const mainRect = mainRef.current.getBoundingClientRect();
+    const containerRect = containerRef.current?.getBoundingClientRect();
+    const bunRect = bunRef.current?.getBoundingClientRect();
+    const sauceRect = sauceRef.current?.getBoundingClientRect();
+    const mainRect = mainRef.current?.getBoundingClientRect();
     
-    if (containerRect.top > bunRect.top) {
+    if (containerRect && bunRect && containerRect.top > bunRect.top) {
       setCurrent('one');
     } 
-    if (containerRect.top > sauceRect.top) {
+    if (containerRect && sauceRect && containerRect.top > sauceRect.top) {
       setCurrent('two');
     }
-    if (containerRect.top > mainRect.top) {
+    if (containerRect && mainRect && containerRect.top > mainRect.top) {
       setCurrent('three');
     }
     

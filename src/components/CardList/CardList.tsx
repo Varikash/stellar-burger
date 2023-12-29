@@ -1,11 +1,14 @@
 import Card from "../Card/Card";
 import Style from './CardList.module.css';
-import PropTypes from 'prop-types';
-import PropTypesBurger from '../../utils/PropTypesShape';
 import { forwardRef } from "react";
+import TIngredientProps from "../../utils/TIngredientProps.types";
 
-const CardList = forwardRef((props, ref) => {
-  const { category, items } = props;
+type CardListProps = {
+  category: string;
+  items: TIngredientProps[];
+}
+
+const CardList = forwardRef<HTMLDivElement, CardListProps>(({ category, items }, ref) => {
 
   return(
     <div ref={ref}>
@@ -18,8 +21,3 @@ const CardList = forwardRef((props, ref) => {
 })
 
 export default CardList;
-
-CardList.propTypes = {
-  category: PropTypes.string.isRequired,
-  items: PropTypes.arrayOf(PropTypesBurger).isRequired,
-}

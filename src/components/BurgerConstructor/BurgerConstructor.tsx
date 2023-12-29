@@ -3,36 +3,34 @@ import { useMemo } from 'react';
 import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../Modal/Modal';
 import PopupOrder from '../PopupOrder/PopupOrder';
-import { 
-  useSelector, 
-  useDispatch 
-} from 'react-redux';
 import { fetchOrder, clearOrder } from "../../services/actions/fetchOrder";
 import { useDrop } from 'react-dnd';
 import { addBun, addIngredient, resetIngredients } from '../../services/reducers/burgerConstructionSlice';
 import IngredientElement from '../IngredientElement/IngredientElement';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { AppDispatch } from '../../utils/AppThunk.types';
 import TIngredientProps from '../../utils/TIngredientProps.types';
+import { useAppDispatch } from '../../hooks/hooks';
+import { useAppSelector } from '../../hooks/hooks';
+import { RootState } from '../../utils/AppThunk.types';
 
 export type TIngredientWithKey = TIngredientProps & {key: string};
 
 
 function BurgerConstructor(): JSX.Element {
 
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const getIngredientsData = (state: any) => state.orderList; // TO DO
-  const ingredientsData = useSelector(getIngredientsData); //TO DO
+  const getIngredientsData = (state: RootState) => state.orderList;
+  const ingredientsData = useAppSelector(getIngredientsData);
   const { bunItem, ingredientsList } = ingredientsData;
 
-  const getOrderNumber = (state: any) => state.orders.number; //TO DO
-  const orderNumber = useSelector(getOrderNumber);
+  const getOrderNumber = (state: RootState) => state.orders.number;
+  const orderNumber = useAppSelector(getOrderNumber);
 
-  const userInfo = (state: any) => state.user.loggedIn; //TO DO
-  const isUserLogged = useSelector(userInfo);
+  const userInfo = (state: RootState) => state.user.loggedIn;
+  const isUserLogged = useAppSelector(userInfo);
 
   const [ , dropTarget] = useDrop({
     accept: 'ingredients',
@@ -57,9 +55,9 @@ function BurgerConstructor(): JSX.Element {
   const handleOpenModal = () => {
     if (isUserLogged) {
       const token = localStorage.getItem('accessToken');
-      const bunID = bunItem._id;
+      const bunID= bunItem?._id;
       const components = ingredientsList.map((ingredient: TIngredientWithKey) => ingredient._id);
-      const burgerComponentsID = [bunID,...components,bunID];
+      const burgerComponentsID = bunID ? [bunID,...components,bunID]:[...components];
       dispatch(fetchOrder(burgerComponentsID, token));
     } else {
       const currentPath = location.pathname;
@@ -96,7 +94,7 @@ function BurgerConstructor(): JSX.Element {
             
 
             <ul className={Style.ingredientsList}>
-              {ingredientsList.map((ingredient: TIngredientWithKey, index: number) => { // TO DO
+              {ingredientsList.map((ingredient: TIngredientWithKey, index: number) => {
                 return(
                     <IngredientElement item={ingredient} index={index} key={ingredient.key}/>
                 )
