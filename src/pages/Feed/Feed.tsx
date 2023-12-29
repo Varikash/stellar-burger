@@ -2,18 +2,18 @@ import { useEffect, useMemo } from 'react';
 import BurgerOrderCardSmall from '../../components/BurgerOrderCardSmall/BurgerOrderCardSmall';
 import Wrapper from '../../components/Wrapper/Wrapper';
 import Style from './Feed.module.css';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   connect as connectFeedOrder,
   disconnect as disconnectFeedOrder
 } from '../../services/webSocket/actions'
 import { WS_FEED_ORDER_URL } from '../../utils/url';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 
 
-const Feed = () => {
+const Feed = (): JSX.Element => {
 
-  const dispatch = useDispatch();
-  const orders = useSelector(state => state.websocket.orders);
+  const dispatch = useAppDispatch();
+  const orders = useAppSelector(state => state.websocket.orders);
 
   const connect = () => dispatch(connectFeedOrder(WS_FEED_ORDER_URL));
   const disconnect = () => dispatch(disconnectFeedOrder());
@@ -40,7 +40,7 @@ const Feed = () => {
         <p className={`${Style.header} text text_type_main-large`}>Лента Заказов</p>
         <div className={`${Style.container}`}>
           <div className={`${Style.feedLog}`}>
-            {orders.orders && 
+            {orders?.orders && 
               orders.orders.map((element) => {
                 return <BurgerOrderCardSmall key={element._id} element={element}/>
               })
@@ -73,11 +73,11 @@ const Feed = () => {
             </div>
             <div>
               <p className={`text text_type_main-large`}>Выполненно за всё время</p>
-              <p className={`${Style.number} text text_type_digits-large`}>{orders.total}</p>
+              <p className={`${Style.number} text text_type_digits-large`}>{orders?.total}</p>
             </div>
             <div>
               <p className={`${Style.headerToday} text text_type_main-large`}>Выполненно за сегодня:</p>
-              <p className={`${Style.number} text text_type_digits-large`}>{orders.totalToday}</p>
+              <p className={`${Style.number} text text_type_digits-large`}>{orders?.totalToday}</p>
             </div>
           </div>
         </div>

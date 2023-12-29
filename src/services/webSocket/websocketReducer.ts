@@ -9,15 +9,22 @@ import {
   wsMessage
 } from './actions';
 
+export type WebSockeOrders = {
+  success: boolean;
+  orders: TOrderHistory[];
+  total: number;
+  totalToday: number;
+}
+
 type WebSocketState = {
   status: SocketStatus;
-  orders: TOrderHistory[];
+  orders: WebSockeOrders | null;
   connectingError: string;
 }
 
 const initialState: WebSocketState = {
   status: WebsocketStatus.OFFLINE,
-  orders: [],
+  orders: null,
   connectingError: ''
 }
 

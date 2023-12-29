@@ -1,16 +1,16 @@
 import Style from './OrderHistory.module.css'
 import BurgerOrderCard from '../../components/BurgerOrderCard/BurgerOrderCard';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   connect as connectFeedOrder,
   disconnect as disconnectFeedOrder
 } from '../../services/webSocket/actions';
 import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 
-const OrderHistory = () => {
+const OrderHistory = (): JSX.Element => {
 
-  const dispatch = useDispatch();
-  const orders = useSelector(state => state.websocket.orders);
+  const dispatch = useAppDispatch();
+  const orders = useAppSelector(state => state.websocket.orders);
 
   const userOrderURL = 'wss://norma.nomoreparties.space/orders';
   const token = localStorage.getItem('accessToken');
@@ -32,7 +32,7 @@ const OrderHistory = () => {
   }, [])
 
 
-  let ordersArray = orders.orders? [...orders.orders].reverse() : [];
+  let ordersArray = orders?.orders? [...orders.orders].reverse() : [];
 
   return (
     <div className={`${Style.page}`}>

@@ -1,5 +1,4 @@
 import { useParams, useMatch } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import Style from './OrderExtentionStatic.module.css';
 import { useEffect, useState } from "react";
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -9,9 +8,17 @@ import {
 } from '../../services/webSocket/actions';
 import { WS_FEED_ORDER_URL } from "../../utils/url";
 import { WS_USER_FEED_ORDER_URL } from "../../utils/url";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { RootState } from "../../utils/AppThunk.types";
+import TIngredientProps from "../../utils/TIngredientProps.types";
+import TOrderHistory from "../../utils/TOrderHistory.types";
 
-const transformIngredients = (ingredients) => {
-  const uniqueIngredients = {};
+type UniqueIngredients = {
+  [key: string]: TIngredientProps & {count: number};
+}
+
+const transformIngredients = (ingredients: TIngredientProps[]): (TIngredientProps & {count: number})[] => {
+  const uniqueIngredients: UniqueIngredients = {};
 
   ingredients?.forEach(ingredient => {
     if (uniqueIngredients[ingredient._id]) {
@@ -27,22 +34,22 @@ const transformIngredients = (ingredients) => {
 }
 
 
-const OrderExtentionStatic = () => {
+const OrderExtentionStatic = (): JSX.Element => {
 
   const isProfileOrder = useMatch('/profile/orders/:id');
   const isFeedOrder = useMatch('/feed/:id');
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const connect = (url) => dispatch(connectFeedOrder(url));
+  const connect = (url: string) => dispatch(connectFeedOrder(url));
   const disconnect = () => dispatch(disconnectFeedOrder());
 
   const { id } = useParams();
-  const ordersObj = useSelector(state => state.websocket.orders);
-  const getData = state => state.ingredients.ingredients;
-  const data = useSelector(getData); 
-  const [order, setOrder] = useState(null);
-  const [uniqueOrderArray, setUniqueOrderArray] = useState([]);
+  const ordersObj = useAppSelector(state => state.websocket.orders);
+  const getData = (state: RootState) => state.ingredients.ingredients;
+  const data = useAppSelector(getData); 
+  const [order, setOrder] = useState<TOrderHistory | null | undefined>(null);
+  const [uniqueOrderArray, setUniqueOrderArray] = useState<(TIngredientProps & {count: number})[]>([]);
   const [sum, setSum] = useState(0);
   const price = [];
 
@@ -64,27 +71,6 @@ const OrderExtentionStatic = () => {
     }
   }, [ordersObj, id]);
 
-  // useEffect(() => {
-  //   if (order && data) {
-  //     const orderArray = [];
-  //     order.ingredients.forEach(ingredient => {
-  //       const foundObject = data.find(obj => obj._id === ingredient);
-  
-  //       if (foundObject) {
-  //         price.push(foundObject.price);
-  //         orderArray.push({
-  //           _id: foundObject._id,
-  //           name: foundObject.name,
-  //           price: foundObject.price,
-  //           image: foundObject.image,
-  //         });
-  //       }
-  //     });
-  //     setSum(price?.reduce((acc, current) => acc + current, 0));
-  //     setUniqueOrderArray(transformIngredients(orderArray));
-  //   }
-  // }, [order, data, price]);
-
   useEffect(() => {
     if (order && data) {
       const orderArray = order.ingredients.map(ingredient => {
@@ -95,7 +81,7 @@ const OrderExtentionStatic = () => {
           price: foundObject.price,
           image: foundObject.image,
         } : null;
-      }).filter(Boolean); // фильтрация, чтобы убрать возможные null значения
+      }).filter(Boolean) as (TIngredientProps & { _id: string, name: string, price: number, image: string })[];; // фильтрация, чтобы убрать возможные null значения
       
       const sum = orderArray.reduce((acc, cur) => acc + (cur?.price || 0), 0);
       setSum(sum);
@@ -108,7 +94,7 @@ const OrderExtentionStatic = () => {
 
 
   const status = order?.status === 'done' ? 'Выполнен': 'Выполняется';
-  const time = <FormattedDate date={new Date(order?.createdAt)} />;
+  const time = <FormattedDate date={new Date(order?.createdAt || Date.now())} />;
 
   return(
     <div className={`${Style.container}`}>
@@ -136,7 +122,7 @@ const OrderExtentionStatic = () => {
         </ul>
         <div className={`${Style.infoOrder}`}>
           <span className={`text text_type_main-default text_color_inactive`}>{time}</span>
-          <span className={`${Style.totalSum} text text_type_digits-default`}>{sum} <CurrencyIcon /></span>
+          <span className={`${Style.totalSum} text text_type_digits-default`}>{sum} <CurrencyIcon type="primary"/></span>
         </div>
         </div>
       </div>
