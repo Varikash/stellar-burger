@@ -1,18 +1,17 @@
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
 import Style from './ForgotPage.module.css';
-import { useDispatch } from 'react-redux';
 import { checkEmail } from '../../services/reducers/forgotPasswordSlice';
-import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useForm } from '../../hooks/useForm';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 
-const ForgotPage = () => {
-  const state = useSelector(store => store.getEmail)
-  const dispatch = useDispatch();
+const ForgotPage = (): JSX.Element => {
+  const state = useAppSelector(store => store.getEmail)
+  const dispatch = useAppDispatch();
   const { values, handleChange } = useForm({email: ''})
   const navigate = useNavigate();
-  const onSubmit = (e) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     dispatch(checkEmail(values.email));
   }
