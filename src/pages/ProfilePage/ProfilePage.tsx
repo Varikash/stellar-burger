@@ -1,21 +1,16 @@
 import { NavLink, Outlet} from 'react-router-dom';
 import Style from './ProfilePage.module.css';
 import { logOutUser } from '../../services/reducers/handleUserSlice';
-import { useDispatch} from 'react-redux';
 import Wrapper from '../../components/Wrapper/Wrapper';
-import { useEffect } from 'react';
+import { useAppDispatch } from '../../hooks/hooks';
 
 
 
-const ProfilePage = () => {
-  const dispatch = useDispatch();
+const ProfilePage = (): JSX.Element => {
+  const dispatch = useAppDispatch();
   const onClick = () => {
     dispatch(logOutUser())
   }
-
-  useEffect(() => {
-    console.log('Component did mount')
-  }, [])
 
   return(
     <Wrapper>
