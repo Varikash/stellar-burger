@@ -1,21 +1,27 @@
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import Style from './Register.module.css';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { createUser } from '../../services/reducers/handleUserSlice';
 import { Navigate } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
+import { RootState } from '../../utils/AppThunk.types';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { RegisterAndUpdate } from '../../utils/apiBackend';
 
-const RegisterPage = () => {
+const RegisterPage = (): JSX.Element => {
   const { values, handleChange } = useForm({name: '', email: '', password: ''});
-  const regUser = state => state.user.registered;
-  const registered = useSelector(regUser);
-  const dispatch = useDispatch();
+  const regUser = (state: RootState) => state.user.registered;
+  const registered = useAppSelector(regUser);
+  const dispatch = useAppDispatch();
 
-  const onSubmit = e => {
-    e.preventDefault()
-    dispatch(createUser(values));
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const logginData: RegisterAndUpdate = {
+      name: values.name,
+      email: values.email,
+      password: values.password
+    }
+    dispatch(createUser(logginData));
   }
 
   return(
