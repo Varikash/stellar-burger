@@ -23,7 +23,7 @@ export type LogginForm = EmailForm & {
   password: string;
 }
 
-type NewPassForm = {
+export type NewPassForm = {
   password: string;
   token: string;
 }

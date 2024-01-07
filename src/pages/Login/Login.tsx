@@ -6,7 +6,7 @@ import { useForm } from '../../hooks/useForm';
 import { RootState } from '../../utils/AppThunk.types';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { LogginForm } from '../../utils/apiBackend';
-const LoginPage = () => {
+const LoginPage = (): JSX.Element => {
 
   const { values, handleChange} = useForm({email: '', password: ''});
   const dispatch = useAppDispatch();

@@ -3,14 +3,15 @@ import { Link } from 'react-router-dom';
 import Style from './ResetPage.module.css';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { sendNewPass } from '../../utils/apiBackend';
+import { NewPassForm, sendNewPass } from '../../utils/apiBackend';
 import { useForm } from '../../hooks/useForm';
+import { RootState } from '../../utils/AppThunk.types';
+import { useAppSelector } from '../../hooks/hooks';
 
-const ResetPage = () => {
+const ResetPage = (): JSX.Element => {
   const { values, handleChange } = useForm({password: '', token: ''})
-  const condition = state => state.getEmail.success;
-  const state = useSelector(condition);
+  const condition = (state: RootState) => state.getEmail.success;
+  const state = useAppSelector(condition);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,9 +20,13 @@ const ResetPage = () => {
     }
   }, [state, navigate])
 
-  const onSubmit = e => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    sendNewPass(values)
+    const logginData: NewPassForm = {
+      password: values.password,
+      token: values.token
+    }
+    sendNewPass(logginData)
     .then(() => {
       alert("Пароль изменен успешно!");
       navigate('/login');
