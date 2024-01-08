@@ -1,13 +1,27 @@
-export const socketMiddleware = (wsActions) => {
+import { ActionCreatorWithPayload, ActionCreatorWithoutPayload, Middleware } from "@reduxjs/toolkit";
+import { WebSockeOrders } from "../webSocket/websocketReducer";
+
+type WsActions = {
+    wsConnect: ActionCreatorWithPayload<string>;
+    wsOpen: ActionCreatorWithoutPayload;
+    wsClose: ActionCreatorWithoutPayload;
+    wsError: ActionCreatorWithPayload<string>;
+    wsMessage: ActionCreatorWithPayload<WebSockeOrders>;
+    wsConnecting: ActionCreatorWithoutPayload;
+    wsDisconnect: ActionCreatorWithoutPayload;
+};
+
+
+
+export const socketMiddleware = (wsActions: WsActions): Middleware => {
   return (store) => {
-    let socket = null;
+    let socket: WebSocket | null = null;
 
     return (next) => (action) => {
       const { dispatch } = store;
       const { type } = action;
       const {
         wsConnect,
-        wsSendMessage,
         wsOpen,
         wsClose,
         wsError,
@@ -40,10 +54,6 @@ export const socketMiddleware = (wsActions) => {
         socket.onclose = event => {
           dispatch(wsClose());
         };
-
-        if (wsSendMessage && type === wsSendMessage.type) {
-          socket.send(JSON.stringify(action.payload));
-        }
 
         if (wsDisconnect.type === type) {
           socket.close();
