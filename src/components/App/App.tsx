@@ -1,7 +1,6 @@
 import AppHeader from '../AppHeader/AppHeader';
 import ConstructorPage from '../ConstructorPage/ConstructorPage';
 import Style from './App.module.css'
-import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchIngredients } from '../../services/actions/fetchIngredients';
 import { Routes, Route, useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -21,12 +20,14 @@ import OrderHistory from '../../pages/OrderHistory/OrderHistory';
 import Feed from '../../pages/Feed/Feed';
 import OrderExtention from '../../pages/OrderExtention/OrderExtention';
 import OrderExtentionStatic from '../../pages/OrderExtentionStatic/OrderExtentionStatic';
+import { RootState } from '../../utils/AppThunk.types';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 
 function App() {
 
-  const dispatch = useDispatch();
-  const getIngredientsState = state => state.ingredients;
-  const ingredientsState = useSelector(getIngredientsState);
+  const dispatch = useAppDispatch();
+  const getIngredientsState = (state: RootState) => state.ingredients;
+  const ingredientsState = useAppSelector(getIngredientsState);
   const { loadingIngredients, errorLoadingIngredients} = ingredientsState;
   const { id } = useParams();
 
@@ -62,7 +63,7 @@ function App() {
                 <Route path="/ingredients/:id" element={<IngredientPage/>} />
                 <Route path="/feed/" element={<Feed />} />
                 <Route path="/feed/:id" element={<OrderExtentionStatic />} />
-                <Route path="/profile/" element={<OnlyAuth component={<ProfilePage />}/>}> 
+                <Route path="/profile/" element={<OnlyAuth onlyUnAuth={false} component={<ProfilePage />}/>}> 
                   <Route index element={<ProfileForm />} />
                   <Route path="orders" element={<OrderHistory />} />
                   <Route path="orders/:id" element={<OrderExtentionStatic />} />
