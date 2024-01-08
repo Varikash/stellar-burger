@@ -9,9 +9,10 @@ import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import { BrowserRouter as Router} from 'react-router-dom';
 import { FeedOrderMiddleware } from './services/webSocket/utils';
+import type {} from "redux-thunk/extend-redux"
 
 
-const store = configureStore({
+export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk, FeedOrderMiddleware),
   devTools: true, 
