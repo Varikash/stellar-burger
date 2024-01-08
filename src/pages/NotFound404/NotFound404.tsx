@@ -1,7 +1,7 @@
 import Styles from './NotFound404.module.css'
 import { Link } from 'react-router-dom'
 
-const NotFound404 = () => {
+const NotFound404 = (): JSX.Element => {
   return(
     <>
     <div className={Styles.container}>
