@@ -1,12 +1,11 @@
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 import Style from './IngredientPage.module.css'
 import NotFound404 from "../NotFound404/NotFound404";
+import { useAppSelector } from "../../hooks/hooks";
 
-const IngredientPage = () => {
+const IngredientPage = (): JSX.Element => {
   const { id } = useParams();
-  const ingredients = useSelector(state => state.ingredients.ingredients);
-
+  const ingredients = useAppSelector(state => state.ingredients.ingredients);
   const ingredient = ingredients.find(ingredient => ingredient._id === id);
 
   if (!ingredient) {
