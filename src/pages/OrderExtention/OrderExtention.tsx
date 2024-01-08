@@ -1,12 +1,24 @@
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 import Style from './OrderExtention.module.css';
 import { useEffect, useState } from "react";
 import { CurrencyIcon, FormattedDate, CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useAppSelector } from "../../hooks/hooks";
+import { RootState } from "../../utils/AppThunk.types";
+import TOrderHistory from "../../utils/TOrderHistory.types";
 
-const transformIngredients = (ingredients) => {
-  const uniqueIngredients = {};
+type Ingredients = {
+  _id: string;
+  name: string;
+  price: number;
+  image: string;
+}
 
+type OrderExtentionProps = {
+  onClose: () => void;
+}
+
+const transformIngredients = (ingredients: Ingredients[]) => {
+  const uniqueIngredients: Record<string, Ingredients & {count: number}> = {};
   ingredients?.forEach(ingredient => {
     if (uniqueIngredients[ingredient._id]) {
       uniqueIngredients[ingredient._id].count += 1;
@@ -20,16 +32,16 @@ const transformIngredients = (ingredients) => {
   return Object.values(uniqueIngredients);
 }
 
-const OrderExtention = ({onClose}) => {
+const OrderExtention = ({onClose}: OrderExtentionProps): JSX.Element => {
   const { id } = useParams();
-  const ordersObj = useSelector(state => state.websocket.orders);
-  const getData = state => state.ingredients.ingredients;
-  const data = useSelector(getData); 
-  const [order, setOrder] = useState(null);
-  const [uniqueOrderArray, setUniqueOrderArray] = useState([]);
+  const ordersObj = useAppSelector(state => state.websocket.orders);
+  const getData = (state: RootState) => state.ingredients.ingredients;
+  const data = useAppSelector(getData); 
+  const [order, setOrder] = useState<TOrderHistory | null | undefined>(null);
+  const [uniqueOrderArray, setUniqueOrderArray] = useState<(Ingredients & { count: number })[]>([]);
   const [sum, setSum] = useState(0);
   
-  const handleClick = (e) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     onClose();
   }
@@ -51,7 +63,7 @@ const OrderExtention = ({onClose}) => {
           price: foundObject.price,
           image: foundObject.image,
         } : null;
-      }).filter(Boolean); // фильтрация, чтобы убрать возможные null значения
+      }).filter(Boolean) as Ingredients[]; // фильтрация, чтобы убрать возможные null значения
       
       const sum = orderArray.reduce((acc, cur) => acc + (cur?.price || 0), 0);
       setSum(sum);
@@ -62,7 +74,7 @@ const OrderExtention = ({onClose}) => {
 
 
   const status = order?.status === 'done' ? 'Выполнен': 'Выполняется';
-  const time = <FormattedDate date={new Date(order?.createdAt)} />;
+  const time = order?.createdAt? <FormattedDate date={new Date(order?.createdAt)} /> : null;
   
 
   return(
@@ -72,7 +84,7 @@ const OrderExtention = ({onClose}) => {
         <div className={`${Style.headerContainer}`}>
           <span className={`${Style.number} text text_type_digits-default mb-10`}>#{order?.number}</span>
           <button className={`${Style.button}`} onClick={handleClick}>
-            <CloseIcon />
+            <CloseIcon type="primary"/>
           </button>
         </div>
         <h2 className={`${Style.header} text text_type_main-medium mb-3`}>{order?.name}</h2>
@@ -96,7 +108,7 @@ const OrderExtention = ({onClose}) => {
         </ul>
         <div className={`${Style.infoOrder}`}>
           <span className={`text text_type_main-default text_color_inactive`}>{time}</span>
-          <span className={`${Style.totalSum} text text_type_digits-default`}>{sum} <CurrencyIcon /></span>
+          <span className={`${Style.totalSum} text text_type_digits-default`}>{sum} <CurrencyIcon type="primary"/></span>
         </div>
       </div>
     </div>
