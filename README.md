@@ -21,7 +21,7 @@
 - [uuid](https://www.npmjs.com/package/uuid)
 - [библиотека компонентов @ya.praktikum/react-developer-burger-ui-components](https://yandex-practicum.github.io/react-developer-burger-ui-components/docs/)
 
-Демо: https://varikash.github.io/stellar-burger/  
+Демо: https://stellar-burger-five.vercel.app/
 
 *Автор: Варикаш Николай*   
 *Контакты: n.varicash@gmail.com*    
